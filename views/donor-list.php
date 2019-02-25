@@ -63,7 +63,7 @@ include "../controller/fetchEmpAcc.php";
     // show donor list
     let uncheckedSurveyRes = ``;
     $.ajax({
-      url: "../controller/fetchUncheckedSurvey.php",
+      url: "../controller/survey/fetchUncheckedSurvey.php",
       dataType: "json",
       success: data => {
         console.log(data);
@@ -119,7 +119,7 @@ include "../controller/fetchEmpAcc.php";
     //show expected donor
     let expectedDonor = ``;
     $.ajax({
-      url: '../controller/fetchExpectedDonor.php',
+      url: '../controller/donor/fetchExpectedDonor.php',
       dataType: 'json',
       success: data => {
         console.log(data);

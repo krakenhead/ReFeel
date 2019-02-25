@@ -24,8 +24,17 @@ include "../controller/fetchEmpAcc.php";
       <?php 
       include "components/header.php";
       ?>
+      <div class="page-title">
+        <h3>Graphs</h3>
+      </div>
       <section class="content">
-        <div class="content-container">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 col-lg-12 p-0">
+              <div class="content-container">
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
