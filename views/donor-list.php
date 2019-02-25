@@ -60,6 +60,14 @@ include "../controller/fetchEmpAcc.php";
     $('#donor-list').addClass('active');
     $('.loader').hide();
 
+    $(document).ajaxStart(function() {
+      $('.loader').show();
+    });
+
+    $(document).ajaxComplete(function() {
+      $('.loader').hide();
+    });
+
     // show donor list
     let uncheckedSurveyRes = ``;
     $.ajax({
@@ -89,7 +97,7 @@ include "../controller/fetchEmpAcc.php";
             </tbody>
           </table>
           `;
-          console.log(uncheckedSurveyRes);
+          $('#donorSurveyList').html(uncheckedSurveyRes);
         }
       }
     });
@@ -101,19 +109,10 @@ include "../controller/fetchEmpAcc.php";
           <td>${ obj.intDonationId }</td>
           <td>${ obj.intClientId }</td>
           <td>${ obj.Applicant_DonorName }</td>
-          <td><a href=""><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
+          <td><a href="fetchDonorSurveyAnswers.php?rowid=${ obj.intDonationId }"><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
         </tr>
         `;
       });
-      // return arr.map( obj => (
-      //   `<tr>
-      //      <td>${ obj.intDonationId }</td>
-      //      <td>${ obj.intClientId }</td>
-      //      <td>${ obj.Applicant_DonorName }</td>
-      //      <td><a href=""><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
-      //    </tr>
-      //    `
-      // ).join(''));
     }
 
     //show expected donor
@@ -162,17 +161,6 @@ include "../controller/fetchEmpAcc.php";
         </tr>
         `;
       });
-      // let newArr = arr.map( obj => (
-      //   `
-      //   <tr>
-      //     <td>${ obj.intDonationId }</td>
-      //     <td>${ obj.intClientId }</td>
-      //     <td>${ obj.Applicant_DonorName }</td>
-      //     <td>${ obj.dtmExamTaken }</td>
-      //   </tr>
-      //   `
-      // ).join(''));
-      // return newArr;
     }
   </script>
 </body>

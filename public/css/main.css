@@ -306,3 +306,14 @@ ul .nav a {
     border-top: 3px solid #1976D2;
     border-radius: 2pt;
 }
+
+.client-info-card {
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+    box-shadow: 0 0 1px 0 #d1d1d1;
+    padding: 15px;
+}
+
+.client-info-card:hover {
+    box-shadow: 0 0 20px 0 #d1d1d1;
+}

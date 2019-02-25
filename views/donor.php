@@ -258,7 +258,7 @@ include "../controller/fetchEmpAcc.php";
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form action="people-related/edit_donorrecord.php" method="post" name="editdonor" enctype="multipart/form-data">
+          <form action="../controller/donor/editDonorRecord.php" method="post" name="editdonor" enctype="multipart/form-data">
             <div class="form-group">
               <input type = "hidden" id ='clientId' name ='clientId'>
               <label for="clientfname">First Name</label>
@@ -346,7 +346,15 @@ include "../controller/fetchEmpAcc.php";
   <script>
     $('#maintenance').addClass('active');
     $('#donor').addClass('active');
-    $('.loader').hide();
+    // $('.loader').hide();
+
+    $(document).ajaxStart(function() {
+      $('.loader').show();
+    });
+
+    $(document).ajaxComplete(function() {
+      $('.loader').hide();
+    });
 
     //fetch donors
     let fetchDonor = 'fetchDonor';
@@ -373,7 +381,6 @@ include "../controller/fetchEmpAcc.php";
     });
 
     $('#editdonorinfo').on('show.bs.modal', function(e) {
-
       var rowid = $(e.relatedTarget).data('id');
       var fname = $(e.relatedTarget).data('fname');
       var mname = $(e.relatedTarget).data('mname');

@@ -1,5 +1,5 @@
 <?php
-	include "connections.php";
+	include_once "connections.php";
 	session_start();
 	$varEmpId = $_SESSION["sessEmpId"];
 
