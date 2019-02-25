@@ -432,7 +432,7 @@ include "../controller/fetchEmpAcc.php";
             success:function(data){
               console.log(data);
               alert("The survey in use is "+data);
-              window.location.href = "survey-tab.php";
+              window.location.href = "survey.php";
             }
 
           });
