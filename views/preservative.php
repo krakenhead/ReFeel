@@ -32,12 +32,16 @@ include "../controller/fetchEmpAcc.php";
   <?php 
   include "components/core-script.php";
   ?>
-  <script src="../public/js/feather.min.js"></script>
   <script>
-    feather.replace();
     $('#maintenance').addClass('active');
     $('#preservative').addClass('active');
-    $(document).ready(function (){
+    $('.loader').hide();
+
+    $(document).ajaxStart(function() {
+      $('.loader').show();
+    });
+
+    $(document).ajaxComplete(function() {
       $('.loader').hide();
     });
   </script>
