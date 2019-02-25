@@ -15,6 +15,6 @@
           </div>
       </div>
     </div>
-    <button type="button" class="btn-logout"><i class="fas fa-sign-out-alt" style="align-self: center;"></i> Logout</button>
+    <button type="button" onclick="location.href='../controller/employeeLogout.php'" class="btn-logout"><i class="fas fa-sign-out-alt" style="align-self: center;"></i> Logout</button>
   </div>
 </nav>

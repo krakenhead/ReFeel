@@ -1,3 +1,6 @@
+<?php 
+include "../controller/fetchEmpAcc.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +13,9 @@
   <link rel="stylesheet" href="../public/css/all.css">
 </head>
 <body>
+  <?php 
+  include "components/loader.php";
+  ?>
   <div class="wrapper">
     <?php 
     include "components/sidebar.php";
@@ -31,6 +37,9 @@
     feather.replace();
     $('#maintenance').addClass('active');
     $('#donor').addClass('active');
+    $(document).ready(function (){
+      $('.loader').hide();
+    });
   </script>
 </body>
 </html>

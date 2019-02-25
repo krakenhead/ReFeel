@@ -5,10 +5,10 @@
   <div class="navigation-wrapper">
     <div class="usr ">
       <div class="usrimg">
-        <img src="../public/img/skypedp.png" style="max-width: 100%; height: 3rem; width: 3rem; border-radius: 5rem;">
+        <img src="../public/img/<?php echo $varImg ?>" style="max-width: 100%; height: 3rem; width: 3rem; border-radius: 5rem;">
       </div>
       <div class="usrinfo">
-        <p style="font-weight: 600; color: #212121;">John Doe<br><span style="font-weight: 300;">Doctor</span></p>
+        <p style="font-weight: 600; color: #212121;"><?php echo $varFname . ' ' . $varLname; ?><br><span style="font-weight: 300;"><?php echo $varRole; ?></span></p>
       </div>
     </div>
     <div class="pl-1 pr-1">

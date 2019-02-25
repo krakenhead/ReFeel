@@ -1,3 +1,6 @@
+<?php 
+include "../controller/fetchEmpAcc.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,27 +13,167 @@
   <link rel="stylesheet" href="../public/css/all.css">
 </head>
 <body>
+  <?php 
+  include "components/loader.php";
+  ?>
   <div class="wrapper">
     <?php 
     include "components/sidebar.php";
     ?>
-    <div class="mainpanel">
+    <main class="mainpanel">
       <?php 
       include "components/header.php";
       ?>
-      <div class="content">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.
+      <div class="page-title">
+        <h3>Donor List</h3>
       </div>
-    </div>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 col-lg-12 p-0">
+              <div class="content-container">
+                <h4>Unchecked Survey</h4>
+                <div id="donorSurveyList" class="text-center">
+                  <!-- content goes here -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12 p-0 mt-2">
+              <div class="content-container">
+                <h4>Expected Donors</h4>
+                <div id="expectedDonor" class="text-center">
+                  <!-- content goes here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
   <?php 
   include "components/core-script.php";
   ?>
-  <script src="../public/js/feather.min.js"></script>
   <script>
-    feather.replace();
+    // 'use strict';
     $('#home').addClass('active');
     $('#donor-list').addClass('active');
+    $('.loader').hide();
+
+    // show donor list
+    let uncheckedSurveyRes = ``;
+    $.ajax({
+      url: "../controller/fetchUncheckedSurvey.php",
+      dataType: "json",
+      success: data => {
+        console.log(data);
+        if (data.length == 0) {
+          uncheckedSurveyRes = `
+          <i class="fas fa-scroll fa-7x"></i>
+          <h4>No unchecked surveys found</h4>
+          `;
+          $('#donorSurveyList').html(uncheckedSurveyRes);
+        } else if (data.length !== 0) {
+          uncheckedSurveyRes = `
+          <table class='table table-bordered text-center' id='tbldonorsurvey'>
+            <thead>
+              <tr >
+              <th>Exam Code</th>
+              <th>Donor Code</th>
+              <th>Donor/Applicant Name</th>
+              <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${ iterateOverUncheckedSurvey(data) }
+            </tbody>
+          </table>
+          `;
+          console.log(uncheckedSurveyRes);
+        }
+      }
+    });
+
+    function iterateOverUncheckedSurvey(arr) {
+      return arr.map( obj => {
+        return `
+        <tr>
+          <td>${ obj.intDonationId }</td>
+          <td>${ obj.intClientId }</td>
+          <td>${ obj.Applicant_DonorName }</td>
+          <td><a href=""><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
+        </tr>
+        `;
+      });
+      // return arr.map( obj => (
+      //   `<tr>
+      //      <td>${ obj.intDonationId }</td>
+      //      <td>${ obj.intClientId }</td>
+      //      <td>${ obj.Applicant_DonorName }</td>
+      //      <td><a href=""><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
+      //    </tr>
+      //    `
+      // ).join(''));
+    }
+
+    //show expected donor
+    let expectedDonor = ``;
+    $.ajax({
+      url: '../controller/fetchExpectedDonor.php',
+      dataType: 'json',
+      success: data => {
+        console.log(data);
+        if (data.length == 0) {
+          expectedDonor = `
+          <i class="fas fa-user-slash fa-7x"></i>
+          <h4>No expected donor found</h4>
+          `;
+          $('#expectedDonor').html(expectedDonor);
+        } else if (data.length !== 0) {
+          expectedDonor = `
+          <table class='table table-bordered text-center' id='tbldonorsurvey'>
+            <thead>
+              <tr>
+              <th>Exam Code</th>
+              <th>Donor Code</th>
+              <th>Donor/Applicant Name</th>
+              <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${ iterateOverExpectedDonor(data) }
+            </tbody>
+          </table>
+          `;
+          $('#expectedDonor').html(expectedDonor);
+        }
+      }
+    });
+
+    function iterateOverExpectedDonor(arr) {
+      console.log(arr);
+      return arr.map( obj => {
+        return `
+        <tr>
+          <td>${ obj.intDonationId }</td>
+          <td>${ obj.intClientId }</td>
+          <td>${ obj.Applicant_DonorName }</td>
+          <td>${ obj.dtmExamTaken }</td>
+        </tr>
+        `;
+      });
+      // let newArr = arr.map( obj => (
+      //   `
+      //   <tr>
+      //     <td>${ obj.intDonationId }</td>
+      //     <td>${ obj.intClientId }</td>
+      //     <td>${ obj.Applicant_DonorName }</td>
+      //     <td>${ obj.dtmExamTaken }</td>
+      //   </tr>
+      //   `
+      // ).join(''));
+      // return newArr;
+    }
   </script>
 </body>
 </html>

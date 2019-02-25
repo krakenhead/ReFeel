@@ -1,3 +1,6 @@
+<?php 
+include "../controller/fetchEmpAcc.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,27 +13,33 @@
   <link rel="stylesheet" href="../public/css/all.css">
 </head>
 <body>
+  <?php 
+  include "components/loader.php";
+  ?>
   <div class="wrapper">
     <?php 
     include "components/sidebar.php";
     ?>
-    <div class="mainpanel">
+    <main class="mainpanel">
       <?php 
       include "components/header.php";
       ?>
-      <main class="content">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum maxime similique mollitia vitae eaque corrupti inventore odit nobis aperiam quo labore ad perferendis, dolorum, voluptatem nesciunt sit vero repellat molestias.
-      </main>
-    </div>
+      <section class="content">
+        <div class="content-container">
+        </div>
+      </section>
+    </main>
   </div>
   <?php 
   include "components/core-script.php";
   ?>
-  <script src="../public/js/feather.min.js"></script>
   <script>
-    feather.replace();
+    // feather.replace();
     $('#home').addClass('active');
     $('#graphs').addClass('active');
+    $(document).ready(function (){
+      $('.loader').hide();
+    });
   </script>
 </body>
 </html>

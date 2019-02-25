@@ -66,9 +66,81 @@ body {
 }
 
 body {
-    background-color: #f5f5f5;
+    background-color: #f1ebeb;
     font-family: 'Lato-Regular';
 }
+
+/********** LOADER  **********/
+.loader {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    opacity: 0.7;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center !important;
+}
+
+.heart {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background: #f00;
+    transform: rotate(45deg);
+    animation: beat 1s linear infinite;
+}
+
+.heart:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #f00;
+    position: absolute;
+    top: -50%;
+    left: 0;
+    border-radius: 50%;
+}
+
+.heart:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #f00;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    border-radius: 50%;
+}
+
+@keyframes beat {
+    0% {
+        transform: rotate(45deg) scale(1);
+    }
+
+    25% {
+        transform: rotate(45deg) scale(1.2);
+    }
+
+    50% {
+        transform: rotate(45deg) scale(1.1);
+    }
+
+    75% {
+        transform: rotate(45deg) scale(1.2);
+    }
+
+    100% {
+        transform: rotate(45deg) scale(1);
+    }
+}
+
+/******* end loader ********/
 
 .wrapper {
     text-align: left;
@@ -77,9 +149,6 @@ body {
 .system-title {
     background-color: #FF4848;
     height: 4rem;
-    /* max-width: 18rem; */
-    /* display: block; */
-    /* float: left; */
 }
 
 .logo {
@@ -89,8 +158,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    /* position: relative; */
-    /* z-index: 4; */
 }
 
 .system-logo {
@@ -131,7 +198,7 @@ body {
     max-height: 100%;
     position: fixed;
     overflow-y: auto;
-    z-index: 999;
+    z-index: 10;
 }
 
 .navigation-wrapper::-webkit-scrollbar {
@@ -143,7 +210,7 @@ body {
 }
 
 .navigation-wrapper::-webkit-scrollbar-thumb {
-    background: #eeeeee;
+    background: #e0e0e0;
 }
 
 .navigation-wrapper::-webkit-scrollbar-thumb:hover {
@@ -167,7 +234,7 @@ body {
 }
 
 .content {
-    padding: .3rem .75rem;
+    padding: .50rem .75rem;
 }
 
 .usr {
@@ -226,4 +293,16 @@ ul .nav a {
 
 .notif {
     padding: .25rem .50rem;
+}
+
+.page-title {
+    background-color: white;
+    padding: .75rem 1rem;
+}
+
+.content-container {
+    background-color: #fff;
+    padding: .50rem 1rem;
+    border-top: 3px solid #1976D2;
+    border-radius: 2pt;
 }
