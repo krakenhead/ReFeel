@@ -390,7 +390,7 @@ include "../controller/fetchEmpAcc.php";
                 //console.log(data);
                 alert("Changes had been saved the survey is named :"+data.decQuestionVersion);
                 // console.log(data.intQuestionVersion);
-                window.location.href = "survey-tab.php";
+                window.location.href = "survey.php";
               },
               error: function(xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);
