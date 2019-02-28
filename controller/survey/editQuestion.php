@@ -71,10 +71,6 @@ foreach($_POST["obj"] as $value){
   // echo json_encode($category.$categoryID);
 }
 
-// /*for(){
-//
-
-// }*/
 $latest_survey = mysqli_query($connections,"SELECT decQuestionVersion FROM tblquestion ORDER BY intQuestionId DESC LIMIT 1");
 /*while ($row4 = mysqli_fetch_assoc($latest_survey)) {
   $latestsurveyversion = $row4["intQuestionVersion"];

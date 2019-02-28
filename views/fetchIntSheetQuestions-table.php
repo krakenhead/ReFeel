@@ -16,12 +16,12 @@
   <link rel="stylesheet" href="../public/css/all.css">
 </head>
 <body>
-  <?php 
+  <?php
   include "components/loader.php";
   ?>
   <div class="wrapper">
     <main class="mainpanel" style="width: 100%">
-      <?php 
+      <?php
       include "components/special-header.php";
       ?>
       <div class="page-title">
@@ -252,7 +252,7 @@
       </section>
     </main>
   </div>
-  <?php 
+  <?php
   include "components/core-script.php";
   ?>
   <script>

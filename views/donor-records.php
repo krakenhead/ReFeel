@@ -661,7 +661,7 @@ include "../controller/fetchEmpAcc.php";
       $.ajax({//kung magpoproceed sa sero kunin mo yung nakaquarantine na bloodbag
         type: "POST",
         url: '../controller/blood/fetchUnderQuarantineBloodBag.php',
-        data: {clientid,clientid},
+        data: {clientid:clientid},
         success:function(data){
           $('#bloodbag_underquarantine').val(data);
           $('#bloodbag_underquarantine2').val(data);
