@@ -427,6 +427,7 @@ $clientId = $_GET["clientId"];
   <?php 
   include "components/core-script.php";
   ?>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('.loader').hide();
   </script>

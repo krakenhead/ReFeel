@@ -183,6 +183,7 @@ include "../controller/fetchEmpAcc.php";
   include "components/core-script.php";
   ?>
   <script src="../public/js/sweetalert.min.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('#transaction').addClass('active');
     $('#blood-inventory').addClass('active');

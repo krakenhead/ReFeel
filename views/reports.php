@@ -59,6 +59,7 @@ include "../controller/fetchEmpAcc.php";
   <script src="../public/rep/jquery-3.3.1.min.js"></script>
   <script src="../public/rep/popper.min.js"></script>
   <script src="../public/rep/bootstrap.min.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('#reports').addClass('active');
     $('.loader').hide();

@@ -141,6 +141,7 @@ include "../controller/fetchEmpAcc.php";
   include "components/core-script.php";
   ?>
   <script src="../public/js/sweetalert.min.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('#maintenance').addClass('active');
     $('#donor-edit-requests').addClass('active');

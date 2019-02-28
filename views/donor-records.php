@@ -568,6 +568,7 @@ include "../controller/fetchEmpAcc.php";
   include "components/core-script.php";
   ?>
   <script src="../public/js/datatables.min.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('#transaction').addClass('active');
     $('#donor-records').addClass('active');

@@ -251,6 +251,7 @@ include "../controller/fetchEmpAcc.php";
   ?>
   <script src="../public/js/datatables.min.js"></script>
   <script src="../public/js/sweetalert.min.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('#maintenance').addClass('active');
     $('#preservative').addClass('active');

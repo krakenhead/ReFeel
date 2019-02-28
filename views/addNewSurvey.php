@@ -109,6 +109,7 @@ include "../controller/fetchEmpAcc.php";
   <?php 
   include "components/core-script.php";
   ?>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('#maintenance').addClass('active');
     $('#survey').addClass('active');

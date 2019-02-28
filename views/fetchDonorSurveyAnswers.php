@@ -110,6 +110,7 @@ include "../controller/fetchEmpAcc.php";
   <?php 
   include "components/core-script.php";
   ?>
+  <script src="../public/js/notification.js"></script>
   <script>
   $('#home').addClass('active');
   $('#donor-list').addClass('active');

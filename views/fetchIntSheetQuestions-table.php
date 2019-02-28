@@ -255,6 +255,7 @@
   <?php
   include "components/core-script.php";
   ?>
+  <script src="../public/js/notification.js"></script>
   <script>
     $('.loader').hide();
     $(document).ready(function(){

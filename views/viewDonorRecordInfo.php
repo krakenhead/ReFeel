@@ -181,6 +181,7 @@ if(mysqli_num_rows($timesrejectedseroqry) > 0){
   include "components/core-script.php";
   ?>
   <script src="../public/js/datatables.min.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     // feather.replace();
     $('#maintenance').addClass('active');

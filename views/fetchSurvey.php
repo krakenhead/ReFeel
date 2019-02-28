@@ -251,6 +251,7 @@ include "../controller/fetchEmpAcc.php";
   include "components/core-script.php";
   ?>
   <script src="../public/js/jquery-ui.js"></script>
+  <script src="../public/js/notification.js"></script>
   <script>
     // feather.replace();
     $('#maintenance').addClass('active');

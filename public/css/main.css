@@ -381,3 +381,13 @@ ul .nav a {
 .my-legend a {
     color: #777;
 }
+
+.notif-area {
+    width: 300px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 500px;
+    overflow-x: hidden;
+}
