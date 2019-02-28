@@ -7,7 +7,7 @@ if ($requestData['type'] == 'fetchDonor') {
 			'strClientMiddleName', 'strClientLastName'
 			 );
 	
-		$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName,strClientOccupation,strClientContact,intBloodTypeId,stfClientCivilStatus,stfClientSex,stfClientType,TIMESTAMPDIFF(year,datClientBirthday,NOW()) AS age FROM tblclient";
+		$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName,strClientOccupation,strClientContact,intBloodTypeId,stfClientCivilStatus,stfClientSex,stfClientType,TIMESTAMPDIFF(year,datClientBirthday,NOW()) AS age, strUserImageDir FROM tblclient JOIN tbluser ON tblclient.intUserId = tbluser.intUserId";
 	
 		// datatable column index  => database column name
 	
@@ -67,7 +67,7 @@ if ($requestData['type'] == 'fetchDonor') {
 		 $sub_array[] =
 			 '
 			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" data-fname = "'.$row["strClientFirstName"].'"
-			data-mname="'.$row["strClientMiddleName"].'" data-lname="'.$row["strClientLastName"].'" data-occ="'.$row["strClientOccupation"].'" data-contact ="'.$row["strClientContact"].'"
+			data-mname="'.$row["strClientMiddleName"].'" data-lname="'.$row["strClientLastName"].'" data-occ="'.$row["strClientOccupation"].'" data-contact ="'.$row["strClientContact"].'" data-image ="'.$row["strUserImageDir"].'"
 			data-sex="'.$row["stfClientSex"].'" data-btype = "'.$bloodid.'" data-status = "'.$row["stfClientCivilStatus"].'" data-age = "'.$row["age"].'" style="padding: .2rem .75rem;">Edit</button>
 			 '; //<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
 	

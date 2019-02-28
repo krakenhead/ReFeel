@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "../controller/fetchEmpAcc.php";
 ?>
 <!DOCTYPE html>
@@ -12,17 +12,18 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
+  <link rel="stylesheet" href="../public/css/jquery-ui.css">
 </head>
 <body>
-  <?php 
+  <?php
   include "components/loader.php";
   ?>
   <div class="wrapper">
-    <?php 
+    <?php
     include "components/sidebar.php";
     ?>
     <main class="mainpanel">
-      <?php 
+      <?php
       include "components/header.php";
       ?>
       <div class="page-title">
@@ -67,15 +68,16 @@ include "../controller/fetchEmpAcc.php";
                         $categoryID = $row["intQuestionCategoryId"];
 
                         $getcategorystring = mysqli_query($connections,"SELECT stfQuestionCategory FROM tblquestioncategory WHERE intQuestionCategoryId = $categoryID");
-                        while ($row3 = mysqli_fetch_assoc($getcategorystring)) {
-                          $category = $row3["stfQuestionCategory"];
-                        }
-
+                        // while ($row3 = mysqli_fetch_assoc($getcategorystring)) {
+                        //   $category = $row3["stfQuestionCategory"];
+                        // }
+                        $row3 = mysqli_fetch_assoc($getcategorystring);
+                        $category = $row3["stfQuestionCategory"];
                     ?>
                       <tr id = '<?php echo $row['intQuestionId'];?>'>
-                        <td><textarea class='form-control' value ='<?php echo $question; ?>' name='question<?php echo $id; ?>' id='question<?php echo $id; ?>' readonly><?php echo $question; ?></textarea></td>
-                        <td><input type = 'text' value = '<?php echo $type; ?>' name = 'type<?php echo $id; ?>' id='type<?php echo $id; ?>' readonly></td>
-                        <td><input type = 'text' value = '<?php echo $category; ?>' name = 'category<?php echo $id;?>' id='category<?php echo $id; ?>' readonly></td>
+                        <td><textarea class='que form-control' value ='<?php echo $question; ?>' name='question<?php echo $id; ?>' id='question<?php echo $id; ?>' readonly><?php echo $question; ?></textarea></td>
+                        <td><input type = 'text' value = '<?php echo $type; ?>' name = 'type<?php echo $id; ?>' id='type<?php echo $id; ?>' class = "type" readonly></td>
+                        <td><input type = 'text' value = '<?php echo $category; ?>' name = 'category<?php echo $id;?>' id='category<?php echo $id; ?>' class ="cat" readonly></td>
                         <td>
                           <button type='button' class='btn' data-toggle='modal' data-target='#editsurveyitem' data-id='<?php echo $row['intQuestionId'];?>'>Edit</button> <button type='button' class='btn btn-danger' data-id='<?php echo $row['intQuestionId'];?>'>Delete</button>
                         </td>
@@ -241,9 +243,11 @@ include "../controller/fetchEmpAcc.php";
     </div>
   </div>
   <!-- end of modal -->
-  <?php 
+
+  <?php
   include "components/core-script.php";
   ?>
+  <script src="../public/js/jquery-ui.js"></script>
   <script>
     // feather.replace();
     $('#maintenance').addClass('active');
@@ -256,6 +260,9 @@ include "../controller/fetchEmpAcc.php";
     addrow();
     saveeditedquestion();
     saveeditedsurvey();
+    $("#tblsurvey tbody").sortable({
+    connectWith: ".table tbody"
+  }).disableSelection();
     var tr_number_add = 0;
     var deleted_rows = 0;
     $('#surveytab').addClass("active");
@@ -295,7 +302,8 @@ include "../controller/fetchEmpAcc.php";
         var add_question = $("#add_question_text").val();
         rowid = parseInt($('#tblsurvey tr:last').attr('id')) + 1;
         console.log(rowid);
-        var add_total_row = "<tr><td><input type='checkbox' name='record'></td><td>" + "<input type ='text' id = 'question_add"+rowid+"' "+"value = '"+ add_question +"'>" + "</td><td>" + "<input type ='text' id = 'category_add"+rowid+"' "+"value = '" + add_chosenCategory +"'>" + "</td><td>" + "<input type ='text' id = 'type_add"+rowid+"' "+"value = '" + add_chosenType + "'>" + "</td></tr>";
+        // var add_total_row = "<tr><td><input type='checkbox' name='record'></td><td>" + "<input type ='text' id = 'question_add"+rowid+"' "+"value = '"+ add_question +"'>" + "</td><td>" + "<input type ='text' id = 'category_add"+rowid+"' "+"value = '" + add_chosenCategory +"'>" + "</td><td>" + "<input type ='text' id = 'type_add"+rowid+"' "+"value = '" + add_chosenType + "'>" + "</td></tr>";
+        var add_total_row = `<tr><td><input type='checkbox' name='record'></td><td><input type ='text' id = 'question_add${rowid}' value = "${add_question}"></td><td><input type ='text' id = 'category_add${rowid}'value = ' ${add_chosenCategory} '></td><td><input type ='text' id = 'type_add${rowid}' value = ' ${add_chosenType} '></td></tr>`;
 
         console.log(add_total_row);
         $("#add_table_questions tbody").append(add_total_row);
@@ -318,8 +326,15 @@ include "../controller/fetchEmpAcc.php";
           console.log(new_question+new_chosenType+new_chosenCategory);
           console.log(tr_number_add);
 
-          var add_total_row =  "<tr id ='"+i+"'><td><textarea class='form-control' value ='"+new_question+"' name='question"+i+"' id='question"+i+"' readonly>"+new_question+"</textarea></td>"+"<td><input type = 'text' value = '"+new_chosenType+"' name = 'type"+i+"' id='type"+i+"' readonly></td>"+"<td><input type = 'text' value = '"+new_chosenCategory+"' name = 'category"+i+"' id='category"+i+"' readonly></td>"+
-          "<td><button type='button' class='btn ml-2 btn-sm' data-toggle='modal' data-target='#editsurveyitem' data-id='"+i+"'>Edit</button> <button type='button' class='btn btn-danger' data-id='"+i+"'>Delete</button></td></tr>"
+          // var add_total_row =  "<tr id ='"+i+"'><td><textarea class='form-control' value ='"+new_question+"' name='question"+i+"' id='question"+i+"' readonly>"+new_question+"</textarea></td>"+"<td><input type = 'text' value = '"+new_chosenType+"' name = 'type"+i+"' id='type"+i+"' readonly></td>"+"<td><input type = 'text' value = '"+new_chosenCategory+"' name = 'category"+i+"' id='category"+i+"' readonly></td>"+
+          // "<td><button type='button' class='btn ml-2 btn-sm' data-toggle='modal' data-target='#editsurveyitem' data-id='"+i+"'>Edit</button> <button type='button' class='btn btn-danger' data-id='"+i+"'>Delete</button></td></tr>";
+          var add_total_row =
+          `<tr id ="${i}">
+          <td><textarea class="que form-control" value ="${new_question}" name="question${i}" id="question${i}"  readonly>${new_question}</textarea></td>
+          <td><input type = "text" value = "${new_chosenType}" name = "type${i}" id="type${i}" class="type"readonly></td>
+          <td><input type = "text" value = "${new_chosenCategory}" name = "category${i}" id="category${i}" class="cat"readonly></td>
+          <td><button type="button" class="btn ml-2 btn-sm" data-toggle="modal" data-target="#editsurveyitem" data-id="${i}">Edit</button> <button type="button" class="btn btn-danger" data-id="${i}">Delete</button></td>
+          </tr>`;
 
           console.log(add_total_row);
           //$("#tblsurvey :last-child").append(add_total_row);
@@ -368,6 +383,43 @@ include "../controller/fetchEmpAcc.php";
       });
     }
 
+    // function saveeditedsurvey(){
+    //   $("#save_changes").click(function(e){
+    //     e.preventDefault;
+    //     var formdata = $("form[name ='survey']").serialize();
+    //     var selected = $('#hiddensurveyversion').val();
+    //     var rowCount = $('#tblsurvey tr').length;
+    //     var confirm_input = confirm("Are you sure?");
+    //     rowCount = rowCount - 1;
+    //     var allrows = rowCount+deleted_rows;
+    //     console.log(formdata);
+    //     console.log(allrows);
+    //     if (confirm_input == true){
+    //       $.ajax({
+    //         url:"../controller/survey/editQuestion.php",
+    //         type:"POST",
+    //         data:{formdata:formdata,
+    //           selected:selected,
+    //           allrows:allrows},
+    //           dataType: "json",
+    //           success:function(data){
+    //             //console.log(data);
+    //             alert("Changes had been saved the survey is named :"+data.decQuestionVersion);
+    //             // console.log(data.intQuestionVersion);
+    //             window.location.href = "survey.php";
+    //           },
+    //           error: function(xhr, status, error) {
+    //             var err = JSON.parse(xhr.responseText);
+    //             alert(err.Message);
+    //           }
+    //         });
+    //       }
+    //       else{
+    //         alert("Confirmation Cancelled");
+    //         return false;
+    //       }
+    //     });
+    //   }
     function saveeditedsurvey(){
       $("#save_changes").click(function(e){
         e.preventDefault;
@@ -377,32 +429,82 @@ include "../controller/fetchEmpAcc.php";
         var confirm_input = confirm("Are you sure?");
         rowCount = rowCount - 1;
         var allrows = rowCount+deleted_rows;
-        console.log(formdata);
-        console.log(allrows);
-        if (confirm_input == true){
-          $.ajax({
-            url:"../controller/survey/editQuestion.php",
-            type:"POST",
-            data:{formdata:formdata,
-              selected:selected,
-              allrows:allrows},
-              dataType: "json",
-              success:function(data){
-                //console.log(data);
-                alert("Changes had been saved the survey is named :"+data.decQuestionVersion);
-                // console.log(data.intQuestionVersion);
-                window.location.href = "survey.php";
-              },
-              error: function(xhr, status, error) {
-                var err = JSON.parse(xhr.responseText);
-                alert(err.Message);
-              }
-            });
-          }
-          else{
-            alert("Confirmation Cancelled");
-            return false;
-          }
+
+        var obj = [];
+        $("#tblsurvey tbody").find("tr").each(function(){
+          var que = $(this).find('.que').text();
+          var type = $(this).find('.type').val().trim();
+          var cat = $(this).find('.cat').val().trim();
+
+          obj.push({
+            que:que,
+            type:type,
+            cat:cat,
+          });
+
+        });
+          console.log(obj);
+          if (confirm_input == true){
+           $.ajax({
+             url:"../controller/survey/editQuestion.php",
+             type:"POST",
+             data:{obj:obj,
+               selected:selected,
+               allrows:allrows},
+               dataType: "json",
+               success:function(data){
+                 //console.log(data);
+                 alert("Changes had been saved the survey is named :"+data.decQuestionVersion);
+                 // console.log(data.intQuestionVersion);
+                 window.location.href = "survey.php";
+               },
+               error: function(xhr, status, error) {
+                 // var err = JSON.parse(xhr.responseText);
+                 // alert(err.Message);
+                 console.log(xhr, status, error);
+               }
+             });
+           }
+           else{
+             alert("Confirmation Cancelled");
+             return false;
+           }
+
+
+
+
+        // var formdata = $("form[name ='survey']").serialize();
+        // var selected = $('#hiddensurveyversion').val();
+        // var rowCount = $('#tblsurvey tr').length;
+        // var confirm_input = confirm("Are you sure?");
+        // rowCount = rowCount - 1;
+        // var allrows = rowCount+deleted_rows;
+        // console.log(formdata);
+        // console.log(allrows);
+        // if (confirm_input == true){
+        //   $.ajax({
+        //     url:"../controller/survey/editQuestion.php",
+        //     type:"POST",
+        //     data:{formdata:formdata,
+        //       selected:selected,
+        //       allrows:allrows},
+        //       dataType: "json",
+        //       success:function(data){
+        //         //console.log(data);
+        //         alert("Changes had been saved the survey is named :"+data.decQuestionVersion);
+        //         // console.log(data.intQuestionVersion);
+        //         window.location.href = "survey.php";
+        //       },
+        //       error: function(xhr, status, error) {
+        //         var err = JSON.parse(xhr.responseText);
+        //         alert(err.Message);
+        //       }
+        //     });
+        //   }
+        //   else{
+        //     alert("Confirmation Cancelled");
+        //     return false;
+        //   }
         });
       }
 
@@ -444,9 +546,17 @@ include "../controller/fetchEmpAcc.php";
 
       });
 
-  /*    $("#tblsurvey tbody").sortable({
-      connectWith: ".table tbody"
-    }).disableSelection();*/
+
+
+      // $("#tblsurvey tbody").sortable();
+//       $(function () {
+//       $('#tblsurvey').sortable({
+//           tolerance: 'touch',
+//           drop: function () {
+//               alert('delete!');
+//           }
+//       });
+// });
 
 
     });

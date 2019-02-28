@@ -276,7 +276,7 @@ include "../controller/fetchEmpAcc.php";
             <div class="form-group">
               <label for="clientimage">Image</label>
               <input type="file" class="form-control" id='clientimage' name ='clientimage'>
-              <img id="imageprev2" style = "width:200px;height:200px" src="#" alt="your image" />
+              <img id="imageprev2" style = "width:200px;height:200px" src="" alt="your image" />
             </div>
             <div class="form-group">
               <label for="clientocc">Occupation</label>
@@ -392,6 +392,8 @@ include "../controller/fetchEmpAcc.php";
       var btype = $(e.relatedTarget).data('btype');
       var status = $(e.relatedTarget).data('status');
       var age = $(e.relatedTarget).data('age');
+      var imagedir = $(e.relatedTarget).attr('data-image');
+			console.log(imagedir);
     //  alert(btype);
       $("#clientId").val(rowid);
       $("#clientfname").val(fname);
@@ -403,6 +405,8 @@ include "../controller/fetchEmpAcc.php";
       $("#clientbloodtype").val(btype);
       $("#clientcivstat").val(status);
       $("#clientbday").val(age);
+			$('#imageprev2').attr('src', "../public/img/" + imagedir);
+			
       var bbtype = $('#clientbloodtype').val();
       console.log(bbtype);
     });

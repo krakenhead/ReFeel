@@ -5,7 +5,7 @@ $columns = array('strClientFirstName',
 		'strClientMiddleName', 'strClientLastName'
 	 	);
 
-	$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName,strClientOccupation,strClientContact,intBloodTypeId,stfClientCivilStatus,stfClientSex,stfClientType,TIMESTAMPDIFF(year,datClientBirthday,NOW()) AS age FROM tblclient";
+	$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName,strClientOccupation,strClientContact,intBloodTypeId,stfClientCivilStatus,stfClientSex,stfClientType,TIMESTAMPDIFF(year,datClientBirthday,NOW()) AS age, strUserImageDir FROM tblclient JOIN tbluser ON tblclient.intUserId = tbluser.intUserId";
 
 	// datatable column index  => database column name
 
