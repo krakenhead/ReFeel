@@ -78,7 +78,7 @@ else if (mysqli_num_rows($viewreleasedbloodbags) == 0){
      if (willApprove) {
        $.ajax({
          method: "POST",
-         url: "blood-related/return_bloodbags.php",
+         url: "../controller/blood/returnBloodBag.php",
          data: "serialno=" + serialno,
          success: function (data) {
            swal("Success!","Blood bag successfully returned","success");
