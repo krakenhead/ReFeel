@@ -188,13 +188,13 @@ include "../controller/fetchEmpAcc.php";
     $('#blood-inventory').addClass('active');
     $('.loader').hide();
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     fetchReleasedBloodBags();
     fetchRottenBloodBags();
