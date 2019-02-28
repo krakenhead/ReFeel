@@ -22,7 +22,7 @@ FROM tblclient c
 LEFT JOIN tblbloodbag bb ON c.intClientId = bb.intClientId JOIN tbldonation d ON d.intClientId = c.intClientId
 WHERE c.intClientId NOT IN (SELECT intClientId from tblbloodbag where stfIsBloodBagExpired = 'No')
 AND  stfDonationRemarks = 'Incomplete'
-AND stfDonationStatus = 'Unable'
+AND stfDonationStatus = 'Able'
 AND CONCAT(strClientFirstName, ' ', strClientMiddleName, ' ', strClientLastName) LIKE '$donorname'
 ");
 

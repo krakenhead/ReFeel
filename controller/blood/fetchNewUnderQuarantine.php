@@ -6,7 +6,7 @@ $date = $params["date_init"];*/
 
     $searchbloodbag = mysqli_query($connections,"SELECT *
                                                 FROM tblbloodbag
-                                                WHERE stfBloodDispatchment = 'Under Quarantine'
+                                                WHERE intBloodDispatchmentId = 3
                                                 AND intClientId = '$donor_id' ");
 
               if(mysqli_num_rows($searchbloodbag)>0){
