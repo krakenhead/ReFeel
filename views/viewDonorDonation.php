@@ -9,8 +9,9 @@ $clientId = $_GET["clientId"];
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ReFeel</title>
+  <title>ReFeel - Donation Info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="../public/img/blood.ico">
   <link rel="stylesheet" href="../public/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
@@ -26,7 +27,7 @@ $clientId = $_GET["clientId"];
       ?>
       <div class="page-title">
         <h3>Donation Info</h3>
-        <button type="button" onclick="location.href='viewDonorRecordInfo.php?id=<?php echo $clientId; ?>'" class="btn"><i class="fas fa-long-arrow-alt-left"></i> Back</button>
+        <button type="button" onclick="location.href='donor-records.php'" class="btn"><i class="fas fa-long-arrow-alt-left"></i> Back</button>
       </div>
       <section class="content">
         <div class="container-fluid">
