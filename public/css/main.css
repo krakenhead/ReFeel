@@ -93,7 +93,7 @@ body {
     height: 70px;
     background: #f00;
     transform: rotate(45deg);
-    animation: beat 1s linear infinite;
+    animation: beat 3s linear infinite;
 }
 
 .heart:before {
@@ -316,4 +316,68 @@ ul .nav a {
 
 .client-info-card:hover {
     box-shadow: 0 0 20px 0 #d1d1d1;
+}
+
+.button-container {
+    border-top: 3px solid #FF4848;
+    background-color: rgb(238, 238, 238);
+    margin: 0px 0px 20px 0;
+    padding: 30px 30px 30px 30px;
+    scale: 1;
+}
+
+.storage-buttons {
+    background: #fff;
+}
+
+.storage-buttons:hover {
+    scale: 1.5;
+    -webkit-box-shadow: 5px 0px 5px 0px rgba(189, 189, 189, 0.75), 0px 5px 5px 0px rgba(189,189,189,0.75), 0px -5px 5px 0px rgba(189,189,189,0.75), -5px 0px 5px 0px rgba(189,189,189,0.75);
+    -moz-box-shadow: 5px 0px 5px 0px rgba(189, 189, 189, 0.75), 0px 5px 5px 0px rgba(189,189,189,0.75), 0px -5px 5px 0px rgba(189,189,189,0.75), -5px 0px 5px 0px rgba(189,189,189,0.75);
+    box-shadow: 5px 0px 5px 0px rgba(189, 189, 189, 0.75), 0px 5px 5px 0px rgba(189,189,189,0.75), 0px -5px 5px 0px rgba(189,189,189,0.75), -5px 0px 5px 0px rgba(189,189,189,0.75);
+}
+
+.my-legend {
+    margin-bottom: 3rem;
+}
+
+.my-legend .legend-title {
+    text-align: right;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.my-legend .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: right;
+    list-style: none;
+}
+
+.my-legend .legend-scale ul li {
+    display: block;
+    float: right;
+    width: 50px;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 80%;
+    list-style: none;
+}
+
+.my-legend ul.legend-labels li span {
+    display: block;
+    float: right;
+    height: 15px;
+    width: 50px;
+}
+
+.my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+}
+
+.my-legend a {
+    color: #777;
 }
