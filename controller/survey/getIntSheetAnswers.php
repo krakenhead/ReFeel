@@ -1,5 +1,5 @@
 <?php
-	include ("connections.php");
+	include ("../connections.php");
 	parse_str(mysqli_real_escape_string($connections, $_POST["formdata"]), $params);
 	$varDbId = $params["hidden_id"];
 
