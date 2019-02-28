@@ -28,6 +28,9 @@ include "../controller/fetchEmpAcc.php";
       ?>
       <div class="page-title">
         <h3>Survey Questions</h3>
+				<a href="#jump">
+				<button type="button" onclick="location.href='survey.php'" class="btn"><i class="fas fa-long-arrow-alt-left"></i> Back</button>
+			</a>
       </div>
       <section class="content">
         <div class="container-fluid">

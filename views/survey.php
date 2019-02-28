@@ -14,6 +14,7 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/all.css">
 </head>
 <body>
+	
   <?php 
   include "components/loader.php";
   ?>
@@ -25,6 +26,16 @@ include "../controller/fetchEmpAcc.php";
       <?php 
       include "components/header.php";
       ?>
+			<a href ="addNewSurvey.php">
+				<button title="Add new survey" class="btn btn-lg btn-danger" style="position: fixed; bottom: 20px; right: 30px; z-index: 99; border-radius: 60px;">
+					<i class="fas fa-plus"></i>
+				</button>
+			</a>
+			<a href="#jump">
+				<button title="Back to Top" class="btn btn-lg btn-danger" style="position: fixed; bottom: 80px; right: 30px; z-index: 99; border-radius: 60px;">
+					<i class="fas fa-angle-double-up"></i>
+				</button>
+			</a>
       <div class="page-title">
         <h3>Survey</h3>
       </div>
@@ -33,7 +44,7 @@ include "../controller/fetchEmpAcc.php";
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container" style="padding-bottom: 4rem">
-                <h4 class="py-2">Available Surveys</h4>
+                <h4 id="jump" class="py-2">Available Surveys</h4>
                 <?php
                   $fetchsurveyvercurr = mysqli_query($connections,"SELECT DISTINCT(decQuestionVersion)
                   FROM tblquestion WHERE boolVersionInUse = '1'");
@@ -44,12 +55,12 @@ include "../controller/fetchEmpAcc.php";
                   FROM tblquestion WHERE boolVersionInUse = '0' ORDER BY 1 ASC");
                 ?>
                 <table class='table table-bordered mt-2 text-center' id='tblsurvey' style="tr:first-child {background-color: rgb(234,72,127)}">
-									<tr class="bg-danger text-white">
+									<tr class="text-white" style="background-color: #ff4848;">
 										<td>Survey Version</td>
 										<td>Action</td>
 									</tr>
 									<tbody>
-										<tr>
+										<tr class="text-danger">
 											<td class="position-sticky sticky-top bg-light align-middle" style="border-bottom: 3px solid gray;"><?php echo $varsurveyvercurr;?></td>
 											<td class="position-sticky sticky-top bg-light" style="border-bottom: 3px solid gray;"><a href ="fetchSurvey.php?selected=<?php echo $varsurveyvercurr; ?>"><button type='button' class='btn'  name = 'check_survey'>View</button></a></td>
 										</tr>
@@ -75,7 +86,7 @@ include "../controller/fetchEmpAcc.php";
 									?>
 									</tbody>
                 </table>
-                <a href ="addNewSurvey.php"><button type = 'button' class='btn btn-outline-danger float-right mt-1' id = "make_survey" style="margin-top: -10px">Make a new Survey</button></a>
+                <!--<a href ="addNewSurvey.php"><button type = 'button' class='btn btn-outline-danger float-right mt-1' id = "make_survey" style="margin-top: -10px">Make a new Survey</button></a>-->
               </div>
             </div>
           </div>
