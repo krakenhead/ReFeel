@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "../controller/fetchEmpAcc.php";
 $clientid = $_GET['id'];
 // echo $clientid;
@@ -19,7 +19,9 @@ $donationidqry = mysqli_query($connections,"SELECT intDonationId FROM tbldonatio
 if(mysqli_num_rows($donationidqry) > 0){
 while($donation = mysqli_fetch_assoc($donationidqry)){
  $donation_id = $donation["intDonationId"];
-}}
+}}else{
+  $donation_id = null;
+}
 
 $latestrequestqry = mysqli_query($connections,"SELECT intClientReqId,txtchanges FROM tblrequest WHERE intClientId = '$clientid' ORDER BY intClientReqId DESC LIMIT 1 OFFSET 0");
 
@@ -105,15 +107,15 @@ if(mysqli_num_rows($timesrejectedseroqry) > 0){
   <link rel="stylesheet" href="../public/css/datatables.min.css">
 </head>
 <body>
-  <?php 
+  <?php
   include "components/loader.php";
   ?>
   <div class="wrapper">
-    <?php 
+    <?php
     include "components/sidebar.php";
     ?>
     <main class="mainpanel">
-      <?php 
+      <?php
       include "components/header.php";
       ?>
       <div class="page-title">
@@ -175,7 +177,7 @@ if(mysqli_num_rows($timesrejectedseroqry) > 0){
       </section>
     </main>
   </div>
-  <?php 
+  <?php
   include "components/core-script.php";
   ?>
   <script src="../public/js/datatables.min.js"></script>
