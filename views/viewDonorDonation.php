@@ -27,7 +27,7 @@ $clientId = $_GET["clientId"];
       ?>
       <div class="page-title">
         <h3>Donation Info</h3>
-        <button type="button" onclick="location.href='viewDonorRecordInfo.php?id=<?php echo $clientId; ?>'" class="btn"><i class="fas fa-long-arrow-alt-left"></i> Back</button>
+        <button type="button" onclick="location.href='donor-records.php'" class="btn"><i class="fas fa-long-arrow-alt-left"></i> Back</button>
       </div>
       <section class="content">
         <div class="container-fluid">
