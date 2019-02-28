@@ -67,7 +67,7 @@ include "../controller/fetchEmpAcc.php";
 
 									?>
 										<tr>
-											<td><?php echo $version; ?></td>
+											<td class="align-middle"><?php echo $version; ?></td>
 											<td><a href ="fetchSurvey.php?selected=<?php echo $version; ?>"><button type='button' class='btn'  name = 'check_survey'>View</button></a></td>
 										</tr>
 									<?php 
