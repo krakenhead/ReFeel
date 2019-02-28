@@ -6,8 +6,9 @@ include "../controller/fetchEmpAcc.php";
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ReFeel</title>
+  <title>ReFeel - Preservative</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="../public/img/blood.ico">
   <link rel="stylesheet" href="../public/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
