@@ -179,11 +179,12 @@ include "../controller/fetchEmpAcc.php";
                 </div>
               </div>
             </div>
-            <div class="col-md-12 col-lg-12 p-0 mt-2" id="addInitial" style="display: none">
+            <div class="col-md-12 col-lg-12 p-0 mt-2" id="addInitial" style="display: none"> 
               <div class="content-container">
                 <div id="addInitial" class="mt-2" style="padding-bottom: 3rem; ">
                   <h4><small><span class="badge badge-pill badge-dark" style="margin-right: 1rem;">3</span></small>Initial Screening</h4>
                   <form name="adddonorinitexam">
+                    <input type="hidden" id="clientId_init" name ="clientId_init">
                     <div class="form-group col-md-5">
                       <label for="date_init">Date Screened</label>
                       <input type="date" name="date_init" value=<?php echo $datenow ?> required>
