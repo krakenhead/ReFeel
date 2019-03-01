@@ -64,6 +64,16 @@ include "../controller/fetchEmpAcc.php";
     $('#reports').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     var formdata = $("form[name='daterange']").serialize();
     console.log(formdata);
     $.ajax({

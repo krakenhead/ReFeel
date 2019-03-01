@@ -62,13 +62,23 @@ include "../controller/fetchEmpAcc.php";
     $('#donor-list').addClass('active');
     $('.loader').hide();
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
+
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     // show donor list
     let uncheckedSurveyRes = ``;

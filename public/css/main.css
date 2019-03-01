@@ -210,7 +210,7 @@ body {
 }
 
 .navigation-wrapper::-webkit-scrollbar-thumb {
-    background: #e0e0e0;
+    background: #a8a6a6;
 }
 
 .navigation-wrapper::-webkit-scrollbar-thumb:hover {
@@ -218,6 +218,27 @@ body {
 }
 
 .navigation-wrapper::-webkit-scrollbar-thumb:horizontal {
+    width: 10px;
+}
+
+/*******/
+.scrollable-menu::-webkit-scrollbar {
+    max-width: 7px;
+}
+
+.scrollable-menu::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.scrollable-menu::-webkit-scrollbar-thumb {
+    background: #a8a6a6;
+}
+
+.scrollable-menu::-webkit-scrollbar-thumb:hover {
+    background: #bdbdbd;
+}
+
+.scrollable-menu::-webkit-scrollbar-thumb:horizontal {
     width: 10px;
 }
 

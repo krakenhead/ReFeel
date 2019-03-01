@@ -214,6 +214,16 @@ include "../controller/fetchEmpAcc.php";
     $('#blood-type').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     //show active blood type
     let activeBloodType = 'activeBloodType';
     $('#tblActiveBloodType').DataTable({
@@ -244,13 +254,13 @@ include "../controller/fetchEmpAcc.php";
       }
     });
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     $(document).on("submit", "form[name='form_addnewbloodtype']", function(e){
       e.preventDefault();

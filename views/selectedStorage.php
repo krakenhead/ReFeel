@@ -331,13 +331,23 @@ if($_GET["storage_id"]){
     $('#blood-inventory').addClass('active');
     $('.loader').hide();
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
+
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     let storage_id = <?php echo $storage_id ?>;
     let storage_type = "<?php echo $storage_type ?>";

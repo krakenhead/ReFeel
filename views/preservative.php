@@ -257,6 +257,16 @@ include "../controller/fetchEmpAcc.php";
     $('#preservative').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     //show active preservatives
     let activePreservatives = 'activePreservatives';
     $('#tblActivePreservatives').DataTable({
@@ -287,13 +297,13 @@ include "../controller/fetchEmpAcc.php";
       }
     });
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     $("#newpreservativeFresh").on('change',function(){
       console.log("hi");

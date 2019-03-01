@@ -102,6 +102,16 @@ include "../controller/fetchEmpAcc.php";
     $('#maintenance').addClass('active');
     $('#survey').addClass('active');
     $('.loader').hide();
+
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
   </script>
 </body>
 </html>

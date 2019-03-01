@@ -115,6 +115,16 @@ include "../controller/fetchEmpAcc.php";
     $('#survey').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     var tr_number = 1;
 
     $('#submit_item').click(function() {

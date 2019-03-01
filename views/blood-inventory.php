@@ -189,6 +189,16 @@ include "../controller/fetchEmpAcc.php";
     $('#blood-inventory').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     // $(document).ajaxStart(function() {
     //   $('.loader').show();
     // });

@@ -115,6 +115,17 @@ include "../controller/fetchEmpAcc.php";
   $('#home').addClass('active');
   $('#donor-list').addClass('active');
   $('.loader').hide();
+
+  var checkExpiringBloodBags = function() {
+    $.ajax({
+      type: "POST",
+      url: "../controller/blood/checkExpiringBloodBags.php",
+      complete: function(){
+        setTimeout(checkExpiringBloodBags, 60000);
+      }
+    });
+  }()
+
   $(function(){
     $("form[name ='submit_update']").on('submit',function(e){
       e.preventDefault();

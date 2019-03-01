@@ -188,6 +188,16 @@ if(mysqli_num_rows($timesrejectedseroqry) > 0){
     $('#donor').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     let clientid = <?php echo $clientid ?>;
     let bannedDonorRecord = 'bannedDonorRecord';
     // console.log(clientid);

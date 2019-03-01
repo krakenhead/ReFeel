@@ -259,6 +259,16 @@ include "../controller/fetchEmpAcc.php";
     $('#blood-component').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     //show active blood component
     let activeBloodComponent = 'activeBloodComponent';
     $('#tblActiveBloodComponent').DataTable({
@@ -289,13 +299,13 @@ include "../controller/fetchEmpAcc.php";
       }
     });
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     $(document).on("submit","form[name='form_addnewbloodcomponent']", function(e){
     e.preventDefault();

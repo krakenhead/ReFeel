@@ -222,6 +222,16 @@ include "../controller/fetchEmpAcc.php";
     $('#storage').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     //show active storage
     let activeStorage = 'activeStorage';
     $('#tblActiveStorage').DataTable({
@@ -252,13 +262,13 @@ include "../controller/fetchEmpAcc.php";
       }
     });
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     $(document).on("submit", "form[name='form_addnewbloodstorage']", function(e){
       e.preventDefault();

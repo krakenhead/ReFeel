@@ -258,6 +258,17 @@
   <script src="../public/js/notification.js"></script>
   <script>
     $('.loader').hide();
+
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+    
     $(document).ready(function(){
       $("#idIntSheet").submit(function(e){
         e.preventDefault();//para di siya lumipat ng link

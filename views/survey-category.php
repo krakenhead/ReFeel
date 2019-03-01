@@ -179,6 +179,16 @@ include "../controller/fetchEmpAcc.php";
     $('#survey-category').addClass('active');
     $('.loader').hide();
 
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
+
     //show active survey category
     let activeSurveyCategory = 'activeSurveyCategory';
     $('#tblActiveSurveyCategory').DataTable({
@@ -209,13 +219,13 @@ include "../controller/fetchEmpAcc.php";
       }
     });
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     $(document).on("submit", "form[name='form_addnewsurveycategory']", function(e){
       e.preventDefault();

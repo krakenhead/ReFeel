@@ -430,6 +430,15 @@ $clientId = $_GET["clientId"];
   <script src="../public/js/notification.js"></script>
   <script>
     $('.loader').hide();
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
   </script>
 </body>
 </html>

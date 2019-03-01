@@ -348,15 +348,25 @@ include "../controller/fetchEmpAcc.php";
   <script>
     $('#maintenance').addClass('active');
     $('#donor').addClass('active');
-    // $('.loader').hide();
+    $('.loader').hide();
 
-    $(document).ajaxStart(function() {
-      $('.loader').show();
-    });
+    var checkExpiringBloodBags = function() {
+      $.ajax({
+        type: "POST",
+        url: "../controller/blood/checkExpiringBloodBags.php",
+        complete: function(){
+          setTimeout(checkExpiringBloodBags, 60000);
+        }
+      });
+    }()
 
-    $(document).ajaxComplete(function() {
-      $('.loader').hide();
-    });
+    // $(document).ajaxStart(function() {
+    //   $('.loader').show();
+    // });
+
+    // $(document).ajaxComplete(function() {
+    //   $('.loader').hide();
+    // });
 
     //fetch donors
     let fetchDonor = 'fetchDonor';
