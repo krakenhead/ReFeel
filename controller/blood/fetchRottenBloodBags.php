@@ -86,10 +86,21 @@ $(document).on("click",".btn_discard",function(){
     if (willApprove) {
       $.ajax({
         method: "POST",
-        url: "blood-related/discard_bloodbag.php",
+        url: "../controller/blood/discardBloodBag.php",
         data: "serialno=" + serialno,
         success: function (data) {
-          swal("Success!","Blood bag is now discarded.","success");
+          // swal("Success!","Blood bag is now discarded.","success");
+          swal({
+            title: '',
+            text: 'Blood bag discarded successfully!',
+            icon: 'success',
+            buttons: {text: 'Okay'}
+          })
+          .then((willApprove) => {
+            if (willApprove) {
+              location.reload();
+            }
+          });
         }
       });
     }

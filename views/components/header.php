@@ -8,12 +8,7 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="notifications">
         <div class="notif-area">
-          <h6 class="dropdown-header" style="font-weight: 600;">Notifications</h6>
-          <div class="dropdown-divider"></div>
-          <div class="notif text-center">
-            <i class="far fa-envelope fa-5x"></i>
-            <h5>No notifications</h5>
-          </div>
+          
         </div>
       </div>
     </div>

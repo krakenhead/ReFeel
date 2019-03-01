@@ -45,12 +45,9 @@ include "../controller/fetchEmpAcc.php";
   ?>
   <script src="../public/js/notification.js"></script>
   <script>
-    // feather.replace();
     $('#home').addClass('active');
     $('#graphs').addClass('active');
-    $(document).ready(function (){
-      $('.loader').hide();
-    });
+    $('.loader').hide();
   </script>
 </body>
 </html>

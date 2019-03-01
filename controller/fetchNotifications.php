@@ -37,7 +37,7 @@ $getnotificationuncheckedsurvey = mysqli_query($connections, " SELECT DISTINCT(d
                                                 AND dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 4 DAY) AND NOW() ");
 $output = '
 <h6 class="dropdown-header" style="font-weight: 600;">Notifications</h6>
-<ul style="list-style: none; ">
+
 ';
 while($rowalmostrotten = mysqli_fetch_assoc($getnotificationdetailsalmostrotten)){
 
@@ -111,8 +111,12 @@ while($rowuncheckedsurvey = mysqli_fetch_assoc($getnotificationuncheckedsurvey))
   <div class='dropdown-divider'></div>
   ";
 }
-$output .= "</ul>";
-echo $output;
+// $output .= "</ul>";
+if (mysqli_num_rows($getnotificationdetailsrotten) > 0 && mysqli_num_rows($getnotificationdetailsalmostrotten) > 0 && mysqli_num_rows($getnotificationincomplete) > 0 && mysqli_num_rows($getnotificationeditrequest) > 0 && mysqli_num_rows($getnotificationuncheckedsurvey)) {
+  echo "1";
+} else {
+  echo $output;
+}
 
 
 ?>
