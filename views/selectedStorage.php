@@ -331,7 +331,9 @@ if($_GET["storage_id"]){
     $('#blood-inventory').addClass('active');
     $('.loader').hide();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -339,7 +341,7 @@ if($_GET["storage_id"]){
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
+    }
 
     // $(document).ajaxStart(function() {
     //   $('.loader').show();

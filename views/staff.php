@@ -218,7 +218,9 @@ include "../controller/fetchEmpAcc.php";
     $('#staff').addClass('active');
     $('.loader').hide();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -226,7 +228,7 @@ include "../controller/fetchEmpAcc.php";
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
+    }
 
     //show staff
     $('#tblStaff').DataTable({

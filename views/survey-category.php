@@ -179,7 +179,9 @@ include "../controller/fetchEmpAcc.php";
     $('#survey-category').addClass('active');
     $('.loader').hide();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -187,7 +189,7 @@ include "../controller/fetchEmpAcc.php";
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
+    }
 
     //show active survey category
     let activeSurveyCategory = 'activeSurveyCategory';

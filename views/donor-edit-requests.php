@@ -147,7 +147,9 @@ include "../controller/fetchEmpAcc.php";
     $('#donor-edit-requests').addClass('active');
     $('.loader').hide();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -155,7 +157,7 @@ include "../controller/fetchEmpAcc.php";
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
+    }
 
     // $(document).ajaxStart(function() {
     //   $('.loader').show();

@@ -157,7 +157,9 @@ $countdonortypeo = $row_countdonortypeo["Donor Count"];
 
     // check_expiringbloodbags();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -165,7 +167,7 @@ $countdonortypeo = $row_countdonortypeo["Donor Count"];
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
+    }
 
     // function check_expiringbloodbags(){
     //   $.ajax({

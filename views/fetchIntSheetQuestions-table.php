@@ -259,7 +259,9 @@
   <script>
     $('.loader').hide();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -267,8 +269,8 @@
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
-    
+    }
+
     $(document).ready(function(){
       $("#idIntSheet").submit(function(e){
         e.preventDefault();//para di siya lumipat ng link

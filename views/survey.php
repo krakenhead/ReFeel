@@ -103,7 +103,9 @@ include "../controller/fetchEmpAcc.php";
     $('#survey').addClass('active');
     $('.loader').hide();
 
-    var checkExpiringBloodBags = function() {
+    checkExpiringBloodBags();
+
+    function checkExpiringBloodBags() {
       $.ajax({
         type: "POST",
         url: "../controller/blood/checkExpiringBloodBags.php",
@@ -111,7 +113,7 @@ include "../controller/fetchEmpAcc.php";
           setTimeout(checkExpiringBloodBags, 60000);
         }
       });
-    }()
+    }
   </script>
 </body>
 </html>
