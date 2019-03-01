@@ -63,6 +63,8 @@ include "../controller/fetchEmpAcc.php";
     $('.loader').hide();
 
     checkExpiringBloodBags();
+    fetchExpectedDonor();
+    fetchUncheckedSurveys();
 
     function checkExpiringBloodBags() {
       $.ajax({
@@ -83,38 +85,43 @@ include "../controller/fetchEmpAcc.php";
     // });
 
     // show donor list
-    let uncheckedSurveyRes = ``;
-    $.ajax({
-      url: "../controller/survey/fetchUncheckedSurvey.php",
-      dataType: "json",
-      success: data => {
-        console.log(data);
-        if (data.length == 0) {
-          uncheckedSurveyRes = `
-          <i class="fas fa-scroll fa-7x"></i>
-          <h4>No unchecked surveys found</h4>
-          `;
-          $('#donorSurveyList').html(uncheckedSurveyRes);
-        } else if (data.length !== 0) {
-          uncheckedSurveyRes = `
-          <table class='table table-bordered text-center' id='tbldonorsurvey'>
-            <thead>
-              <tr >
-              <th>Exam Code</th>
-              <th>Donor Code</th>
-              <th>Donor/Applicant Name</th>
-              <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${ iterateOverUncheckedSurvey(data) }
-            </tbody>
-          </table>
-          `;
-          $('#donorSurveyList').html(uncheckedSurveyRes);
+    function fetchUncheckedSurveys() {
+      let uncheckedSurveyRes = ``;
+      $.ajax({
+        url: "../controller/survey/fetchUncheckedSurvey.php",
+        dataType: "json",
+        success: data => {
+          console.log(data);
+          if (data.length == 0) {
+            uncheckedSurveyRes = `
+            <i class="fas fa-scroll fa-7x"></i>
+            <h4>No unchecked surveys found</h4>
+            `;
+            $('#donorSurveyList').html(uncheckedSurveyRes);
+          } else if (data.length !== 0) {
+            uncheckedSurveyRes = `
+            <table class='table table-bordered text-center' id='tbldonorsurvey'>
+              <thead>
+                <tr >
+                <th>Exam Code</th>
+                <th>Donor Code</th>
+                <th>Donor/Applicant Name</th>
+                <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${ iterateOverUncheckedSurvey(data) }
+              </tbody>
+            </table>
+            `;
+            $('#donorSurveyList').html(uncheckedSurveyRes);
+          }
+        },
+        complete: function() {
+          setTimeout(fetchUncheckedSurveys, 5000);
         }
-      }
-    });
+      });
+    }
 
     function iterateOverUncheckedSurvey(arr) {
       return arr.map( obj => {
@@ -129,39 +136,45 @@ include "../controller/fetchEmpAcc.php";
       });
     }
 
-    //show expected donor
-    let expectedDonor = ``;
-    $.ajax({
-      url: '../controller/donor/fetchExpectedDonor.php',
-      dataType: 'json',
-      success: data => {
-        console.log(data);
-        if (data.length == 0) {
-          expectedDonor = `
-          <i class="fas fa-user-slash fa-7x"></i>
-          <h4>No expected donor found</h4>
-          `;
-          $('#expectedDonor').html(expectedDonor);
-        } else if (data.length !== 0) {
-          expectedDonor = `
-          <table class='table table-bordered text-center' id='tbldonorsurvey'>
-            <thead>
-              <tr>
-              <th>Exam Code</th>
-              <th>Donor Code</th>
-              <th>Donor/Applicant Name</th>
-              <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${ iterateOverExpectedDonor(data) }
-            </tbody>
-          </table>
-          `;
-          $('#expectedDonor').html(expectedDonor);
+    function fetchExpectedDonor() {
+      let expectedDonor = ``;
+      $.ajax({
+        url: '../controller/donor/fetchExpectedDonor.php',
+        dataType: 'json',
+        success: data => {
+          console.log(data);
+          if (data.length == 0) {
+            expectedDonor = `
+            <i class="fas fa-user-slash fa-7x"></i>
+            <h4>No expected donor found</h4>
+            `;
+            $('#expectedDonor').html(expectedDonor);
+          } else if (data.length !== 0) {
+            expectedDonor = `
+            <table class='table table-bordered text-center' id='tbldonorsurvey'>
+              <thead>
+                <tr>
+                <th>Exam Code</th>
+                <th>Donor Code</th>
+                <th>Donor/Applicant Name</th>
+                <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${ iterateOverExpectedDonor(data) }
+              </tbody>
+            </table>
+            `;
+            $('#expectedDonor').html(expectedDonor);
+          }
+        },
+        complete: function() {
+          setTimeout(fetchExpectedDonor, 5000);
         }
-      }
-    });
+      });
+
+    }
+    //show expected donor
 
     function iterateOverExpectedDonor(arr) {
       console.log(arr);
