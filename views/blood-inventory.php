@@ -70,7 +70,12 @@ include "../controller/fetchEmpAcc.php";
                 </div>
               </div>
               <div class="content-container mt-2">
-                <h4>Rotten Blood Bag</h4>
+                <div class="row mb-4">
+                  <h4 class="col-md-6">Rotten Blood Bag</h4>
+                  <div class="col-md-6">
+                    <button type="button" class="float-right btn btn-outline-danger" onclick="location.href='discardedBloodBags.php'">Discarded Blood Bags</button>
+                  </div>
+                </div>
                 <div class="container-fluid" id="rottenBloodBags">
 
                 </div>
