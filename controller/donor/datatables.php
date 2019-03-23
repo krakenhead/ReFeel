@@ -412,7 +412,7 @@ $sub_array[3] =
 $sub_array[3] =
 '
 <div class="text-center">
-<a href = "fetch_donorsurveyanswers.php?rowid='.$latestdonationID.'" ><button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">Check Survey</button></a>
+<a href = "fetchDonorSurveyAnswers.php?rowid='.$latestdonationID.'" ><button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">Check Survey</button></a>
 <button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
 </div>
 ';

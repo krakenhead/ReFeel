@@ -41,9 +41,9 @@
             <li class="nav-item">
               <a href="donor.php" id="donor" class="nav-link"><i class="fas fa-user-cog mr-1"></i>Donor</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="blood-type.php" id="blood-type" class="nav-link"><i class="fas fa-heartbeat mr-1"></i>Blood Type</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="blood-component.php" id="blood-component" class="nav-link"><img src="../public/glyphicon/si-glyph-blood-bag.svg" style="width:20px;">Blood Component</a>
             </li>

@@ -59,7 +59,7 @@ if ($requestData['type'] == 'activeStorage') {
       <button type="button" name="edit" class="btn btn-success btn-sm" id="'.$row["intStorageId"].'" data-toggle="modal" data-target="#editBloodStorageModal" data-id="'.$row["intStorageId"].'"><i class="fa fa-edit"></i> Edit</button>
   
       <button type="button" name="view" class="btn btn-sm" id="'.$row["intStorageId"].'" data-toggle="modal"
-        data-target="#viewBloodStorageModal" data-id="'.$row["intStorageId"].'"><i class="fas fa-toggle-off"></i> Disable</button>
+        data-target="#viewBloodStorageModal" data-id="'.$row["intStorageId"].'"><i class="fas fa-toggle-off"></i> View</button>
       </div>
       ';
   
