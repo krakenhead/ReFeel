@@ -13,6 +13,8 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
   <link rel="stylesheet" href="../public/css/datatables.min.css">
+  <link rel="stylesheet" href="../public/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="../public/css/jquery-ui.css">
 </head>
 <body>
   <?php 
@@ -74,13 +76,14 @@ include "../controller/fetchEmpAcc.php";
                     <div class="row">
                       <!-- <div class=""> -->
                       <div class="form-group col-md-5">
-                        <label for="date_phys">Date Screened</label>
-                        <input type="date" name="date_phys" value=<?php echo $datenow ?> required>
+                        <strong for="date_phys">Date Screened</strong>
+                        <!-- <input type="date" name="date_phys" value=<?php echo $datenow ?> required> -->
+                        <input type="text" class="form-control dPicker" name="date_phys" value=<?php echo $datenow ?> readonly>
                       </div>
                       <!-- </div> -->
                       <div class="col-md-5">
                         <!-- <div class="form-group"> -->
-                        <label for="donorweight">Weight</label>
+                        <strong for="donorweight">Weight</strong>
                         <div class="input-group">
                           <input type="number" class="form-control" id='donorweight' name="donorweight" required>
                           <div class="input-group-append">
@@ -91,7 +94,7 @@ include "../controller/fetchEmpAcc.php";
                         <!-- </div> -->
                       </div>
                       <div class="col-md-5">
-                        <label for="donorbloodpressure_systole">Blood Pressure</label>
+                        <strong for="donorbloodpressure_systole">Blood Pressure</strong>
                         <!-- <div class="form-group"> -->
                           <!-- <div class="row"> -->
                         <div class="input-group">
@@ -106,7 +109,7 @@ include "../controller/fetchEmpAcc.php";
                       </div>
                       <div class="col-md-5">
                         <!-- <div class="form-group"> -->
-                        <label for="donorpulserate">Pulse Rate</label>
+                        <strong for="donorpulserate">Pulse Rate</strong>
                         <div class="input-group">
                           <input type="text" class="form-control" id='donorpulserate' name="donorpulserate" required>
                           <div class="input-group-append">
@@ -117,7 +120,7 @@ include "../controller/fetchEmpAcc.php";
                       </div>
                       <div class="col-md-5">
                         <!-- <div class="form-group"> -->
-                        <label for="donortemperature">Temperature</label>
+                        <strong for="donortemperature">Temperature</strong>
                         <div class="input-group">
                           <input type="number" class="form-control" id='donortemperature' name='donortemperature' required>
                           <div class="input-group-append">
@@ -128,25 +131,25 @@ include "../controller/fetchEmpAcc.php";
                       </div>
                       <!-- <div class=""> -->
                       <div class="form-group col-md-9">
-                        <label for="donorgenapp">General Appearance</label>
+                        <strong for="donorgenapp">General Appearance</strong>
                         <input type="text" class="form-control" id='donorgenapp' name="donorgenapp" required>
                       </div>
                       <!-- </div> -->
                       <!-- <div class=""> -->
                       <div class="form-group col-md-9">
-                        <label for="donorheent">Head, Ears, Eyes, Nose & Throat (HEENT)</label>
+                        <strong for="donorheent">Head, Ears, Eyes, Nose & Throat (HEENT)</strong>
                         <input type="text" class="form-control" id='donorheent' name="donorheent" required>
                       </div>
                       <!-- </div> -->
                       <!-- <div class=""> -->
                       <div class="form-group col-md-9">
-                        <label for="donorheartlungs">Heart and Lungs</label>
+                        <strong for="donorheartlungs">Heart and Lungs</strong>
                         <input type="text" class="form-control" id='donorheartlungs' name="donorheartlungs" required>
                       </div>
                       <!-- </div> -->
                       <!-- <div class=""> -->
                       <div class="form-group col-md-9">
-                        <label for="examremarks">Exam Remarks</label>
+                        <strong for="examremarks">Exam Remarks</strong>
                         <select class="form-control" id='examremarks' name="examremarks" required>
                           <option selected disabled>Select Exam Remarks</option>
                           <option value="Accepted">Accepted</option>
@@ -157,16 +160,16 @@ include "../controller/fetchEmpAcc.php";
                       <!-- </div> -->
                       <div class="col-md-9" id = "amount" style="display : none;">
                         <div class="form-group">
-                          <label for="bloodamount">Amount of Blood</label>
+                          <strong for="bloodamount">Amount of Blood</strong>
                           <input type="radio" name="bloodamount" value = "250cc" id = "bloodamount" >250cc
                           <input type="radio" name="bloodamount" value = "450cc" id = "bloodamount">450cc
                         </div>
                       </div>
                       <div class="col-md-9" id = "reason"  style="display : none;">
                         <div class="form-group">
-                          <label for="reasonfordeferal">Reason for Defferal</label>
+                          <strong for="reasonfordeferal">Reason for Defferal</strong>
                           <input type="text" name="reasonfordeferal" id = "reasonfordeferal" class="form-control">
-                          <label for="instruction">Instructions</label>
+                          <strong for="instruction">Instructions</strong>
                           <input type="text" name="instruction" id = "instruction" class="form-control">
                         </div>
                       </div>
@@ -186,8 +189,9 @@ include "../controller/fetchEmpAcc.php";
                   <form name="adddonorinitexam">
                     <input type="hidden" id="clientId_init" name ="clientId_init">
                     <div class="form-group col-md-5">
-                      <label for="date_init">Date Screened</label>
-                      <input type="date" name="date_init" value=<?php echo $datenow ?> required>
+                      <strong for="date_init">Date Screened</strong>
+                      <!-- <input type="date" name="date_init" value=<?php echo $datenow ?> required> -->
+                      <input type="text" class="form-control dPicker" name="date_init" value=<?php echo $datenow ?> readonly>
                     </div>
                     <table class = "table table-striped">
                       <thead>
@@ -297,11 +301,12 @@ include "../controller/fetchEmpAcc.php";
                   <form name="adddonorseroexam">
                     <input type="hidden" id="clientId_sero" name ="clientId_sero">
                     <div class="form-group col-md-5">
-                      <label for="date_sero">Date Screened</label>
-                      <input type="date" name="date_sero" value=<?php echo $datenow ?> required>
+                      <strong for="date_sero">Date Screened</strong>
+                      <!-- <input type="date" name="date_sero" value=<?php echo $datenow ?> required> -->
+                      <input type="text" class="form-control dPicker" name="date_sero" value=<?php echo $datenow ?> readonly>
                     </div>
                     <div class="form-group col-md-5">
-                      <label for="date_sero">Blood Bag</label>
+                      <strong for="date_sero">Blood Bag</strong>
                       <input type="text" id ="bloodbag_underquarantine" class = "form-control" name = "bloodbag_underquarantine" readonly required>
                     </div>
                     <table class = "table table-striped">
@@ -397,7 +402,7 @@ include "../controller/fetchEmpAcc.php";
                         ?>
                       </tbody>
                     </table>
-                    <label for="D_phlebotomist">Phlebotomist</label>
+                    <strong for="D_phlebotomist">Phlebotomist</strong>
                     <select class="form-control" name="D_phlebotomist" id="D_phlebotomist" required>
                       <?php
                       include("connections.php");
@@ -431,45 +436,45 @@ include "../controller/fetchEmpAcc.php";
   </div>
   <!-- modal declaration -->
   <div class="modal fade" id="editdonorinfo" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-lg modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editdonorinfo">Edit Donor Info</h5>
           <button type="button" class="close" data-dismiss="modal" aria-close="Close"> <span aria-hidden="true">&times;</span> </button>
         </div>
         <div class="modal-body">
-          <div class="container-fluid">
-            <form name="editdonor">
-              <div class="form-group">
+          <form name="editdonor">
+            <div class="row">
+              <div class="form-group col-md-4">
                 <input type = "hidden" id ='clientId' name ='clientId'>
-                <label for="clientfname">First Name</label>
+                <strong for="clientfname">First Name</strong>
                 <input type="text" class="form-control" id='clientfname' name ='clientfname' >
               </div>
-              <div class="form-group">
-                <label for="clientminit">Middle Name</label>
+              <div class="form-group col-md-4">
+                <strong for="clientminit">Middle Name</strong>
                 <input type="text" class="form-control" id='clientminit' name ='clientminit'>
               </div>
-              <div class="form-group">
-                <label for="clientlname">Last Name</label>
+              <div class="form-group col-md-4">
+                <strong for="clientlname">Last Name</strong>
                 <input type="text" class="form-control" id='clientlname' name ='clientlname'>
               </div>
-              <div class="form-group">
-                <label for="clientocc">Occupation</label>
+              <div class="form-group col-md-6">
+                <strong for="clientocc">Occupation</strong>
                 <input type="text" class="form-control" id='clientocc' name ='clientocc'>
               </div>
-              <div class="form-group">
-                <label for="clientcontact">Contact</label>
+              <div class="form-group col-md-6">
+                <strong for="clientcontact">Contact</strong>
                 <input type="number" class="form-control" id='clientcontact' name="clientcontact">
               </div>
-              <div class="form-group">
-                <label for="clientsex">Sex</label>
+              <div class="form-group col-md-3">
+                <strong for="clientsex">Sex</strong>
                 <select class ='form-control' name='clientsex' id = 'clientsex' disabled>
                   <option value='Male'>Male</option>
                   <option value='Male'>Female</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="clientbloodtype">Blood Type</label>
+              <div class="form-group col-md-3">
+                <strong for="clientbloodtype">Blood Type</strong>
                 <select class="form-control" name="clientbloodtype" id="clientbloodtype">
 
                   <?php
@@ -492,8 +497,8 @@ include "../controller/fetchEmpAcc.php";
 
                 </select>
               </div>
-              <div class="form-group">
-                <label for="clientcivstat">Civil Status</label>
+              <div class="form-group col-md-3">
+                <strong for="clientcivstat">Civil Status</strong>
                 <select name="clientcivstat" class="form-control" id="clientcivstat">
                   <option value="Married">Married</option>
                   <option value="Widowed">Widowed</option>
@@ -502,8 +507,8 @@ include "../controller/fetchEmpAcc.php";
                   <option value="Single">Single</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="clientbday">Birthday</label>
+              <div class="form-group col-md-3">
+                <strong for="clientbday">Birthday</strong>
                 <input type="text" class="form-control" id='clientbday' disabled>
               </div>
             </div>
@@ -568,11 +573,15 @@ include "../controller/fetchEmpAcc.php";
   include "components/core-script.php";
   ?>
   <script src="../public/js/datatables.min.js"></script>
+  <script src="../public/js/dataTables.responsive.min.js"></script>
   <script src="../public/js/notification.js"></script>
+  <script src="../public/js/swal2.all.min.js"></script>
+  <script src="../public/js/jquery-ui.js"></script>
   <script>
     $('#transaction').addClass('active');
     $('#donor-records').addClass('active');
     $('.loader').hide();
+    $('.dPicker').datepicker({ dateFormat: 'yy-mm-dd' });
 
     checkExpiringBloodBags();
 
@@ -603,7 +612,8 @@ include "../controller/fetchEmpAcc.php";
         url: '../controller/donor/datatables.php',
         type: 'POST',
         data: { type: donorRecords }
-      }
+      },
+      responsive: true
     });
     $('#tblDonorRecords').on("click", ".btnAddphysical", function(){
       var clientid = $(this).attr("data-id");
@@ -811,14 +821,19 @@ include "../controller/fetchEmpAcc.php";
     var clientocc = $("#clientocc").val();
     var clientcontact = $("#clientcontact").val();
     var clientcivstat = $("#clientcivstat").val();
-    var confirm_input = confirm("Are you sure?");
+    // var confirm_input = confirm("Are you sure?");
     var formdata = $(this).serialize();
-    console.log(formdata);
+    // console.log(formdata);
     if(clientcontact.length == 11)
     {
-      if(confirm_input == true)
-      {
-        $.ajax({
+      Swal.fire({
+        title: 'Are you sure?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if(result.value) {
+          $.ajax({
           url: "../controller/donor/editDonorRecord2.php",
           method: "POST",
           data: {formdata : formdata},
@@ -826,194 +841,367 @@ include "../controller/fetchEmpAcc.php";
             console.log(data);
             if (data == '1')
             {
-              alert("Edit Successful");
+              Swal.fire('Edit successful!');
               $('#editdonorinfo').modal('hide');
               $("#editdonorinfo .modal-body input").val("");
             }
             else if(data == '2')
             {
-              alert("Edit Unsuccessful");
+              Swal.fire('Edit Unsuccessful');
             }
           }
-        });
-      }
+          });
+        }
+      });
+      // if(confirm_input == true)
+      // {
+      //   $.ajax({
+      //     url: "../controller/donor/editDonorRecord2.php",
+      //     method: "POST",
+      //     data: {formdata : formdata},
+      //     success:function(data){
+      //       console.log(data);
+      //       if (data == '1')
+      //       {
+      //         alert("Edit Successful");
+      //         $('#editdonorinfo').modal('hide');
+      //         $("#editdonorinfo .modal-body input").val("");
+      //       }
+      //       else if(data == '2')
+      //       {
+      //         alert("Edit Unsuccessful");
+      //       }
+      //     }
+      //   });
+      // }
     }else{
-      alert("Invalid Contact");
+      Swal.fire('Invalid Contact');
     }
   });
 
   $("form[name='adddonorphysrecord']").on('submit',function(e){
     e.preventDefault();
     var status =$("#donorstatus option:selected").text();
-    var confirm_input = confirm("Are you sure? Once you hit OK you cannot change your inputs");
+    // var confirm_input = confirm("Are you sure? Once you hit OK you cannot change your inputs");
 
-    if(confirm_input == true){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Once you hit OK you cannot change your inputs',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if(result.value) {
+        var formdata = $("form[name='adddonorphysrecord']").serialize();
+        // console.log(formdata);
+        $.ajax({
+          type: "POST",
+          url: '../controller/donor/savePhysicalExam.php',
+          data: {formdata,formdata},
+          success:function(data){
+            console.log(data);
+            if (data == '1')
+            {
+              Swal.fire('Insert Successful');
+              $('#addPhysical').hide(600);
+              $('#addInitial').show(600);
+            }
+            else if(data == '2')
+            {
+              Swal.fire('Insert Successful, You will not proceed to Initial Screening because the donor failed in Physical Exam');
+              $("#donorphysrecord_save").hide();
+              $("#btnclearphys").hide();
+            }
+            else if (data == '3') {
+              Swal.fire('Insert Unsuccessful');
+            }
+            else if(data == '42'){
+              Swal.fire('Insert Successful, Donor will not be allowed to donate again');
+              $('#donorphysrecord_save').hide(600);
 
-      e.preventDefault();
-      var formdata = $("form[name='adddonorphysrecord']").serialize();
-      console.log(formdata);
-      $.ajax({
-        type: "POST",
-        url: '../controller/donor/savePhysicalExam.php',
-        data: {formdata,formdata},
-        success:function(data){
-          console.log(data);
-          if (data == '1')
-          {
-            alert("Insert Successful");
-            $('#addPhysical').hide(600);
-            $('#addInitial').show(600);
+            }
+            else if(data == '5'){
+              Swal.fire(`Insert unsuccessful, The date must not be greater than today's date`);
+            }
           }
-          else if(data == '2')
-          {
-            alert("Insert Successful, You will not proceed to Initial Screening because the donor failed in Physical Exam");
-            $("#donorphysrecord_save").hide();
-            $("#btnclearphys").hide();
-          }
-          else if (data == '3') {
-            alert("Insert Unsuccessful");
-          }
-          else if(data == '42'){
-            alert("Insert Succesful, Donor will not be allowed to donate again");
-            $('#donorphysrecord_save').hide(600);
+        });
+      }
+    });
 
-          }
-          else if(data == '5'){
-            alert("Insert unsuccesful, The date must not be greater than today's date");
+    // if(confirm_input == true){
+
+    //   e.preventDefault();
+    //   var formdata = $("form[name='adddonorphysrecord']").serialize();
+    //   console.log(formdata);
+    //   $.ajax({
+    //     type: "POST",
+    //     url: '../controller/donor/savePhysicalExam.php',
+    //     data: {formdata,formdata},
+    //     success:function(data){
+    //       console.log(data);
+    //       if (data == '1')
+    //       {
+    //         alert("Insert Successful");
+    //         $('#addPhysical').hide(600);
+    //         $('#addInitial').show(600);
+    //       }
+    //       else if(data == '2')
+    //       {
+    //         alert("Insert Successful, You will not proceed to Initial Screening because the donor failed in Physical Exam");
+    //         $("#donorphysrecord_save").hide();
+    //         $("#btnclearphys").hide();
+    //       }
+    //       else if (data == '3') {
+    //         alert("Insert Unsuccessful");
+    //       }
+    //       else if(data == '42'){
+    //         alert("Insert Succesful, Donor will not be allowed to donate again");
+    //         $('#donorphysrecord_save').hide(600);
+
+    //       }
+    //       else if(data == '5'){
+    //         alert("Insert unsuccesful, The date must not be greater than today's date");
 
 
-          }
-        }
-      });
-    }//confirm
-    else{
-      alert("Confirmation Cancelled");
-      return false;
-    }
+    //       }
+    //     }
+    //   });
+    // }//confirm
+    // else{
+    //   alert("Confirmation Cancelled");
+    //   return false;
+    // }
 
   });
 
   $("form[name='adddonorinitexam']").on('submit',function(e){
     e.preventDefault();
-    var confirm_input = confirm("Are you sure? Once you hit OK you cannot change your inputs");
+    // var confirm_input = confirm("Are you sure? Once you hit OK you cannot change your inputs");
     var donor_id = $('#clientId_init').val();
     var formdata = $("form[name='adddonorinitexam']").serialize();
-    console.log(formdata);
-    if (confirm_input == true){
+    // console.log(formdata);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Once you hit 'Yes' you cannot change your inputs`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if(result.value) {
+        $.ajax({
+          type: "POST",
+          url: '../controller/donor/saveDonorInitialExam.php',
+          data: {formdata,formdata},
+          success:function(data){
+            console.log(data);
+            if(data == '1'){
+              Swal.fire('Insert Successful');
+              $('#addInitial').hide(600);
+              $('#addSerological').show(600);
 
-      $.ajax({
-        type: "POST",
-        url: '../controller/donor/saveDonorInitialExam.php',
-        data: {formdata,formdata},
-        success:function(data){
-          console.log(data);
-          if(data == '1'){
-            alert("Insert Successful");
-            $('#addInitial').hide(600);
-            $('#addSerological').show(600);
+              $.ajax({//kung magpoproceed sa sero kunin mo yung nakaquarantine na bloodbag
+                type: "POST",
+                url: '../controller/blood/fetchNewUnderQuarantineBloodBag.php',
+                data: {donor_id,donor_id},
+                success:function(data){
+                  $('#bloodbag_underquarantine').val(data);
+                }
+              });
 
-            $.ajax({//kung magpoproceed sa sero kunin mo yung nakaquarantine na bloodbag
-              type: "POST",
-              url: '../controller/blood/fetchNewUnderQuarantineBloodBag.php',
-              data: {donor_id,donor_id},
-              success:function(data){
-                $('#bloodbag_underquarantine').val(data);
-              }
-            });
+            }
+            else if(data == '2'){
+              Swal.fire('Insert Successful','You will not proceed to Serological Screening because the donor failed in Initial Screening Exam','warning');
+              $('#donorinitrecord_save').hide();
+            }
+            else if(data == '3'){
+              Swal.fire('Insert Unsuccessful');
+            }
+            else if(data == '4'){
+              Swal.fire(`Insert Unsuccessful,The date must not be greater than today's date`);
+            }
+          }
+        });
+      }
+    });
 
-          }
-          else if(data == '2'){
-            alert("Insert Successful, You will not proceed to Serological Screening because the donor failed in Initial Screening Exam");
-            $('#donorinitrecord_save').hide();
-          }
-          else if(data == '3'){
-            alert("Insert Unsuccessful");
-          }
-          else if(data == '4'){
-            alert("Insert Unsuccessful,The date must not be greater than today's date");
-          }
+    // if (confirm_input == true){
 
-        }
-      });
-    }//if true
-    else{
-      alert("Confirmation Cancelled");
-      return false;
-    }
+    //   $.ajax({
+    //     type: "POST",
+    //     url: '../controller/donor/saveDonorInitialExam.php',
+    //     data: {formdata,formdata},
+    //     success:function(data){
+    //       console.log(data);
+    //       if(data == '1'){
+    //         alert("Insert Successful");
+    //         $('#addInitial').hide(600);
+    //         $('#addSerological').show(600);
+
+    //         $.ajax({//kung magpoproceed sa sero kunin mo yung nakaquarantine na bloodbag
+    //           type: "POST",
+    //           url: '../controller/blood/fetchNewUnderQuarantineBloodBag.php',
+    //           data: {donor_id,donor_id},
+    //           success:function(data){
+    //             $('#bloodbag_underquarantine').val(data);
+    //           }
+    //         });
+
+    //       }
+    //       else if(data == '2'){
+    //         alert("Insert Successful, You will not proceed to Serological Screening because the donor failed in Initial Screening Exam");
+    //         $('#donorinitrecord_save').hide();
+    //       }
+    //       else if(data == '3'){
+    //         alert("Insert Unsuccessful");
+    //       }
+    //       else if(data == '4'){
+    //         alert("Insert Unsuccessful,The date must not be greater than today's date");
+    //       }
+
+    //     }
+    //   });
+    // }//if true
+    // else{
+    //   alert("Confirmation Cancelled");
+    //   return false;
+    // }
   });
 
   $("form[name='change_storageForm']").on('submit',function(e){
     e.preventDefault();
-    var confirm_input = confirm("Are you sure?");
-    var formdata = $("form[name='change_storageForm']").serialize();
-
-    if (confirm_input == true){
-      console.log(formdata);
-      $.ajax({
-        type:"POST",
-        url:"../controller/blood/updateStorage.php",
-        data:{formdata,formdata},
-        success:function(data){
-          console.log(data);
-          if(data == 1){
-          $('#chooseStorageModal').modal('hide');
-          window.location.href = "donor-records.php";
-        }
-        else{
-          alert("We've encountered an error"+' '+data);
-        }
-        }
-      });
-    }else{
-      alert("Confirmation Cancelled");
-      return false;
-    }
+    // var confirm_input = confirm("Are you sure?");
+    Swal.fire({
+      title: 'Are you sure?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if(result.value) {
+        var formdata = $("form[name='change_storageForm']").serialize();
+        $.ajax({
+          type:"POST",
+          url:"../controller/blood/updateStorage.php",
+          data:{formdata,formdata},
+          success:function(data){
+            // console.log(data);
+            if(data == 1){
+            $('#chooseStorageModal').modal('hide');
+            window.location.href = "donor-records.php";
+          } else {
+            Swal.fire("We've encountered an error"+' '+data);
+          }
+          }
+        });
+      }
+    })
+    // if (confirm_input == true){
+    //   console.log(formdata);
+    //   $.ajax({
+    //     type:"POST",
+    //     url:"../controller/blood/updateStorage.php",
+    //     data:{formdata,formdata},
+    //     success:function(data){
+    //       console.log(data);
+    //       if(data == 1){
+    //       $('#chooseStorageModal').modal('hide');
+    //       window.location.href = "donor-records.php";
+    //     }
+    //     else{
+    //       alert("We've encountered an error"+' '+data);
+    //     }
+    //     }
+    //   });
+    // }else{
+    //   alert("Confirmation Cancelled");
+    //   return false;
+    // }
   });
 
   $("form[name='adddonorseroexam']").on('submit',function(e){
     e.preventDefault();
-    var confirm_input = confirm("Are you sure? Once you hit OK you cannot change your inputs");
+    // var confirm_input = confirm("Are you sure? Once you hit OK you cannot change your inputs");
     var formdata = $("form[name='adddonorseroexam']").serialize();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Once you hit 'Yes' you cannot change your inputs`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if(result.value) {
+        $.ajax({
+          type: "POST",
+          url: '../controller/donor/saveDonorSerologicalExam.php',
+          data: {formdata,formdata},
+          success:function(data){
+            // console.log(data);
+            if(data == 1){
+              // console.log(data);
+              Swal.fire("Insert Unsuccessful");
+            /*  $('#div_donoraddserological').hide(600);
+              $('#donorinitrecord_save').hide();*/
+              //$('#donortable').show();
+              //$('#divdonoraddsero').show(600);
+            }
+            else if(data == 2){
+              Swal.fire("Insert Unsuccessful, No Blood Bag Record");
+            }
+            else if(data == 3){
+              Swal.fire("Insert Succesful, Donor will not be allowed to donate again");
+              $('#addSerological').hide(600);
+              $('#donorinitrecord_save').hide();
+            }
+            else if(data == 4){
+              Swal.fire("Insert Successful, Choose a storage");
+              $('#chooseStorageModal').modal('show');
+            }
+            else if(data == 5){
+              Swal.fire("Insert Unsuccessful,The date must not be greater than today's date");
+            }
 
-    if (confirm_input == true){
-      console.log(formdata);
-      $.ajax({
-        type: "POST",
-        url: '../controller/donor/saveDonorSerologicalExam.php',
-        data: {formdata,formdata},
-        success:function(data){
-          console.log(data);
-          if(data == 1){
-            console.log(data);
-            alert("Insert Unsuccessful");
-          /*  $('#div_donoraddserological').hide(600);
-            $('#donorinitrecord_save').hide();*/
-            //$('#donortable').show();
-            //$('#divdonoraddsero').show(600);
           }
-          else if(data == 2){
-            alert("Insert Unsuccessful, No Blood Bag Record");
-          }
-          else if(data == 3){
-            alert("Insert Succesful, Donor will not be allowed to donate again");
-            $('#addSerological').hide(600);
-            $('#donorinitrecord_save').hide();
-          }
-          else if(data == 4){
-            alert("Insert Successful, Choose a storage");
-            $('#chooseStorageModal').modal('show');
-          }
-          else if(data == 5){
-            alert("Insert Unsuccessful,The date must not be greater than today's date");
-          }
+        });
+      }
+    })
+    // if (confirm_input == true){
+    //   console.log(formdata);
+    //   $.ajax({
+    //     type: "POST",
+    //     url: '../controller/donor/saveDonorSerologicalExam.php',
+    //     data: {formdata,formdata},
+    //     success:function(data){
+    //       console.log(data);
+    //       if(data == 1){
+    //         console.log(data);
+    //         alert("Insert Unsuccessful");
+    //       /*  $('#div_donoraddserological').hide(600);
+    //         $('#donorinitrecord_save').hide();*/
+    //         //$('#donortable').show();
+    //         //$('#divdonoraddsero').show(600);
+    //       }
+    //       else if(data == 2){
+    //         alert("Insert Unsuccessful, No Blood Bag Record");
+    //       }
+    //       else if(data == 3){
+    //         alert("Insert Succesful, Donor will not be allowed to donate again");
+    //         $('#addSerological').hide(600);
+    //         $('#donorinitrecord_save').hide();
+    //       }
+    //       else if(data == 4){
+    //         alert("Insert Successful, Choose a storage");
+    //         $('#chooseStorageModal').modal('show');
+    //       }
+    //       else if(data == 5){
+    //         alert("Insert Unsuccessful,The date must not be greater than today's date");
+    //       }
 
-        }
-      });
-    }//if true
-    else{
-      alert("Confirmation Cancelled");
-      return false;
-    }
+    //     }
+    //   });
+    // }//if true
+    // else{
+    //   alert("Confirmation Cancelled");
+    //   return false;
+    // }
   });
   </script>
 </body>

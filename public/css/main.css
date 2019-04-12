@@ -413,3 +413,7 @@ ul .nav a {
     max-height: 500px;
     overflow-x: hidden;
 }
+
+.dPicker {
+    background: none;
+}
