@@ -56,10 +56,10 @@ include "../controller/fetchEmpAcc.php";
                           <tr>
                             <!-- <th>Donation Id</th> -->
                             <th>Question</th>
-                            <th>Answer: Yes or No</th>
-                            <th>Answer: Date</th>
-                            <th>Answer: Quantity</th>
-                            <th>Answer: String</th>
+                            <th>Yes/No</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>String</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -83,8 +83,15 @@ include "../controller/fetchEmpAcc.php";
                               <td><?php echo $quantity; ?></td>
                               <td><?php echo $string; ?></td>
                               <td>
-                                <input type = 'radio' name = 'updatestatus<?php echo $id;?>' id = 'updatestatus<?php echo $id; ?>' value = 'Correct' required = 'required' >Correct</br>
-                                <input type = 'radio' name = 'updatestatus<?php echo $id;?>' id = 'updatestatus<?php echo $id; ?>' value = 'Wrong' >Wrong
+																<div class="btn-group-toggle" data-toggle='buttons'>
+																	<label class='btn btn-outline-success form-control mb-2' value='Correct'>
+																		<input type='radio' name='updatestatus<?php echo $id;?>' id='updatestatus<?php echo $id; ?>' value='Correct' autocomplete='off' required='required' />Acceptable
+																	</label>
+																	<br>
+																	<label class='btn btn-outline-danger form-control' value='Wrong'>
+																		<input type='radio' name='updatestatus<?php echo $id;?>' id='updatestatus<?php echo $id; ?>' value='Wrong' autocomplete='off' required='required' />Unacceptable
+																	</label>
+																</div>
                               </td>
                             </tr>
                           </tbody>

@@ -17,80 +17,160 @@
     <ul class="nav custom-nav">
       <li class="custom-nav-item nav-item">
         <a href="" id="home" class="nav-link" data-toggle="collapse" data-target="#home-tabs" aria-controls="home-tabs" aria-expanded="false">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
+					<div class="d-inline-flex text-center">
+						<div style="width: 30px;"><i class="fas fa-home"></i></div>
+						<span>Home</span>
+					</div>
         </a>
         <div class="collapse show" id="home-tabs">
           <ul class="nav d-block pl-4">
             <li class="nav-item">
-              <a href="graphs.php" id="graphs" class="nav-link"><i class="fas fa-chart-line mr-1"></i>Graphs</a>
+              <a href="graphs.php" id="graphs" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-chart-line mr-1"></i></div>
+									<span>Graphs</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="donor-list.php" id="donor-list" class="nav-link"><i class="fas fa-list mr-1"></i>Donor List</a>
+              <a href="donor-list.php" id="donor-list" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-list mr-1"></i></div>
+									<span>Donor List</span>
+								</div>
+							</a>
             </li>
           </ul>
         </div>
       </li>
       <li class="custom-nav-item nav-item">
         <a href="" id="maintenance" class="nav-link" data-toggle="collapse" data-target="#maintenance-tabs" aria-controls="maintenance-tabs" aria-expanded="false">
-          <i class="fas fa-cogs"></i>
-          <span>Maintenance</span>
+					<div class="d-inline-flex text-center">
+						<div style="width: 30px;"><i class="fas fa-cogs"></i></div>
+						<span>Maintenance</span>
+					</div>
         </a>
         <div class="collapse show" id="maintenance-tabs">
           <ul class="nav d-block pl-4">
             <li class="nav-item">
-              <a href="donor.php" id="donor" class="nav-link"><i class="fas fa-user-cog mr-1"></i>Donor</a>
+              <a href="donor.php" id="donor" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-user-cog mr-1"></i></div>
+									<span>Donor</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="blood-type.php" id="blood-type" class="nav-link"><i class="fas fa-heartbeat mr-1"></i>Blood Type</a>
+              <a href="blood-type.php" id="blood-type" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-heartbeat mr-1"></i></div>
+									<span>Blood Type</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="blood-component.php" id="blood-component" class="nav-link"><img src="../public/glyphicon/si-glyph-blood-bag.svg" style="width:20px;">Blood Component</a>
+              <a href="blood-component.php" id="blood-component" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><img src="../public/glyphicon/si-glyph-blood-bag.svg" class="mx-auto" style="width: 23px;"></div>
+									<span>Blood Component</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="preservative.php" id="preservative" class="nav-link"><i class="fas fa-pills mr-1"></i>Preservative</a>
+              <a href="preservative.php" id="preservative" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<!--<div style="width: 30px;"><i class="fas fa-pills mr-1"></i></div>-->
+									<div style="width: 30px;"><i class="fas fa-vial mr-1"></i></div>
+									<span>Preservative</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="disease.php" id="disease" class="nav-link"><img src="../public/glyphicon/si-glyph-heart-delete.svg" style="width:17px; margin-right: .25rem !important;">Disease</a>
+              <a href="disease.php" id="disease" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><img src="../public/glyphicon/si-glyph-heart-delete.svg" style="width:17px; margin-right: .25rem !important;"></div>
+									<span>Disease</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="donor-edit-requests.php" id="donor-edit-requests" class="nav-link"><img src="../public/glyphicon/si-glyph-document-checked.svg" style="width: 17px; margin-right: .25rem !important;">Donor Edit Requests</a>
+              <a href="donor-edit-requests.php" id="donor-edit-requests" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><img src="../public/glyphicon/si-glyph-document-checked.svg" style="width: 17px; margin-right: .25rem !important;"></div>
+									<span>Donor Edit Requests</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="survey.php" id="survey" class="nav-link"><i class="fas fa-file-alt mr-1"></i>Survey</a>
+              <a href="survey.php" id="survey" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-file-alt mr-1"></i></div>
+									<span>Survey</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="survey-category.php" id="survey-category" class="nav-link"><i class="far fa-file-alt mr-1"></i>Survey Category</a>
+              <a href="survey-category.php" id="survey-category" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<!--<div style="width: 30px;"><i class="far fa-file-alt mr-1"></i></div>-->
+									<div style="width: 30px;"><i class="fa fa-bars mr-1"></i></div>
+									<span>Survey Category</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="storage.php" id="storage" class="nav-link"><i class="fas fa-box-open mr-1"></i>Storage</a>
+              <a href="storage.php" id="storage" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-box-open mr-1"></i></div>
+									<span>Storage</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="staff.php" id="staff" class="nav-link"><i class="fas fa-user-md mr-1"></i>Staff</a>
+              <a href="staff.php" id="staff" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-user-md mr-1"></i></div>
+									<span>Staff</span>
+								</div>
+							</a>
             </li>
           </ul>
         </div>
       </li>
       <li class="custom-nav-item nav-item">
         <a href="" id="transaction" class="nav-link" data-toggle="collapse" data-target="#transaction-tabs" aria-controls="transaction-tabs" aria-expanded="false">
-          <i class="fas fa-stethoscope"></i>
-          <span>Transaction</span>
+					<div class="d-inline-flex text-center">
+						<div style="width: 30px;"><i class="fas fa-stethoscope"></i></div>
+						<span>Transaction</span>
+					</div>
         </a>
         <div class="collapse show" id="transaction-tabs">
           <ul class="nav d-block pl-4">
             <li class="nav-item">
-              <a href="donor-records.php" id="donor-records" class="nav-link"><i class="fas fa-file-medical-alt mr-1"></i>Donor Records</a>
+              <a href="donor-records.php" id="donor-records" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-file-medical-alt mr-1"></i></div>
+									<span>Donor Records</span>
+								</div>
+							</a>
             </li>
             <li class="nav-item">
-              <a href="blood-inventory.php" id="blood-inventory" class="nav-link"><i class="fas fa-first-aid mr-1"></i>Blood Inventory</a>
+              <a href="blood-inventory.php" id="blood-inventory" class="nav-link">
+								<div class="d-inline-flex text-center">
+									<div style="width: 30px;"><i class="fas fa-first-aid mr-1"></i></div>
+									<span>Blood Inventory</span>
+								</div>
+							</a>
             </li>
           </ul>
         </div>
       </li>
       <li class="custom-nav-item nav-item">
         <a href="reports.php" id="reports" class="nav-link">
-          <i class="fas fa-file-medical"></i>
-          <span>Reports</span>
+          <div class="d-inline-flex text-center">
+						<div style="width: 30px;"><i class="fas fa-file-medical"></i></div>
+						<span>Reports</span>
+					</div>
         </a>
       </li>
     </ul>

@@ -33,7 +33,7 @@ include "../controller/fetchEmpAcc.php";
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container">
-                <h4>Unchecked Survey</h4>
+                <h4 class="p-3">Unchecked Survey</h4>
                 <div id="donorSurveyList" class="text-center">
                   <!-- content goes here -->
                 </div>
@@ -41,7 +41,7 @@ include "../controller/fetchEmpAcc.php";
             </div>
             <div class="col-md-12 col-lg-12 p-0 mt-2">
               <div class="content-container">
-                <h4>Expected Donors</h4>
+                <h4 class="p-3">Expected Donors</h4>
                 <div id="expectedDonor" class="text-center">
                   <!-- content goes here -->
                 </div>
@@ -102,11 +102,11 @@ include "../controller/fetchEmpAcc.php";
             uncheckedSurveyRes = `
             <table class='table table-bordered text-center' id='tbldonorsurvey'>
               <thead>
-                <tr >
-                <th>Exam Code</th>
-                <th>Donor Code</th>
-                <th>Donor/Applicant Name</th>
-                <th>Action</th>
+                <tr class="bg-danger text-white">
+									<td>Exam Code</td>
+									<td>Donor Code</td>
+									<td>Donor/Applicant Name</td>
+									<td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -126,11 +126,11 @@ include "../controller/fetchEmpAcc.php";
     function iterateOverUncheckedSurvey(arr) {
       return arr.map( obj => {
         return `
-        <tr>
+        <tr class="align-middle">
           <td>${ obj.intDonationId }</td>
           <td>${ obj.intClientId }</td>
           <td>${ obj.Applicant_DonorName }</td>
-          <td><a href="fetchDonorSurveyAnswers.php?rowid=${ obj.intDonationId }"><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
+          <td><a href="fetchDonorSurveyAnswers.php?rowid=${ obj.intDonationId }"><button type='button' class='btn btn-sm btn-outline-danger' data-id='${ obj.intDonationId }'>Check</button></a></td>
         </tr>
         `;
       });
