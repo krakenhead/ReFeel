@@ -153,11 +153,11 @@ include "../controller/fetchEmpAcc.php";
             expectedDonor = `
             <table class='table table-bordered text-center' id='tbldonorsurvey'>
               <thead>
-                <tr>
-                <th>Exam Code</th>
-                <th>Donor Code</th>
-                <th>Donor/Applicant Name</th>
-                <th>Date</th>
+                <tr class="bg-danger text-white">
+									<td>Exam Code</td>
+									<td>Donor Code</td>
+									<td>Donor/Applicant Name</td>
+									<td>Date</td>
                 </tr>
               </thead>
               <tbody>
@@ -184,7 +184,7 @@ include "../controller/fetchEmpAcc.php";
           <td>${ obj.intDonationId }</td>
           <td>${ obj.intClientId }</td>
           <td>${ obj.Applicant_DonorName }</td>
-          <td>${ obj.dtmExamTaken }</td>
+          <td>date_format(${ obj.dtmExamTaken }, 'F d, Y')</td>
         </tr>
         `;
       });

@@ -244,7 +244,7 @@
 								<canvas id="wastage"></canvas>
 							</div>							
 						</div>						
-						<div class="row text-center align-self-center mx-4 py-4"> <!-- Row 1 -->
+						<div class="row text-center align-self-center mx-4 py-4"> <!-- Row 2 -->
 							<div class="w-50 p-2">
 								<h4>Donors per Blood Type</h4>
                 <canvas id="donorcountperbloodtype"></canvas>
@@ -262,7 +262,10 @@
   <script src="../public/js/Chart.bundle.js"></script>
   <script>
 
-		// var arr_btypes = ["A", "B", "AB", "O"];
+		// random rgb for fun
+		// function getRandomInt(max) {
+			// return Math.floor(Math.random() * Math.floor(max));
+		// }
 		
     $('#home').addClass('active');
     $('#graphs').addClass('active');
@@ -302,7 +305,12 @@
           // label: '# of Remaining Blood Bags',
           data: <?php echo json_encode($arr_rembloodbags);?>,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)"
+						
+						'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
             'rgba(75, 192, 192, 0.2)'
@@ -362,13 +370,18 @@
           label: 'Wastage',
           data: [ <?php echo json_encode($total_bloodbags) ?>, <?php echo json_encode($wasted_bloodbags) ?> ],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)"
+						
+						'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)'
+            'rgba(75, 192, 192, 0.2)'						
           ],
           borderColor: [
-            'rgba(255,99,132,1)',
+            'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
             'rgba(75, 192, 192, 1)'
@@ -387,17 +400,22 @@
           // label: '# of Donors',
           data: <?php echo json_encode($arr_donorcountperbloodtype);?>,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)'
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)",
+            // "rgba("+getRandomInt(256)+","+getRandomInt(256)+","+getRandomInt(256)+",0.5)"
+						
+						'rgba(255, 99, 132, 0.35)',
+            'rgba(54, 162, 235, 0.35)',
+            'rgba(255, 206, 86, 0.35)',
+            'rgba(75, 192, 192, 0.35)'
           ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
+          // borderColor: [
+            // 'rgba(255, 99, 132, 0)',
+            // 'rgba(54, 162, 235, 0)',
+            // 'rgba(255, 206, 86, 0)',
+            // 'rgba(75, 192, 192, 0)'
+          // ],
           borderWidth: 1
         }]
       },
