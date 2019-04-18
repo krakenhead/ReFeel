@@ -63,7 +63,7 @@ if ($requestData['type'] == 'activePreservatives') {
             <button type="button" name="edit" class="btn btn-success btn-sm" id="'.$row["intPreservativeId"].'" data-toggle="modal" data-target="#editpreservativeModal" data-id="'.$row["intPreservativeId"].'"     data-prename = "'.$row["txtPreservative"].'" data-span = "'.$row["intPreservativeLifespan"].'" data-fresh ="'.$row["intPreservativeFreshPercentage"].'" data-neutral = "'.$row["intPreservativeNeutralPercentage"].'" data-critical ="'.$row["intPreservativeCriticalPercentage"].'"><i class="fa fa-edit"></i> Edit</button>
     
         <button type="button" name="view" class="btn btn-sm" id="'.$row["intPreservativeId"].'" data-toggle="modal"
-          data-target="#viewpreservativeModal" data-id="'.$row["intPreservativeId"].'" data-prename = "'.$row["txtPreservative"].'" data-span = "'.$row["intPreservativeLifespan"].'" data-fresh ="'.$row["intPreservativeFreshPercentage"].'" data-neutral = "'.$row["intPreservativeNeutralPercentage"].'" data-critical ="'.$row["intPreservativeCriticalPercentage"].'"><i class="far fa-eye"></i> View</button>
+          data-target="#viewpreservativeModal" data-id="'.$row["intPreservativeId"].'" data-prename = "'.$row["txtPreservative"].'" data-span = "'.$row["intPreservativeLifespan"].'" data-fresh ="'.$row["intPreservativeFreshPercentage"].'" data-neutral = "'.$row["intPreservativeNeutralPercentage"].'" data-critical ="'.$row["intPreservativeCriticalPercentage"].'"><i class="far fa-eye"></i> Disable</button>
     </div>
             ';
     

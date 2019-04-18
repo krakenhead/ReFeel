@@ -1,6 +1,4 @@
-<?php 
-include "../controller/fetchEmpAcc.php";
-?>
+<?php include "../controller/fetchEmpAcc.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,26 +12,20 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/all.css">
 </head>
 <body>
-  <?php 
-  include "components/loader.php";
-  ?>
+  <?php include "components/loader.php"; ?>
   <div class="wrapper">
-    <?php 
-    include "components/sidebar.php";
-    ?>
+    <?php include "components/sidebar.php"; ?>
     <main class="mainpanel">
-      <?php 
-      include "components/header.php";
-      ?>
+      <?php include "components/header.php"; ?>
       <div class="page-title">
-        <h3>Donor List</h3>
+        <h3 class="p-2">Donor List</h3>
       </div>
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container">
-                <h4>Unchecked Survey</h4>
+                <h4 class="p-2">Unchecked Survey</h4>
                 <div id="donorSurveyList" class="text-center">
                   <!-- content goes here -->
                 </div>
@@ -41,7 +33,7 @@ include "../controller/fetchEmpAcc.php";
             </div>
             <div class="col-md-12 col-lg-12 p-0 mt-2">
               <div class="content-container">
-                <h4>Expected Donors</h4>
+                <h4 class="p-2">Expected Donors</h4>
                 <div id="expectedDonor" class="text-center">
                   <!-- content goes here -->
                 </div>
@@ -52,9 +44,7 @@ include "../controller/fetchEmpAcc.php";
       </section>
     </main>
   </div>
-  <?php 
-  include "components/core-script.php";
-  ?>
+  <?php include "components/core-script.php"; ?>
   <script src="../public/js/notification.js"></script>
   <script>
     // 'use strict';
@@ -94,19 +84,22 @@ include "../controller/fetchEmpAcc.php";
           console.log(data);
           if (data.length == 0) {
             uncheckedSurveyRes = `
-            <i class="fas fa-scroll fa-7x"></i>
-            <h4>No unchecked surveys found</h4>
+							<i class="fas fa-scroll fa-7x"></i>
+							<!--<h4 style="margin: 10px 0px 10px 0px">No unchecked surveys found.</h4>-->
+							<h4 class='my-3'>No unchecked surveys found.</h4>
             `;
             $('#donorSurveyList').html(uncheckedSurveyRes);
-          } else if (data.length !== 0) {
+          } 
+					
+					else if (data.length !== 0) {
             uncheckedSurveyRes = `
             <table class='table table-bordered text-center' id='tbldonorsurvey'>
               <thead>
-                <tr >
-                <th>Exam Code</th>
-                <th>Donor Code</th>
-                <th>Donor/Applicant Name</th>
-                <th>Action</th>
+                <tr class="bg-danger text-white">
+									<td style='width: 25%'>Exam Code</td>
+									<td style='width: 25%'>Donor Code</td>
+									<td style='width: 25%'>Donor/Applicant Name</td>
+									<td style='width: 25%'>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -127,10 +120,14 @@ include "../controller/fetchEmpAcc.php";
       return arr.map( obj => {
         return `
         <tr>
-          <td>${ obj.intDonationId }</td>
-          <td>${ obj.intClientId }</td>
-          <td>${ obj.Applicant_DonorName }</td>
-          <td><a href="fetchDonorSurveyAnswers.php?rowid=${ obj.intDonationId }"><button type='button' class='btn btn-sm' data-id='${ obj.intDonationId }'>Check</button></a></td>
+          <td class="align-middle">${ obj.intDonationId }</td>
+          <td class="align-middle">${ obj.intClientId }</td>
+          <td class="align-middle">${ obj.Applicant_DonorName }</td>
+          <td>
+						<a href="fetchDonorSurveyAnswers.php?rowid=${ obj.intDonationId }">
+							<button type="button" class="btn btn-sm btn-outline-danger" data-id="${ obj.intDonationId }">Check</button>
+						</a>
+					</td>
         </tr>
         `;
       });
@@ -145,25 +142,26 @@ include "../controller/fetchEmpAcc.php";
           console.log(data);
           if (data.length == 0) {
             expectedDonor = `
-            <i class="fas fa-user-slash fa-7x"></i>
-            <h4>No expected donor found</h4>
+							<i class="fas fa-user-slash fa-7x"></i>
+							<h4 class='my-3'>No expected donor found.</h4>
             `;
             $('#expectedDonor').html(expectedDonor);
-          } else if (data.length !== 0) {
+          } 
+					else if (data.length !== 0) {
             expectedDonor = `
-            <table class='table table-bordered text-center' id='tbldonorsurvey'>
-              <thead>
-                <tr>
-                <th>Exam Code</th>
-                <th>Donor Code</th>
-                <th>Donor/Applicant Name</th>
-                <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${ iterateOverExpectedDonor(data) }
-              </tbody>
-            </table>
+							<table class='table table-bordered text-center' id='tbldonorsurvey'>
+								<thead>
+									<tr class="bg-danger text-white">
+										<td style='width: 25%'>Exam Code</td>
+										<td style='width: 25%'>Donor Code</td>
+										<td style='width: 25%'>Donor/Applicant Name</td>
+										<td style='width: 25%'>Date</td>
+									</tr>
+								</thead>
+								<tbody>
+									${ iterateOverExpectedDonor(data) }
+								</tbody>
+							</table>
             `;
             $('#expectedDonor').html(expectedDonor);
           }
@@ -184,7 +182,7 @@ include "../controller/fetchEmpAcc.php";
           <td>${ obj.intDonationId }</td>
           <td>${ obj.intClientId }</td>
           <td>${ obj.Applicant_DonorName }</td>
-          <td>${ obj.dtmExamTaken }</td>
+          <td>${ obj.Expectation_Date }</td>
         </tr>
         `;
       });

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../public/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/login.css">
   <link rel="stylesheet" href="../public/css/all.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
   <div class=" d-md-block d-lg-block mx-auto contents">

@@ -59,7 +59,7 @@ if ($requestData['type'] == 'activeSurveyCategory') {
       <button type="button" name="edit" class="btn btn-success" id="'.$row["intQuestionCategoryId"].'" data-toggle="modal" data-target="#editSurveyCategoryModal" data-id="'.$row["intQuestionCategoryId"].'" disabled><i class="fa fa-edit" ></i> Edit</button>
   
       <button type="button" name="view" class="btn" id="'.$row["intQuestionCategoryId"].'" data-toggle="modal"
-        data-target="#viewSurveyCategoryModal" data-id="'.$row["intQuestionCategoryId"].'"><i class="fas fa-eye"></i> View</button>
+        data-target="#viewSurveyCategoryModal" data-id="'.$row["intQuestionCategoryId"].'"><i class="fas fa-eye"></i> View Details</button>
       </div>
       ';
   
@@ -74,7 +74,7 @@ if ($requestData['type'] == 'activeSurveyCategory') {
     <button type="button" name="edit" class="btn btn-success" id="'.$row["intQuestionCategoryId"].'" data-toggle="modal" data-target="#editSurveyCategoryModal" data-id="'.$row["intQuestionCategoryId"].'"><i class="fa fa-edit"></i> Edit</button>
   
     <button type="button" name="view" class="btn" id="'.$row["intQuestionCategoryId"].'" data-toggle="modal"
-      data-target="#viewSurveyCategoryModal" data-id="'.$row["intQuestionCategoryId"].'"><i class="fas fa-eye"></i> View</button>
+      data-target="#viewSurveyCategoryModal" data-id="'.$row["intQuestionCategoryId"].'"><i class="fas fa-eye"></i> View Details</button>
     </div>
     ';
     $data[] = $sub_array;
@@ -150,7 +150,7 @@ if ($requestData['type'] == 'activeSurveyCategory') {
       '
       <div class="btn-group">
       <button type="button" name="view" class="btn" id="'.$row["intQuestionCategoryId"].'" data-toggle="modal"
-        data-target="#viewSurveyCategoryModal_enable" data-id="'.$row["intQuestionCategoryId"].'"><i class="fas fa-eye"></i> View</button>
+        data-target="#viewSurveyCategoryModal_enable" data-id="'.$row["intQuestionCategoryId"].'"><i class="fas fa-eye"></i> View Details</button>
       </div>
       ';
 

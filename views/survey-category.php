@@ -136,7 +136,7 @@ include "../controller/fetchEmpAcc.php";
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsavedeletesurveycategory">Disable</button>
+            <button type="submit" class="btn btn-primary" id="btnsavedeletesurveycategory">Delete</button>
           </div>
         </form>
       </div>

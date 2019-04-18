@@ -70,12 +70,7 @@ include "../controller/fetchEmpAcc.php";
                 </div>
               </div>
               <div class="content-container mt-2">
-                <div class="row mb-4">
-                  <h4 class="col-md-6">Rotten Blood Bag</h4>
-                  <div class="col-md-6">
-                    <button type="button" class="float-right btn btn-outline-danger" onclick="location.href='discardedBloodBags.php'">Discarded Blood Bags</button>
-                  </div>
-                </div>
+                <h4>Rotten Blood Bag</h4>
                 <div class="container-fluid" id="rottenBloodBags">
 
                 </div>
@@ -245,111 +240,59 @@ include "../controller/fetchEmpAcc.php";
     $(document).on("submit", "form[name='addbloodbag']", function(e){
       e.preventDefault();
       var formdata = $(this).serialize();
-      // var confirm_input = confirm("Are you sure?");
+      var confirm_input = confirm("Are you sure?");
       console.log(formdata);
 
-      swal({
-        title: 'Are you sure?',
-        icon: 'warning',
-        buttons: true
-      }).then((willApprove) => {
-        if (willApprove) {
-          $.ajax({
-            url: "../controller/blood/insertBloodBag.php",
-            method: "POST",
-            data: {formdata,formdata},
-            success: function(data){
+      if(confirm_input == true)
+      {
+        $.ajax({
+          url: "../controller/blood/insertBloodBag.php",
+          method: "POST",
+          data: {formdata,formdata},
+          success: function(data){
+            console.log(data);
+            if (data == '1'){
+              alert('Insert Succesful.');
               console.log(data);
-              if (data == '1'){
-                swal('Insert Succesful.');
-                console.log(data);
-                $(".modal-body input").val("");
-                $(".modal-body select").val("");
-                $('#addbloodmodal').modal("hide");
-                $('#bloodtype').text("");
-              }
-              else if (data == '2'){
-                swal('Donor has undefined bloodtype. Please update his/her record.');
-              }
-              else if (data == '3'){
-                swal('Please check the donor serialno because there is already a bloodbag with the same serial.');
-              }
-              else if(data == '4'){
-                swal('Please check the donor name, Because the donor already has a blood bag in the record.');
-              }
-              else if(data == '5'){
-                swal('Donor not found. Please register the donor first.');
-              }
-              else if(data == '6'){
-                swal('Donor has no current transaction');
-              }
-              else if(data == '7'){
-                swal('Donor has no Blood Volume');
-              }
-              else if(data == '8'){
-                swal('Cannot insert to storage. Storage Full.');
-              }
-              else if(data == '9'){
-                swal('Please fill out all the fields.');
-              }
-              else if(data =='10') {
-                swal('Storage full!');
-              }
-            }//success
-          });
-        }
-      });
-
-      // if(confirm_input == true)
-      // {
-      //   $.ajax({
-      //     url: "../controller/blood/insertBloodBag.php",
-      //     method: "POST",
-      //     data: {formdata,formdata},
-      //     success: function(data){
-      //       console.log(data);
-      //       if (data == '1'){
-      //         swal('Insert Succesful.');
-      //         console.log(data);
-      //         $(".modal-body input").val("");
-      //         $(".modal-body select").val("");
-      //         $('#addbloodmodal').modal("hide");
-      //         $('#bloodtype').text("");
-      //       }
-      //       else if (data == '2'){
-      //         alert('Donor has undefined bloodtype. Please update his/her record.');
-      //       }
-      //       else if (data == '3'){
-      //         alert('Please check the donor serialno because there is already a bloodbag with the same serial.');
-      //       }
-      //       else if(data == '4'){
-      //         alert('Please check the donor name, Because the donor already has a blood bag in the record.');
-      //       }
-      //       else if(data == '5'){
-      //         alert('Donor not found. Please register the donor first.');
-      //       }
-      //       else if(data == '6'){
-      //         alert('Donor has no current transaction');
-      //       }
-      //       else if(data == '7'){
-      //         alert('Donor has no Blood Volume');
-      //       }
-      //       else if(data == '8'){
-      //         alert('Cannot insert to storage. Storage Full.');
-      //       }
-      //       else if(data == '9'){
-      //         alert('Please fill out all the fields.');
-      //       }
-      //       else if(data =='10') {
-      //         alert('Storage full!');
-      //       }
-      //     }//success
-      //   });
-      // }//end of if confirm_input
-      // else{
-      //   alert("Confirmation Cancelled.");
-      //   return false;
-      // }
+              $(".modal-body input").val("");
+              $(".modal-body select").val("");
+              $('#addbloodmodal').modal("hide");
+              $('#bloodtype').text("");
+            }
+            else if (data == '2'){
+              alert('Donor has undefined bloodtype. Please update his/her record.');
+            }
+            else if (data == '3'){
+              alert('Please check the donor serialno because there is already a bloodbag with the same serial.');
+            }
+            else if(data == '4'){
+              alert('Please check the donor name, Because the donor already has a blood bag in the record.');
+            }
+            else if(data == '5'){
+              alert('Donor not found. Please register the donor first.');
+            }
+            else if(data == '6'){
+              alert('Donor has no current transaction');
+            }
+            else if(data == '7'){
+              alert('Donor has no Blood Volume');
+            }
+            else if(data == '8'){
+              alert('Cannot insert to storage. Storage Full.');
+            }
+            else if(data == '9'){
+              alert('Please fill out all the fields.');
+            }
+            else if(data =='10') {
+              alert('Storage full!');
+            }
+          }//success
+        });
+      }//end of if confirm_input
+      else{
+        alert("Confirmation Cancelled.");
+        return false;
+      }
     });
 
     $(document).on("keyup", "#blooddonor", function(e){
