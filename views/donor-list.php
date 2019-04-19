@@ -135,11 +135,13 @@
 
     function fetchExpectedDonor() {
       let expectedDonor = ``;
+      
       $.ajax({
         url: '../controller/donor/fetchExpectedDonor.php',
         dataType: 'json',
         success: data => {
           console.log(data);
+          
           if (data.length == 0) {
             expectedDonor = `
 							<i class="fas fa-user-slash fa-7x"></i>
@@ -148,6 +150,7 @@
             $('#expectedDonor').html(expectedDonor);
           } 
 					else if (data.length !== 0) {
+            let iterateExpDonor = iterateOverExpectedDonor(data).toString();
             expectedDonor = `
 							<table class='table table-bordered text-center' id='tbldonorsurvey'>
 								<thead>
@@ -159,11 +162,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									${ iterateOverExpectedDonor(data) }
+                
+									${ iterateExpDonor.replace(/[,]/g, "") }
 								</tbody>
 							</table>
             `;
             $('#expectedDonor').html(expectedDonor);
+            // console.log(iterateOverExpectedDonor(data));
           }
         },
         complete: function() {
