@@ -4,9 +4,12 @@
 
 	if ($requestData['type'] == 'fetchDonor') {
 		$columns = array(
+			// 'strClientFirstName',
+			// 'strClientMiddleName',
+			// 'strClientLastName'
+			'strClientLastName',
 			'strClientFirstName',
-			'strClientMiddleName',
-			'strClientLastName'
+			'strClientMiddleName'
 		);
 		
 		$query = "
@@ -35,7 +38,7 @@
 		}
 		else	{
 			$query .= "
-				ORDER BY 2 ASC
+				ORDER BY 4 ASC
 			";
 		}
 		
@@ -70,11 +73,13 @@
 		
 			$sub_array = array();
 		
-			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+			// $sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
 		
-			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
+			// $sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
 		
-			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+			// $sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+			
+			$sub_array[] = '<div class="update pt-1">' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientLastName"] . ', ' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . ' '.'<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientMiddleName"] .'</div>';
 		
 			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="stfClientType">' . $row["stfClientType"] . '</div>';
 		
@@ -265,17 +270,135 @@
 		$number_filter_row = mysqli_num_rows($filter_row);
 
 		$result = mysqli_query($connections, $query . $query1);
-
+		
 		$data = array();
-
+		
+		$varSkip = '<i class="fa fa-angle-double-right text-secondary" title="Skipped"></i>';
+		$varPass = '<i class="fa fa-check text-success" title="Passed"></i>';
+		$varFail = '<i class="fa fa-times text-danger" title="Failed"></i>';
+		$varCurr = '<i class="fa fa-circle text-primary" title="Current"></i>';
+		$varNone = '<i class="fa fa-pause text-info" title="Waiting"></i>';
+		
+		$varME = $varNone;
+		$varPE = $varNone;
+		$varIS = $varNone;
+		$varSS = $varNone;
+		
 		while($row = mysqli_fetch_array($result)) {  // preparing an array
-		//  }
+			$did = $row['intDonationId'];
 			$sub_array = array();
+			
+			$sub_array[] = '<div class="update" data-id="'.$row["intDonationId"].'" 	data-column="intDonationId">' . $row["intDonationId"] . '</div>';
 
-			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'" data-column="intDonationId">' . $row["intDonationId"] . '</div>';
+			$sub_array[] = '<div class="update" data-id="'.$row["intDonationId"].'" 	data-column="dtmExamTaken">' . $row["Donation_Date"] . '</div>';
+			///*
+			$qryMeRemarks = mysqli_query($connections, "
+				SELECT DISTINCT(me.stfAnswerRemarks)
+				FROM tblclient c
+				JOIN tbldonation d ON c.intClientId = d.intClientId
+				JOIN tblmedicalexam me ON d.intDonationId = me.intDonationId
+				WHERE me.intDonationId = $did
+				GROUP BY me.stfAnswerRemarks
+			");
+				
+			$varMeRemarks = array();
+			
+			while($rowMeRemarks = mysqli_fetch_assoc($qryMeRemarks))	{
+				$varMeRemarks[] = $rowMeRemarks["stfAnswerRemarks"];
+			}
 
-			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'" data-column="dtmExamTaken">' . $row["Donation_Date"] . '</div>';
+			if(in_array('Wrong', $varMeRemarks))	{
+				$varME = $varFail;
+				$varPE = $varIS = $varSS = $varSkip;
+			}
+			else if(in_array('Expired', $varMeRemarks))	{
+				$varME = $varPE = $varIS = $varSS = $varSkip;
+			}			
+			else if(in_array('Unchecked', $varMeRemarks))	{
+				$varME = $varCurr;
+			}
+			else	{
+				$varME = $varPass;
 
+				$qryPeRemarks = mysqli_query($connections, "
+					SELECT DISTINCT(pe.stfClientPhysicalExamRemarks) AS 'PE'
+					FROM tbldonation d
+					JOIN tblphysicalexam pe ON d.intDonationId = pe.intDonationId
+					WHERE d.intDonationId = $did
+				");
+				
+				$rowPeRemarks = mysqli_fetch_assoc($qryPeRemarks);
+				$varPeRemarks = $rowPeRemarks["PE"];
+
+				if(isset($varPeRemarks))	{
+					if($varPeRemarks == 'Failed')	{
+						$varPE = $varFail;
+						$varIS = $varSkip;
+						$varSS = $varSkip;
+					}
+					else	{
+						$varPE = $varPass;
+						
+						$qryIsRemarks = mysqli_query($connections, "
+							SELECT DISTINCT(ss.stfDonorSerologicalScreeningRemarks) AS 'IS'
+							FROM tbldonation d
+							JOIN tblphysicalexam pe ON d.intDonationId = pe.intDonationId
+							JOIN tblinitialscreening ins ON pe.intDonationId = ins.intDonationId
+							WHERE d.intDonationId = $did
+						");
+							
+						$varIsRemarks = array();
+						
+						while($rowIsRemarks = mysqli_fetch_assoc($qryIsRemarks))	{
+							$varIsRemarks[] = $rowIsRemarks["stfAnswerRemarks"];
+						}
+						
+						if(!empty($varIsRemarks))	{
+							if(in_array('Wrong', $varIsRemarks))	{
+								$varIS = $varFail;
+								$varSS = $varSkip;
+							}
+							else	{
+								$varIS = $varPass;
+								
+								$qrySsRemarks = mysqli_query($connections, "
+									SELECT DISTINCT(ss.stfDonorSerologicalScreeningRemarks) AS 'SS'
+									FROM tbldonation d
+									JOIN tblphysicalexam pe ON d.intDonationId = pe.intDonationId
+									JOIN tblinitialscreening ins ON pe.intDonationId = ins.intDonationId
+									JOIN tblserologicalscreening ss ON ins.intDonationId = ss.intDonationId
+									WHERE d.intDonationId = $did
+								");
+								
+								$varSsRemarks = array();
+								
+								while($rowSsRemarks = mysqli_fetch_assoc($qrySsRemarks))	{
+									$varSsRemarks[] = $rowSsRemarks["SS"];
+								}
+								if(in_array('Wrong', $varSsRemarks))	{
+									$varSS = $varFail;
+								}
+								else	{
+									$varSS = $varPass;
+								}
+							}
+						}
+						else	{
+							$varIS = $varCurr;
+						}
+					}
+				}
+				else	{
+					$varPE = $varCurr;
+				}
+			}
+			//*/
+			
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'">' . $varME . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'">' . $varPE . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'">' . $varIS . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'">' . $varSS . '</div>';
+			
 			$sub_array[] =	'
 				<a class="btn btn-outline-secondary btn-sm ml-2 btn_viewrec" data-id="'.$row["intDonationId"].'" href="viewDonorDonation.php?id='.$row["intDonationId"].'&stat='.$row["stfDonationRemarks"].'&clientId='.$row['intClientId'].'">
 					<i class="fa fa-eye fa-sm mr-1"></i>
@@ -284,7 +407,7 @@
 			'; 
 			//<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
 
-			$data[] = $sub_array;
+			$data[] = $sub_array;		
 		}
 
 		function get_all_data($connections)	{

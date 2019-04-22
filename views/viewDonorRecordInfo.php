@@ -176,7 +176,17 @@
 			<main class="mainpanel">
 				<?php include "components/header.php"; ?>
 				<div class="page-title">
-					<h3 class="p-2">Donor Info</h3>
+					<div class="d-flex justify-content-between">
+					<div>
+						<h3 class="p-2 align-middle">Donor Info</h3>
+					</div>
+					<div class="p-2">
+						<button type="button" onclick="location.href='donor-records.php'" class="btn btn-outline-danger">
+							<i class="fas fa-long-arrow-alt-left"></i>
+							Back
+						</button>
+					</div>
+				</div>
 				</div>
 				<section class="content">
 					<div class="container-fluid">
@@ -190,7 +200,7 @@
 												<h4 class="pt-3">
 													<?php
 														// echo $clientfirstname . " " . $clientmiddlename . " " . $clientlastname;
-														echo $clientlastname . ", " . $clientfirstname . " " . $clientmiddlename;
+														echo $clientlastname . ", " . $clientfirstname . " " . $clientmiddlename . " ";
 														echo $clientsex == 'Male' ? '<i class="fa fa-mars text-primary"></i>' : '<i class="fa fa-venus text-danger"></i>';
 													?>									
 												</h4>
@@ -306,8 +316,12 @@
 											<table id="tblViewDonation" class="table table-hover table-bordered text-center" style="width: 100%">
 												<thead>
 													<tr class="bg-danger text-white">
-														<td>Donation ID</td>
+														<td style="">Donation ID</td>
 														<td>Donation Date</td>
+														<td style="width: 7.5%" title="Medical Exam"><i class="fa fa-notes-medical"></i></td>
+														<td style="width: 7.5%" title="Physical Exam"><i class="fa fa-stethoscope"></i></td>
+														<td style="width: 7.5%" title="Initial Screening"><i class="fa fa-vial"></i></td>
+														<td style="width: 7.5%" title="Serological Screening"><i class="fa fa-microscope"></i></td>
 														<td>Action</td>
 													</tr>
 												</thead>

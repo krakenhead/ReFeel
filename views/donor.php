@@ -31,9 +31,12 @@
 									<table id="tblDonor" class="table table-hover table-bordered text-center">
 										<thead>
 											<tr class="bg-danger text-white">
+											<!--
 												<td>First Name</td>
 												<td>Middle Name</td>
 												<td>Last Name</td>
+											-->
+												<td>Name</td>
 												<td>Type</td>
 												<td>Action</td>
 											</tr>

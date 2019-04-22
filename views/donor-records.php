@@ -15,18 +15,13 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/datatables.min.css">
 </head>
 <body>
-  <?php 
-  include "components/loader.php";
-  ?>
+  <?php include "components/loader.php"; ?>
   <div class="wrapper">
-    <?php 
-    include "components/sidebar.php";
-    ?>
+    <?php include "components/sidebar.php"; ?>
     <main class="mainpanel">
-      <?php 
-      include "components/header.php";
-      $datenow = date('Y-m-d');
-      $datenow_1 = new DateTime($datenow);
+      <?php include "components/header.php";
+				$datenow = date('Y-m-d');
+				$datenow_1 = new DateTime($datenow);
       ?>
       <div class="page-title">
         <h3>Donor Records</h3>
