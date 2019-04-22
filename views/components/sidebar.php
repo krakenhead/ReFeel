@@ -1,6 +1,6 @@
 <div class="sidebar">
   <div class="logo">
-    <img src="../public/img/logo-w-x.png" class="align-center" style="max-width: 100%; width: 65%;  ">
+    <img src="../public/img/logo-w-x.png" class="mx-auto" style="max-width: 100%; width: 65%;  ">
   </div>
   <div class="navigation-wrapper">
     <div class="usr ">

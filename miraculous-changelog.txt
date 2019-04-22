@@ -1,5 +1,12 @@
-Miraculous Changelogs:
+4/20
+Donor:
+*Table headers: bg-color = red
+*Action button styled
+*Modals styled
+	*rhesus: word -> symbol
+*Pagination buttons tweaked
 
+4/14
 Login:
 *changed field highlight to red (compliance for color theme)
 

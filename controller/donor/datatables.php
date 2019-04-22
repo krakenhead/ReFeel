@@ -1,219 +1,156 @@
 <?php
-include("../connections.php");
-$requestData = $_REQUEST;
+	include("../connections.php");
+	$requestData = $_REQUEST;
 
-if ($requestData['type'] == 'fetchDonor') {
-	$columns = array('strClientFirstName',
-			'strClientMiddleName', 'strClientLastName'
-			 );
-	
-		$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName,strClientOccupation,strClientContact,intBloodTypeId,stfClientCivilStatus,stfClientSex,stfClientType,TIMESTAMPDIFF(year,datClientBirthday,NOW()) AS age, strUserImageDir FROM tblclient JOIN tbluser ON tblclient.intUserId = tbluser.intUserId";
-	
+	if ($requestData['type'] == 'fetchDonor') {
+		$columns = array(
+			'strClientFirstName',
+			'strClientMiddleName',
+			'strClientLastName'
+		);
+		
+		$query = "
+			SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName, strClientOccupation, strClientContact, intBloodTypeId, stfClientCivilStatus, stfClientSex, stfClientType, TIMESTAMPDIFF(year,datClientBirthday,NOW()) AS age, strUserImageDir
+			FROM tblclient
+			JOIN tbluser ON tblclient.intUserId = tbluser.intUserId
+		";
+		
 		// datatable column index  => database column name
-	
-	if(isset($_POST['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
-		 $query .= "
-				WHERE stfClientCandonate = 'Yes' AND(strClientFirstName LIKE '%".$requestData['search']['value']."%' OR strClientMiddleName LIKE '%".$requestData['search']['value']."%' OR strClientLastName LIKE '%".$requestData['search']['value']."%')
-			 ";
-	}
-	
-	if(isset($_POST["order"]))
-	{
-	 $query .= ' ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
-	 ';
-	}
-	else
-	{
-	 $query .= ' ORDER BY strClientFirstName ASC ';
-	}
-	
-	$query1 = '';
-	if($_POST["length"] != -1)
-	{
-	 $query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-	}
-	
-	$filter_row = mysqli_query($connections, $query);
-	$number_filter_row = mysqli_num_rows($filter_row);
-	
-	$result = mysqli_query($connections, $query . $query1);
-	
-	$data = array();
-	
-	
-	while($row = mysqli_fetch_array($result)) {  // preparing an array
-	
-	$bloodid = $row["intBloodTypeId"];
-	
-		$fetch_bloodtype = mysqli_query($connections, " SELECT * FROM tblbloodtype WHERE intBloodTypeId = '$bloodid'");
-		//if(mysqli_num_rows($fetch_bloodtype) > 0 ){
-			while($row2 = mysqli_fetch_assoc($fetch_bloodtype)){
-				$blood_type = $row2["stfBloodType"];
-				$rhesus = $row2["stfBloodTypeRhesus"];
-				$bt = $blood_type." ".$rhesus;
-			}
-	//  }
-	
-		$sub_array = array();
-	
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-	
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-	
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
-	
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="stfClientType">' . $row["stfClientType"] . '</div>';
-	
-		 $sub_array[] =
-			 '
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" data-fname = "'.$row["strClientFirstName"].'"
-			data-mname="'.$row["strClientMiddleName"].'" data-lname="'.$row["strClientLastName"].'" data-occ="'.$row["strClientOccupation"].'" data-contact ="'.$row["strClientContact"].'" data-image ="'.$row["strUserImageDir"].'"
-			data-sex="'.$row["stfClientSex"].'" data-btype = "'.$bloodid.'" data-status = "'.$row["stfClientCivilStatus"].'" data-age = "'.$row["age"].'" style="padding: .2rem .75rem;">Edit</button>
-			 '; //<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
-	
-		$data[] = $sub_array;
-	}
-	
-	
-	function get_all_data($connections)
-	{
-	 $query = "SELECT strClientFirstName, strClientMiddleName, strClientLastName
-						FROM tblclient
-						WHERE stfClientCandonate = 'Yes'";
-	 $result = mysqli_query($connections, $query);
-	 return mysqli_num_rows($result);
-	}
-	
-	$output = array(
-	 //"draw"    => intval($_POST["draw"]),
-	 "recordsTotal"  =>  get_all_data($connections),
-	 "recordsFiltered" => $number_filter_row,
-	 "data"    => $data
-	);
-	
-	echo json_encode($output);  // send data as json format
-} else if ($requestData['type'] == 'bannedDonor') {
-	$columns = array('strClientFirstName',
-		'strClientMiddleName', 'strClientLastName'
-	 	);
-
-	$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName,strClientOccupation,strClientContact,intBloodTypeId,stfClientCivilStatus,stfClientSex
-		  		FROM tblclient";
-
-	// datatable column index  => database column name
-
-	if(isset($_POST['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
-		$query .= "
-			WHERE stfClientCandonate = 'No' AND (strClientFirstName LIKE '%".$requestData['search']['value']."%' OR strClientMiddleName LIKE '%".$requestData['search']['value']."%' OR strClientLastName LIKE '%".$requestData['search']['value']."%')
+		
+		if(isset($_POST['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
+			$query .= "
+				WHERE stfClientCandonate = 'Yes'
+				AND	(
+					strClientFirstName LIKE '%".$requestData['search']['value']."%'
+					OR strClientMiddleName LIKE '%".$requestData['search']['value']."%'
+					OR strClientLastName LIKE '%".$requestData['search']['value']."%'
+				)
 			";
-	}
-
-	if(isset($_POST["order"]))
-	{
-	$query .= ' ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
-	';
-	}
-	else
-	{
-	$query .= ' ORDER BY strClientFirstName ASC ';
-	}
-
-	$query1 = '';
-	if($_POST["length"] != -1)
-	{
-	$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-	}
-
-	$filter_row = mysqli_query($connections, $query);
-	$number_filter_row = mysqli_num_rows($filter_row);
-
-	$result = mysqli_query($connections, $query . $query1);
-
-	$data = array();
-
-
-	while($row = mysqli_fetch_array($result)) {  // preparing an array
-
-	$bloodid = $row["intBloodTypeId"];
-
-		$fetch_bloodtype = mysqli_query($connections, " SELECT * FROM tblbloodtype WHERE intBloodTypeId = '$bloodid'");
-		//if(mysqli_num_rows($fetch_bloodtype) > 0 ){
+		}
+		
+		if(isset($_POST["order"]))	{
+			$query .= '
+				ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
+			';
+		}
+		else	{
+			$query .= "
+				ORDER BY 2 ASC
+			";
+		}
+		
+		$query1 = '';
+		if($_POST["length"] != -1)	{
+			$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		}
+		
+		$filter_row = mysqli_query($connections, $query);
+		$number_filter_row = mysqli_num_rows($filter_row);
+		
+		$result = mysqli_query($connections, $query . $query1);
+		
+		$data = array();
+		
+		while($row = mysqli_fetch_array($result)) {  // preparing an array
+			$bloodid = $row["intBloodTypeId"];
+			
+			$fetch_bloodtype = mysqli_query($connections, "
+				SELECT *
+				FROM tblbloodtype
+				WHERE intBloodTypeId = '$bloodid'
+			");
+			
+			// if(mysqli_num_rows($fetch_bloodtype) > 0 )	{
 			while($row2 = mysqli_fetch_assoc($fetch_bloodtype)){
 				$blood_type = $row2["stfBloodType"];
 				$rhesus = $row2["stfBloodTypeRhesus"];
 				$bt = $blood_type." ".$rhesus;
 			}
-	//  }
-
-		$sub_array = array();
-
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-
-		$sub_array[] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
-
-		$sub_array[] =
-			'
-			<a style="border: 1px solid; color: white; background: #6C757D; border-radius: 4px; text-decoration: none; padding: .2rem .75rem" class=" ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+			// }
+		
+			$sub_array = array();
+		
+			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+		
+			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
+		
+			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+		
+			$sub_array[] = '<div class="update pt-1" data-id="' . $row["intClientId"].'" data-column="stfClientType">' . $row["stfClientType"] . '</div>';
+		
+			$sub_array[] = '
+				<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" data-fname = "'.$row["strClientFirstName"].'"
+				data-mname="'.$row["strClientMiddleName"].'" data-lname="'.$row["strClientLastName"].'" data-occ="'.$row["strClientOccupation"].'" data-contact ="'.$row["strClientContact"].'" data-image ="'.$row["strUserImageDir"].'"
+				data-sex="'.$row["stfClientSex"].'" data-btype = "'.$bloodid.'" data-status = "'.$row["stfClientCivilStatus"].'" data-age = "'.$row["age"].'" style="padding: .2rem .75rem;">
+					<i class="fa fa-pen fa-sm mr-1"></i>
+					Edit
+				</button>
 			'; //<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
-
-		$data[] = $sub_array;
+		
+			$data[] = $sub_array;
+		}
+		
+		function get_all_data($connections)	{
+			$query = "
+				SELECT strClientFirstName, strClientMiddleName, strClientLastName
+				FROM tblclient
+				WHERE stfClientCandonate = 'Yes'
+			";
+			$result = mysqli_query($connections, $query);
+			return mysqli_num_rows($result);
+		}
+		
+		$output = array	(
+		 //"draw"    => intval($_POST["draw"]),
+		 "recordsTotal"  =>  get_all_data($connections),
+		 "recordsFiltered" => $number_filter_row,
+		 "data"    => $data
+		);
+		
+		echo json_encode($output);  // send data as json format
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
+	else if ($requestData['type'] == 'bannedDonor') {
+		$columns = array(
+			'strClientFirstName',
+			'strClientMiddleName',
+			'strClientLastName'
+		);
 
-
-	function get_all_data($connections)
-	{
-	$query = "SELECT strClientFirstName, strClientMiddleName, strClientLastName
-						FROM tblclient";
-	$result = mysqli_query($connections, $query);
-	return mysqli_num_rows($result);
-	}
-
-	$output = array(
-	//"draw"    => intval($_POST["draw"]),
-	"recordsTotal"  =>  get_all_data($connections),
-	"recordsFiltered" => $number_filter_row,
-	"data"    => $data
-	);
-
-	echo json_encode($output);  // send data as json format
-
-} else if ($requestData['type'] == 'bannedDonorRecord') {
-		$clientid = $_POST['clientid'];
-		$requestData = $_REQUEST;
-		$columns = array('d.intDonationId',
-				'm.dtmExamTaken','d.stfDonationRemarks'
-				);
-
-			$query = "SELECT DISTINCT(d.intDonationId), m.dtmExamTaken, d.stfDonationRemarks, d.intClientId
-		FROM tbldonation d
-		JOIN tblmedicalexam m ON d.intDonationId = m.intDonationId
+		$query = "
+			SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName, strClientOccupation, strClientContact, intBloodTypeId, stfClientCivilStatus, stfClientSex
+			FROM tblclient
 		";
 
-			// datatable column index  => database column name
+		// datatable column index  => database column name
 
 		if(isset($_POST['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
 			$query .= "
-				WHERE d.intClientId = '$clientid' AND (d.intDonationId LIKE '%".$requestData['search']['value']."%') GROUP BY d.intDonationId  
-				";
+				WHERE stfClientCandonate = 'No'
+				AND (
+					strClientFirstName LIKE '%".$requestData['search']['value']."%'
+					OR strClientMiddleName LIKE '%".$requestData['search']['value']."%'
+					OR strClientLastName LIKE '%".$requestData['search']['value']."%'
+				)
+			";
 		}
 
-		if(isset($_POST["order"]))
-		{
-			$query .= ' ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
+		if(isset($_POST["order"]))	{
+			$query .= '
+				ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
 			';
 		}
-		else
-		{
-
-			$query .= ' ORDER BY d.intDonationId ASC ';
+		else	{
+			$query .= '
+				ORDER BY strClientFirstName ASC
+			';
 		}
 
 		$query1 = '';
-		if($_POST["length"] != -1)
-		{
-		$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		if($_POST["length"] != -1)	{
+			$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 		}
 
 		$filter_row = mysqli_query($connections, $query);
@@ -223,266 +160,517 @@ if ($requestData['type'] == 'fetchDonor') {
 
 		$data = array();
 
-
 		while($row = mysqli_fetch_array($result)) {  // preparing an array
-		//  }
+
+			$bloodid = $row["intBloodTypeId"];
+
+			$fetch_bloodtype = mysqli_query($connections, "
+				SELECT *
+				FROM tblbloodtype
+				WHERE intBloodTypeId = '$bloodid'
+			");
+			//if(mysqli_num_rows($fetch_bloodtype) > 0 ){
+			while($row2 = mysqli_fetch_assoc($fetch_bloodtype))	{
+				$blood_type = $row2["stfBloodType"];
+				$rhesus = $row2["stfBloodTypeRhesus"];
+				$bt = $blood_type." ".$rhesus;
+			}
+			//}
 
 			$sub_array = array();
 
-			$sub_array[] = '<div class="update" data-id="'.$row["intDonationId"].'" 	data-column="intDonationId">' . $row["intDonationId"] . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
 
-			$sub_array[] = '<div class="update" data-id="'.$row["intDonationId"].'" 	data-column="dtmExamTaken">' . $row["dtmExamTaken"] . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
 
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
 
-			$sub_array[] =
-				'
-			<a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intDonationId"].'" href="viewDonorDonation.php?id='.$row["intDonationId"].'&stat='.$row["stfDonationRemarks"].'&clientId='.$row['intClientId'].'">View</a>
-				'; //<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
+			// $sub_array[] =	'
+				// <a style="border: 1px solid; color: white; background: #6C757D; border-radius: 4px; text-decoration: none; padding: .2rem .75rem" class=" ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+			// ';
+			
+			$sub_array[] =	'
+				<a class="btn btn-outline-secondary btn-sm" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">
+					<i class="fa fa-eye fa-sm mr-1"></i>
+					View
+				</a>
+			';
+			
+			//<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
 
 			$data[] = $sub_array;
 		}
 
+		function get_all_data($connections)	{
+			$query = "
+				SELECT strClientFirstName, strClientMiddleName, strClientLastName
+				FROM tblclient
+			";
+			$result = mysqli_query($connections, $query);
+			return mysqli_num_rows($result);
+		}
 
-		function get_all_data($connections)
-		{
-			$clientid = $_POST['clientid'];
-		$query = "SELECT DISTINCT(d.intDonationId), m.dtmExamTaken, d.stfDonationRemarks
-		FROM tbldonation d
-		JOIN tblmedicalexam m ON d.intDonationId = m.intDonationId
-			WHERE d.intClientId = '$clientid'
-			GROUP BY d.intDonationId
+		$output = array	(
+		//"draw"    => intval($_POST["draw"]),
+			"recordsTotal"  =>  get_all_data($connections),
+			"recordsFiltered" => $number_filter_row,
+			"data"    => $data
+		);
+
+		echo json_encode($output);  // send data as json format
+	}
+	
+	else if ($requestData['type'] == 'bannedDonorRecord')	{
+		$clientid = $_POST['clientid'];
+		$requestData = $_REQUEST;
+		$columns = array(
+			'd.intDonationId',
+			'm.dtmExamTaken',
+			'd.stfDonationRemarks'
+		);
+
+		$query = "
+			SELECT DISTINCT(d.intDonationId), DATE_FORMAT(m.dtmExamTaken, '%M %d, %Y - %h:%i %p') AS Donation_Date, d.stfDonationRemarks, d.intClientId
+			FROM tbldonation d
+			JOIN tblmedicalexam m ON d.intDonationId = m.intDonationId
 		";
-		$result = mysqli_query($connections, $query);
-		return mysqli_num_rows($result);
+
+		// datatable column index  => database column name
+
+		if(isset($_POST['search']['value']))	{   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
+			$query .= "
+				WHERE d.intClientId = '$clientid'
+				AND	(d.intDonationId LIKE '%".$requestData['search']['value']."%')
+				GROUP BY d.intDonationId  
+			";
+		}
+
+		if(isset($_POST["order"]))	{
+			$query .= '
+				ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
+			';
+		}
+		else	{
+			$query .= '
+				ORDER BY d.intDonationId ASC
+			';
+		}
+
+		$query1 = '';
+		if($_POST["length"] != -1)	{
+			$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		}
+
+		$filter_row = mysqli_query($connections, $query);
+		$number_filter_row = mysqli_num_rows($filter_row);
+
+		$result = mysqli_query($connections, $query . $query1);
+
+		$data = array();
+
+		while($row = mysqli_fetch_array($result)) {  // preparing an array
+		//  }
+			$sub_array = array();
+
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'" data-column="intDonationId">' . $row["intDonationId"] . '</div>';
+
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'" data-column="dtmExamTaken">' . $row["Donation_Date"] . '</div>';
+
+			$sub_array[] =	'
+				<a class="btn btn-outline-secondary btn-sm ml-2 btn_viewrec" data-id="'.$row["intDonationId"].'" href="viewDonorDonation.php?id='.$row["intDonationId"].'&stat='.$row["stfDonationRemarks"].'&clientId='.$row['intClientId'].'">
+					<i class="fa fa-eye fa-sm mr-1"></i>
+					View
+				</a>
+			'; 
+			//<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
+
+			$data[] = $sub_array;
+		}
+
+		function get_all_data($connections)	{
+			$clientid = $_POST['clientid'];
+			$query = "
+				SELECT DISTINCT(d.intDonationId), m.dtmExamTaken, d.stfDonationRemarks
+				FROM tbldonation d
+				JOIN tblmedicalexam m ON d.intDonationId = m.intDonationId
+				WHERE d.intClientId = '$clientid'
+				GROUP BY d.intDonationId
+			";
+			$result = mysqli_query($connections, $query);
+			return mysqli_num_rows($result);
+		}
+
+		$output = array(
+			//"draw"    => intval($_POST["draw"]),
+			"recordsTotal"  =>  get_all_data($connections),
+			"recordsFiltered" => $number_filter_row,
+			"data"    => $data,
+			"query" => $query
+		);
+		
+		echo json_encode($output);  // send data as json format
+	}
+	
+	else if ($requestData['type'] == 'donorRecords') {
+		$columns = array(
+			'strClientFirstName',
+			'strClientMiddleName',
+			'strClientLastName'
+		);
+
+		$query = "
+			SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName
+			FROM tblclient
+		";
+
+		// $getlatestdonationIDquery = mysqli_query($connections,"
+			// SELECT intDonationId
+			// FROM tbldonation
+			// WHERE intClientId = '$id'
+			// ORDER BY intDonationId DESC
+			// LIMIT 1 OFFSET 0
+		// ");
+
+		// datatable column index  => database column name
+
+		if(isset($_POST['search']['value']))	{   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
+			$query .= "
+				WHERE stfClientCanDonate = 'Yes'
+				AND (
+					strClientFirstName LIKE '%".$requestData['search']['value']."%'
+					OR strClientMiddleName LIKE '%".$requestData['search']['value']."%'
+					OR strClientLastName LIKE '%".$requestData['search']['value']."%'
+				)
+			";
+		}
+
+		if(isset($_POST["order"]))	{
+			$query .= '
+				ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
+			';
+		}
+		else	{
+			$query .= '
+				ORDER BY strClientFirstName ASC
+			';
+		}
+
+		$query1 = '';
+		if($_POST["length"] != -1)	{
+			$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		}
+
+		$filter_row = mysqli_query($connections, $query);
+		$number_filter_row = mysqli_num_rows($filter_row);
+
+		$result = mysqli_query($connections, $query . $query1);
+
+		$data = array();
+
+		while($row = mysqli_fetch_array($result)) {  // preparing an array
+			// $query_donors = "
+				// SELECT intDonationId
+				// FROM tbldonation
+				// WHERE intClientId = '$id'
+				// ORDER BY intDonationId DESC
+				// LIMIT 1 OFFSET 0
+			// ";
+			$id = $row["intClientId"];
+			$getlatestdonationIDquery = mysqli_query($connections,"
+				SELECT intDonationId
+				FROM tbldonation
+				WHERE intClientId = '$id'
+				ORDER BY intDonationId DESC
+				LIMIT 1 OFFSET 0
+			");
+
+			if(mysqli_num_rows($getlatestdonationIDquery) > 0)	{
+				while ($row2 = mysqli_fetch_assoc($getlatestdonationIDquery)) {
+					$latestdonationID = $row2["intDonationId"];
+				}
+
+				$getdeferaldays = mysqli_query($connections,"
+					SELECT MAX(`intDeferralDay`) AS Deferaldays
+					FROM tblbloodcomponent tbc
+					JOIN tblinitialscreening tis ON tbc.intBloodComponentId = tis.intBloodComponentId
+					WHERE strBloodComponentRemarks = 'Failed'
+					AND intDonationId = '$latestdonationID'
+				");
+				
+				if(mysqli_num_rows($getdeferaldays) > 0)	{//if may fail na blood comp
+					while ($row3 = mysqli_fetch_assoc($getdeferaldays)) {
+						$deferaldays = $row3["Deferaldays"];
+					}
+				}
+				else	{	//if walang nag fail
+					$deferaldays = 0;
+				}
+
+				settype($deferaldays,"int");
+
+				$check_ifhasrecordwithinninetydays = mysqli_query($connections, "
+					SELECT c.intClientId
+					FROM tblclient c
+					JOIN tbldonation d ON c.intClientId = d.intClientId
+					JOIN tblmedicalexam me ON d.intDonationId = me.intDonationId
+					JOIN tblphysicalexam pe ON me.intDonationId = pe.intDonationId
+					JOIN tblinitialscreening ins ON pe.intDonationId = ins.intDonationId
+					JOIN tblserologicalscreening ss ON ins.intDonationId = ss.intDonationId
+					WHERE c.intClientId = '$id'
+					AND d.stfDonationRemarks = 'Complete'
+					AND d.intDonationId = (
+						SELECT intDonationId
+						FROM tbldonation
+						WHERE intClientId = '$id'
+						ORDER BY intDonationId DESC
+						LIMIT 1 OFFSET 0
+					)
+					AND d.intDonationId IN (
+						SELECT me.intDonationId
+						FROM tblmedicalexam me
+					)
+					AND d.intDonationId IN (
+						SELECT pe.intDonationId
+						FROM tblphysicalexam pe
+					)
+					AND d.intDonationId IN (
+						SELECT ins.intDonationId
+						FROM tblinitialscreening ins
+					)
+					AND d.intDonationId IN (
+						SELECT ss.intDonationId
+						FROM tblserologicalscreening ss
+					)
+					AND me.dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW()
+					AND pe.dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW()
+					AND ins.dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW()
+					AND ss.dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW()
+				");
+
+				$failed_survey = mysqli_query($connections,"
+					SELECT *
+					FROM tblmedicalexam
+					WHERE intDonationId = '$latestdonationID'
+					AND stfAnswerRemarks = 'Wrong'
+					AND dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()
+				");
+
+				$expired_survey = mysqli_query($connections,"
+					SELECT *
+					FROM `tblmedicalexam`
+					WHERE intDonationId = '$latestdonationID'
+					AND `stfAnswerRemarks` = 'Expired'
+					AND `dtmExamTaken` BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()
+				");
+				
+				$unchecked_survey = mysqli_query($connections,"
+					SELECT *
+					FROM `tblmedicalexam`
+					WHERE intDonationId = '$latestdonationID'
+					AND `stfAnswerRemarks` = 'Unchecked'
+					AND `dtmExamTaken` BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()
+				");
+
+				$failed_BC = mysqli_query($connections,"
+					SELECT *
+					FROM `tblinitialscreening`
+					WHERE dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL $deferaldays DAY) AND NOW()
+					AND intDonationId = '$latestdonationID'
+					AND strBloodComponentRemarks = 'Failed'
+				");
+
+				// $failed_hemo = mysqli_query($connections,"
+					// SELECT *
+					// FROM `tblinitialscreening`
+					// WHERE intDonationId = '$latestdonationID'
+					// AND intBloodComponentId = '3'
+					// AND `stfClientInitialScreeningRemarks` = 'Failed'
+					// AND dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()
+				// ");
+
+				$check_ifseroremaining = mysqli_query($connections, "
+					SELECT *
+					FROM tbldonation
+					WHERE stfDonationRemarks = 'Incomplete'
+					AND intDonationId IN (
+						SELECT intDonationId
+						FROM tblphysicalexam
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intDonationId IN (
+						SELECT intDonationId
+						FROM tblinitialscreening
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intDonationId NOT IN (
+						SELECT intDonationId
+						FROM tblserologicalscreening
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intClientId = '$id'
+				");
+
+				$check_ifnoinit = mysqli_query($connections, "
+					SELECT *
+					FROM tbldonation
+					WHERE stfDonationRemarks = 'Incomplete'
+					AND intDonationId IN (
+						SELECT intDonationId
+						FROM tblphysicalexam
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intDonationId NOT IN (
+						SELECT intDonationId
+						FROM tblinitialscreening
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intClientId = '$id'
+				");
+
+				$check_ifnophys = mysqli_query($connections, "
+					SELECT *
+					FROM tbldonation
+					WHERE stfDonationRemarks = 'Incomplete'
+					AND intDonationId IN (
+						SELECT intDonationId
+						FROM tblmedicalexam
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intDonationId NOT IN (
+						SELECT intDonationId
+						FROM tblphysicalexam
+						WHERE intDonationId = '$latestdonationID'
+					)
+					AND intClientId = '$id'
+				");
+
+				$checkifpwedenaulit = mysqli_query($connections, "
+					SELECT *
+					FROM tbldonation
+					WHERE stfDonationRemarks = 'Complete'
+					AND intDonationId = '$latestdonationID'
+				");
+
+				$sub_array = array();
+
+				$sub_array[0] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+
+				$sub_array[1] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
+
+				$sub_array[2] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+
+				if(mysqli_num_rows($check_ifhasrecordwithinninetydays) == 0)	{
+					if(mysqli_num_rows($failed_BC) == 0 AND mysqli_num_rows($failed_survey) == 0 AND mysqli_num_rows($expired_survey) == 0)	{
+						if(mysqli_num_rows($unchecked_survey) == 0)	{
+							//  if(mysqli_num_rows($failed_hemo) == 0){
+							if(mysqli_num_rows($check_ifnophys) > 0)	{
+								$sub_array[3] =	'
+									<div class="text-center">
+										<button type="button" class="btn btn-primary btnAddphysical" data-id="'.$row["intClientId"].'">Add Physical Screening</button>
+										<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button>
+										<a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+									</div>
+								';
+							}
+							else if(mysqli_num_rows($check_ifnoinit) > 0)	{
+								$sub_array[3] =	'
+									<div class="text-center">
+										<button type="button" class="btn btn-primary btnAddinitial" data-id="'.$row["intClientId"].'">Add Initial Screening</button><button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+									</div>
+								';
+							}
+							else if(mysqli_num_rows($check_ifseroremaining) > 0 )	{
+								$sub_array[3] =	'
+									<div class="text-center">
+										<button type="button" class="btn btn-primary btnAddserological" data-id="'.$row["intClientId"].'">Add Serological Screening</button><button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+									</div>
+								';
+							}
+							else if (mysqli_num_rows($checkifpwedenaulit) > 0)	{
+								$sub_array[3] =	'
+									<div class="text-center">
+										<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'"><button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">Add record</button></a>
+										<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button>
+										<a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+									</div>
+								';
+							}
+		/*
+		------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// }
+		// else {
+			// $sub_array[3] =	'
+				// <button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="donorrecords-tab-viewinfo.php?id=$clientid">View</a>
+			// ';
+		 }
+		 */
+						}
+							else	{
+								$sub_array[3] =	'
+									<div class="text-center">
+										<a href = "fetch_donorsurveyanswers.php?rowid='.$latestdonationID.'" ><button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">Check Survey</button></a>
+										<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+									</div>
+								';
+							}
+					}
+					else	{
+						$sub_array[3] =	'
+							<div class="text-center">
+								<button type = "button" class ="btn btn-success" disabled>Record Complete</button>
+								<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+								</div>
+						';
+					}
+				}
+				else {
+					$sub_array[3] =	'
+						<div class="text-center">
+							<button type = "button" class ="btn btn-success" disabled>Record Complete</button>
+							<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+						</div>
+					';
+				}
+				$data[] = $sub_array;
+			}
+			else	{
+				$sub_array = array();
+
+				$sub_array[0] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+
+				$sub_array[1] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
+
+				$sub_array[2] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+
+				$sub_array[3] =	'
+					<div class="text-center">
+					<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'"><button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">Add record</button></a>
+					<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button>
+					<a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
+					</div>
+				';
+
+				$data[] = $sub_array;
+			}	//end of else
+		}
+	
+		function get_all_data($connections)	{
+			$query = "
+				SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName
+				FROM tblclient
+				WHERE stfClientCanDonate = 'Yes'
+			";
+			$result = mysqli_query($connections, $query);
+			return mysqli_num_rows($result);
 		}
 
 		$output = array(
 		//"draw"    => intval($_POST["draw"]),
-		"recordsTotal"  =>  get_all_data($connections),
+		"recordsTotal" =>  get_all_data($connections),
 		"recordsFiltered" => $number_filter_row,
-		"data"    => $data,
-		"query" => $query
+		"data" => $data
 		);
 
 		echo json_encode($output);  // send data as json format
-} else if ($requestData['type'] == 'donorRecords') {
-	$columns = array(
-		'strClientFirstName', 'strClientMiddleName', 'strClientLastName'
-	 	);
-
-	$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName FROM tblclient  ";
-
-  // $getlatestdonationIDquery = mysqli_query($connections,"SELECT intDonationId FROM tbldonation WHERE intClientId = '$id' ORDER BY intDonationId DESC LIMIT 1 OFFSET 0");
-
-	// datatable column index  => database column name
-
-	if(isset($_POST['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter AND ItemOnHandStatus = 1
-		$query .= "
-			WHERE stfClientCanDonate = 'Yes' AND (strClientFirstName LIKE '%".$requestData['search']['value']."%' OR strClientMiddleName LIKE '%".$requestData['search']['value']."%' OR strClientLastName LIKE '%".$requestData['search']['value']."%')
-			";
 	}
-
-	if(isset($_POST["order"]))
-	{
-	$query .= ' ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir']. '
-	';
-	}
-	else
-	{
-	$query .= ' ORDER BY strClientFirstName ASC ';
-	}
-
-	$query1 = '';
-	if($_POST["length"] != -1)
-	{
-	$query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-	}
-
-	$filter_row = mysqli_query($connections, $query);
-	$number_filter_row = mysqli_num_rows($filter_row);
-
-	$result = mysqli_query($connections, $query . $query1);
-
-	$data = array();
-
-	while($row = mysqli_fetch_array($result)) {  // preparing an array
-		// $query_donors = " SELECT intDonationId FROM tbldonation WHERE intClientId = '$id' ORDER BY intDonationId DESC LIMIT 1 OFFSET 0  ";
-		$id = $row["intClientId"];
-		$getlatestdonationIDquery = mysqli_query($connections,"SELECT intDonationId FROM tbldonation WHERE intClientId = '$id' ORDER BY intDonationId DESC LIMIT 1 OFFSET 0");
-
-		if(mysqli_num_rows($getlatestdonationIDquery) > 0){
-		while ($row2 = mysqli_fetch_assoc($getlatestdonationIDquery)) {
-			$latestdonationID = $row2["intDonationId"];
-		}
-
-		$getdeferaldays = mysqli_query($connections,"SELECT MAX(`intDeferralDay`) AS Deferaldays FROM tblbloodcomponent tbc JOIN tblinitialscreening tis ON tbc.intBloodComponentId = tis.intBloodComponentId WHERE strBloodComponentRemarks = 'Failed' AND intDonationId = '$latestdonationID'");
-		if(mysqli_num_rows($getdeferaldays) > 0){//if may fail na blood comp
-			while ($row3 = mysqli_fetch_assoc($getdeferaldays)) {
-				$deferaldays = $row3["Deferaldays"];
-			}
-
-		}else{//if walang nag fail
-				$deferaldays = 0;
-		}
-
-			settype($deferaldays,"int");
-
-	$check_ifhasrecordwithinninetydays = mysqli_query($connections,"SELECT c.intClientId 	FROM tblclient c JOIN tbldonation d ON c.intClientId = d.intClientId JOIN tblmedicalexam me ON d.intDonationId = me.intDonationId JOIN tblphysicalexam pe ON me.intDonationId = pe.intDonationId JOIN tblinitialscreening ins ON pe.intDonationId = ins.intDonationId JOIN tblserologicalscreening ss ON ins.intDonationId = ss.intDonationId WHERE c.intClientId = '$id' AND d.stfDonationRemarks = 'Complete' AND d.intDonationId = (SELECT intDonationId FROM tbldonation WHERE intClientId = '$id' ORDER BY intDonationId DESC LIMIT 1 OFFSET 0) AND d.intDonationId IN (SELECT me.intDonationId FROM tblmedicalexam me) AND d.intDonationId IN (SELECT pe.intDonationId FROM tblphysicalexam pe) AND d.intDonationId IN (SELECT ins.intDonationId FROM tblinitialscreening ins) AND d.intDonationId IN (SELECT ss.intDonationId FROM tblserologicalscreening ss) AND me.dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW() AND pe.dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW() AND ins.dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW() AND ss.dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW()");
-
-	$failed_survey = mysqli_query($connections,"SELECT * FROM tblmedicalexam WHERE intDonationId = '$latestdonationID' AND stfAnswerRemarks = 'Wrong' AND dtmExamTaken BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()");
-
-	$expired_survey = mysqli_query($connections,"SELECT * FROM `tblmedicalexam` WHERE intDonationId = '$latestdonationID' AND `stfAnswerRemarks` = 'Expired' AND `dtmExamTaken` BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()");
-	$unchecked_survey = mysqli_query($connections,"SELECT * FROM `tblmedicalexam` WHERE intDonationId = '$latestdonationID' AND `stfAnswerRemarks` = 'Unchecked' AND `dtmExamTaken` BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()");
-
-	$failed_BC = mysqli_query($connections,"SELECT * FROM `tblinitialscreening` WHERE dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL $deferaldays DAY) AND NOW() AND intDonationId = '$latestdonationID' AND strBloodComponentRemarks = 'Failed'");
-
-	/*$failed_hemo = mysqli_query($connections,"SELECT *
-																						FROM `tblinitialscreening`
-																						WHERE intDonationId = '$latestdonationID'
-																						AND intBloodComponentId = '3'
-																						AND `stfClientInitialScreeningRemarks` = 'Failed'
-																						AND dtmDateScreened BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW()");*/
-
-	$check_ifseroremaining = mysqli_query($connections,"SELECT * FROM tbldonation WHERE stfDonationRemarks = 'Incomplete' AND intDonationId IN (SELECT intDonationId FROM tblphysicalexam WHERE intDonationId = '$latestdonationID') AND intDonationId IN (SELECT intDonationId FROM tblinitialscreening WHERE intDonationId = '$latestdonationID') AND intDonationId NOT IN (SELECT intDonationId FROM tblserologicalscreening WHERE intDonationId = '$latestdonationID') AND intClientId = '$id' ");
-
-	$check_ifnoinit = mysqli_query($connections,"SELECT * FROM tbldonation WHERE stfDonationRemarks = 'Incomplete' AND intDonationId IN (SELECT intDonationId FROM tblphysicalexam WHERE intDonationId = '$latestdonationID') AND intDonationId NOT IN(SELECT intDonationId FROM tblinitialscreening WHERE intDonationId = '$latestdonationID') AND intClientId = '$id'");
-
-	$check_ifnophys = mysqli_query($connections,"SELECT * FROM tbldonation WHERE stfDonationRemarks = 'Incomplete' AND intDonationId IN (SELECT intDonationId FROM tblmedicalexam WHERE intDonationId = '$latestdonationID') AND intDonationId NOT IN (SELECT intDonationId FROM tblphysicalexam WHERE intDonationId = '$latestdonationID') AND intClientId = '$id'");
-
-	$checkifpwedenaulit = mysqli_query($connections,"SELECT * FROM tbldonation WHERE stfDonationRemarks = 'Complete' AND intDonationId = '$latestdonationID'");
-
-	$sub_array = array();
-
-	$sub_array[0] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-
-	$sub_array[1] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-
-	$sub_array[2] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
-
-	if(mysqli_num_rows($check_ifhasrecordwithinninetydays) == 0){
-			if(mysqli_num_rows($failed_BC) == 0 AND mysqli_num_rows($failed_survey) == 0 AND mysqli_num_rows($expired_survey) == 0){
-				if(mysqli_num_rows($unchecked_survey) == 0){
-				//  if(mysqli_num_rows($failed_hemo) == 0){
-					if(mysqli_num_rows($check_ifnophys) > 0){
-						$sub_array[3] =
-							'
-							<div class="text-center">
-							<button type="button" class="btn btn-primary btnAddphysical" data-id="'.$row["intClientId"].'">Add Physical Screening</button>
-							<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-							</div>
-							';
-					}
-					else if(mysqli_num_rows($check_ifnoinit) > 0){
-						$sub_array[3] =
-							'
-							<div class="text-center">
-							<button type="button" class="btn btn-primary btnAddinitial" data-id="'.$row["intClientId"].'">Add Initial Screening</button><button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-							</div>
-							';
-					}
-					else if(mysqli_num_rows($check_ifseroremaining) > 0 ){
-
-						$sub_array[3] =
-							'
-							<div class="text-center">
-							<button type="button" class="btn btn-primary btnAddserological" data-id="'.$row["intClientId"].'">Add Serological Screening</button><button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-							</div>
-							';
-
-					}
-					else if (mysqli_num_rows($checkifpwedenaulit) > 0){
-						$sub_array[3] =
-						'
-						<div class="text-center">
-						<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'"><button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">Add record</button></a>
-						<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button>
-						<a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-						</div>
-						';
-						}
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*	}else {
-$sub_array[3] =
-	'
-	<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="donorrecords-tab-viewinfo.php?id=$clientid">View</a>
-
-	';
-}*/
-}else{
-$sub_array[3] =
-'
-<div class="text-center">
-<a href = "fetch_donorsurveyanswers.php?rowid='.$latestdonationID.'" ><button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">Check Survey</button></a>
-<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-</div>
-';
-}
-}else{////--------------------------------------------
-$sub_array[3] =
-'
-<div class="text-center">
-<button type = "button" class ="btn btn-success" disabled>Record Complete</button>
-<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-</div>
-';
-}
-}else {
-$sub_array[3] =
-'
-<div class="text-center">
-<button type = "button" class ="btn btn-success" disabled>Record Complete</button>
-<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-</div>
-';
-}
-
-	$data[] = $sub_array;
-
-	}
-	else{
-
-		$sub_array = array();
-
-		$sub_array[0] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-
-		$sub_array[1] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-
-		$sub_array[2] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
-
-
-
-		$sub_array[3] =
-			'
-			<div class="text-center">
-			<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'"><button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">Add record</button></a>
-			<button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button>
-			<a class="btn btn-default btn-sm ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
-			</div>
-			';
-
-		$data[] = $sub_array;
-	}//end of else
-
-	}
-
-
-	function get_all_data($connections)
-	{
-	$query = "SELECT intClientId, strClientFirstName, strClientMiddleName, strClientLastName FROM tblclient WHERE stfClientCanDonate = 'Yes' ";
-	$result = mysqli_query($connections, $query);
-	return mysqli_num_rows($result);
-	}
-
-	$output = array(
-	//"draw"    => intval($_POST["draw"]),
-	"recordsTotal"  =>  get_all_data($connections),
-	"recordsFiltered" => $number_filter_row,
-	"data"    => $data
-	);
-
-	echo json_encode($output);  // send data as json format
-
-}
-
-
- ?>
+?>
