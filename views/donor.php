@@ -81,7 +81,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
-							<form action="valClientSignup.php" method="POST" id = "client_signup" enctype="multipart/form-data">
+							<form action="../controller/donor/valClientSignup.php" method="POST" id = "client_signup" enctype="multipart/form-data">
 								<p class="text-muted"><small><strong>PERSONAL INFORMATION</strong></small></p>
 								<hr style="margin-top: -15px;" />
 								
@@ -274,7 +274,7 @@
 											<label for="clientimage">Image</label>
 										</div>
 										<img id="imageprev2" class="mx-auto d-block mt-2 mb-4 border" style = "width:200px; height:200px" src="" alt="your image" />
-										<input type="file" class="form-control-file" id='clientimage' name ='clientimage'>
+										<input type="file" class="form-control-file" id='clientimage2' name ='clientimage2'>
 									</div>
 									<div class="w-50 p-2 my-auto">
 										<div class="form-group">
@@ -453,7 +453,7 @@
 				}
 			}
 
-			$("#fileimg").change(function() {
+			$("#clientimage").change(function() {
 				readURL(this);
 			});
 
@@ -469,7 +469,7 @@
 				}
 			}
 
-			$("#clientimage").change(function() {
+			$("#clientimage2").change(function() {
 				readURL2(this);
 			});
 		</script>

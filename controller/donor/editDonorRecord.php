@@ -13,12 +13,12 @@ $clientminit = mysqli_real_escape_string($connections, $_POST['clientminit']);
 $clientlname = mysqli_real_escape_string($connections, $_POST['clientlname']);
 //$clientsex = mysqli_real_escape_string($connections, $_POST['clientsex']);
 
-$file = $_FILES ['clientimage'];
-$fileName = $_FILES['clientimage']['name'];/*kukunin yung file name*/
-$fileTmpName = $_FILES['clientimage']['tmp_name'];/*kukunin yung temporary destination na pinupuntahan ng file bago i upload*/
-$fileSize = $_FILES['clientimage']['size'];/*kukunin file size*/
-$fileError = $_FILES['clientimage']['error'];/*integer to pag 0 ibig sabihin succesful parang ganun*/
-$fileType = $_FILES['clientimage']['type'];/*kukunin file type*/
+$file = $_FILES ['clientimage2'];
+$fileName = $_FILES['clientimage2']['name'];/*kukunin yung file name*/
+$fileTmpName = $_FILES['clientimage2']['tmp_name'];/*kukunin yung temporary destination na pinupuntahan ng file bago i upload*/
+$fileSize = $_FILES['clientimage2']['size'];/*kukunin file size*/
+$fileError = $_FILES['clientimage2']['error'];/*integer to pag 0 ibig sabihin succesful parang ganun*/
+$fileType = $_FILES['clientimage2']['type'];/*kukunin file type*/
 
 $fileExt = explode('.', $fileName);
 $fileActualExt = strtolower(end($fileExt));
