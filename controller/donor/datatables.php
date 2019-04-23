@@ -340,7 +340,7 @@
 						$varPE = $varPass;
 						
 						$qryIsRemarks = mysqli_query($connections, "
-							SELECT DISTINCT(ss.stfDonorSerologicalScreeningRemarks) AS 'IS'
+							SELECT DISTINCT(ins.stfClientInitialScreeningRemarks) AS 'IS'
 							FROM tbldonation d
 							JOIN tblphysicalexam pe ON d.intDonationId = pe.intDonationId
 							JOIN tblinitialscreening ins ON pe.intDonationId = ins.intDonationId
@@ -350,7 +350,7 @@
 						$varIsRemarks = array();
 						
 						while($rowIsRemarks = mysqli_fetch_assoc($qryIsRemarks))	{
-							$varIsRemarks[] = $rowIsRemarks["stfAnswerRemarks"];
+							$varIsRemarks[] = $rowIsRemarks["IS"];
 						}
 						
 						if(!empty($varIsRemarks))	{
