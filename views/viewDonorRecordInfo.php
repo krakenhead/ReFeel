@@ -177,16 +177,16 @@
 				<?php include "components/header.php"; ?>
 				<div class="page-title">
 					<div class="d-flex justify-content-between">
-					<div>
-						<h3 class="p-2 align-middle">Donor Info</h3>
+						<div>
+							<h3 class="p-2 align-middle">Donor Info</h3>
+						</div>
+						<div class="p-2">
+							<button type="button" onclick="location.href='donor-records.php'" class="btn btn-outline-danger">
+								<i class="fas fa-long-arrow-alt-left"></i>
+								Back
+							</button>
+						</div>
 					</div>
-					<div class="p-2">
-						<button type="button" onclick="location.href='donor-records.php'" class="btn btn-outline-danger">
-							<i class="fas fa-long-arrow-alt-left"></i>
-							Back
-						</button>
-					</div>
-				</div>
 				</div>
 				<section class="content">
 					<div class="container-fluid">

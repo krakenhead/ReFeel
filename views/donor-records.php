@@ -13,6 +13,7 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
   <link rel="stylesheet" href="../public/css/datatables.min.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
   <?php include "components/loader.php"; ?>
@@ -23,22 +24,22 @@ include "../controller/fetchEmpAcc.php";
 				$datenow = date('Y-m-d');
 				$datenow_1 = new DateTime($datenow);
       ?>
-      <div class="page-title">
-        <h3>Donor Records</h3>
-      </div>
+			<div class="page-title">
+				<h3 class="p-2 align-middle">Donor Records</h3>
+			</div>
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container">
-                <div id="donorRecords">
-                  <table id="tblDonorRecords" class="table table-striped table-bordered">
+                <div id="donorRecords" class="mt-4">
+                  <table id="tblDonorRecords" class="table table-hover table-bordered text-center">
                     <thead>
-                      <tr>
-                        <th>First Name</th>
-                        <th>Middle Name</th>
-                        <th>Last Name</th>
-                        <th class="text-center">Action</th>
+                      <tr class="bg-danger text-white">
+                        <td>First Name</td>
+                        <td>Middle Name</td>
+                        <td>Last Name</td>
+                        <td>Action</td>
                       </tr>
                     </thead>
                   </table>
