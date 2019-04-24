@@ -1,0 +1,185 @@
+            <div class="col-md-12 col-lg-12 p-0 mt-2">
+              <div class="content-container">
+                <span class="d-flex my-2">
+									<button type="button" class="btn btn-danger mr-2" style="height: 50px; width: 50px; border-radius: 25px;">
+										<i class="fa fa-stethoscope fa-lg"></i>
+									</button>
+									<h4 class="p-2">Physical Exam</h4>
+								</span>
+                <?php
+                  $physicalexamQry = mysqli_query($connections,"
+										SELECT *
+										FROM tblphysicalexam
+										WHERE intDonationId = '$id'
+									");
+									
+                  if(mysqli_num_rows($physicalexamQry) > 0)	{
+										while($physical = mysqli_fetch_assoc($physicalexamQry))	{
+											$weight = $physical["decClientWeight"];
+											$bp = $physical["strClientBloodPressure"];
+											$pulserate = $physical["strClientPulseRate"];
+											$temp = $physical["decClientTemperature"];
+											$genapp = $physical["txtClientGenAppearance"];
+											$heent = $physical["txtClientHEENT"];
+											$heartnlungs = $physical["txtClientHeartLungs"];
+											$m_remarks = $physical["stfMedicalStatRemarks"];
+											$bloodvolume = $physical["intBloodVolumeId"];
+											$deferralID = $physical["intDeferralId"];
+											
+											if($m_remarks == "Accepted")	{
+                ?>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donorweight">Weight</label>
+                    <input type="text" class="form-control" value = "<?php echo $weight?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donorbloodpressure">Blood Pressure</label>
+                    <input type="text" class="form-control" value = "<?php echo $bp?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donorpulserate">Pulse Rate</label>
+                    <input type="text" class="form-control" value = "<?php echo $pulserate?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donortemperature">Temperature</label>
+                    <input type="text" class="form-control" value = "<?php echo $temp?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorgenapp">General Appearance</label>
+                    <input type="text" class="form-control" value = "<?php echo $genapp?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheent">Head, Ears, Eyes, Nose & Throat (HEENT)</label>
+                    <input type="text" class="form-control" value = "<?php echo $heent?>"  readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Heart and Lungs</label>
+                    <input type="text" class="form-control" value = "<?php echo $heartnlungs?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Remarks</label>
+                    <input type="text" class="form-control" value = "<?php echo $m_remarks?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Blood Volume</label>
+                    <input type="text" class="form-control" value = "<?php echo $bloodvolume?>" readonly>
+                  </div>
+                </div>
+                <?php
+                  }
+									else if($m_remarks == "Temporarily Deferred" || $m_remarks == "Permanently Deferred")	{
+                    $deferralqry = mysqli_query($connections,"
+											SELECT *
+											FROM tbldeferral
+											WHERE intDeferralId = '$deferralID'
+										");
+                    if(mysqli_num_rows($deferralqry) > 0)	{
+                      while($deferrals = mysqli_fetch_assoc($deferralqry)){
+                        $reason = $deferrals["txtDeferralReason"];
+                        $instruction =$deferrals["txtDeferralInstructions"];
+                      }
+                    }
+										else	{
+
+                    }
+                ?>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donorweight">Weight</label>
+                    <input type="text" class="form-control" value = "<?php echo $weight?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donorbloodpressure">Blood Pressure</label>
+                    <input type="text" class="form-control" value = "<?php echo $bp?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donorpulserate">Pulse Rate</label>
+                    <input type="text" class="form-control" value = "<?php echo $pulserate?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="donortemperature">Temperature</label>
+                    <input type="text" class="form-control" value = "<?php echo $temp?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorgenapp">General Appearance</label>
+                    <input type="text" class="form-control" value = "<?php echo $genapp?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheent">Head, Ears, Eyes, Nose & Throat (HEENT)</label>
+                    <input type="text" class="form-control" value = "<?php echo $heent?>"  readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Heart and Lungs</label>
+                    <input type="text" class="form-control" value = "<?php echo $heartnlungs?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Remarks</label>
+                    <input type="text" class="form-control" value = "<?php echo $m_remarks?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Blood Volume</label>
+                    <input type="text" class="form-control" value = "<?php echo $bloodvolume?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Deferral reason</label>
+                    <input type="text" class="form-control" value = "<?php echo $reason?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="donorheartlungs">Deferral Instruction</label>
+                    <input type="text" class="form-control" value = "<?php echo $instruction?>" readonly>
+                  </div>
+                </div>
+                <?php
+                  }
+                  ?>
+
+                <?php
+                  }
+                }else{
+                  ?>
+                  <div class="text-center">
+                    <i class="fas fa-user-slash fa-5x"></i>
+                    <h5 class='my-3'>No Physical Exam record.</h5>
+                  </div>
+                  <?php
+                }
+                ?>
+              </div>
+            </div>

@@ -288,9 +288,9 @@
 			$did = $row['intDonationId'];
 			$sub_array = array();
 			
-			$sub_array[] = '<div class="update" data-id="'.$row["intDonationId"].'" 	data-column="intDonationId">' . $row["intDonationId"] . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'" 	data-column="intDonationId">' . $row["intDonationId"] . '</div>';
 
-			$sub_array[] = '<div class="update" data-id="'.$row["intDonationId"].'" 	data-column="dtmExamTaken">' . $row["Donation_Date"] . '</div>';
+			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intDonationId"].'" 	data-column="dtmExamTaken">' . $row["Donation_Date"] . '</div>';
 			///*
 			$qryMeRemarks = mysqli_query($connections, "
 				SELECT DISTINCT(me.stfAnswerRemarks)
@@ -682,11 +682,11 @@
 
 				$sub_array = array();
 
-				$sub_array[0] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+				$sub_array[0] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
 
-				$sub_array[1] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
+				$sub_array[1] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
 
-				$sub_array[2] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+				$sub_array[2] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
 
 				if(mysqli_num_rows($check_ifhasrecordwithinninetydays) == 0)	{
 					if(mysqli_num_rows($failed_BC) == 0 AND mysqli_num_rows($failed_survey) == 0 AND mysqli_num_rows($expired_survey) == 0)	{
@@ -698,13 +698,6 @@
 										<button type="button" class="btn btn-primary btnAddphysical" data-id="'.$row["intClientId"].'">
 											Add Physical Screening
 										</button>
-										<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-											<i class="fa fa-user-edit fa-lg"></i>
-										</button>
-										<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-											<i class="fa fa-eye fa-lg"></i>
-										</a>
-									</div>
 								';
 							}
 							else if(mysqli_num_rows($check_ifnoinit) > 0)	{
@@ -713,13 +706,6 @@
 										<button type="button" class="btn btn-primary btnAddinitial" data-id="'.$row["intClientId"].'">
 										Add Initial Screening
 										</button>
-										<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-											<i class="fa fa-user-edit fa-lg"></i>
-										</button>
-										<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-											<i class="fa fa-eye fa-lg"></i>
-										</a>
-									</div>
 								';
 							}
 							else if(mysqli_num_rows($check_ifseroremaining) > 0 )	{
@@ -728,57 +714,27 @@
 										<button type="button" class="btn btn-primary btnAddserological" data-id="'.$row["intClientId"].'">
 											Add Serological Screening
 										</button>
-										<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-											<i class="fa fa-user-edit fa-lg"></i>
-										</button>
-										<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-											<i class="fa fa-eye fa-lg"></i>
-										</a>
-									</div>
 								';
 							}
 							else if (mysqli_num_rows($checkifpwedenaulit) > 0)	{
 								$sub_array[3] =	'
 									<div class="text-center">
-										<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'">
+										<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'" style="text-decoration: none">
 											<button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">
 												Add record
 											</button>
 										</a>
-										<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-											<i class="fa fa-user-edit fa-lg"></i>
-										</button>
-										<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-											<i class="fa fa-eye fa-lg"></i>
-										</a>
-									</div>
 								';
 							}
-		/*
-		------------------------------------------------------------------------------------------------------------------------------------------------------------
-		// }
-		// else {
-			// $sub_array[3] =	'
-				// <button type="button" class="btn ml-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'">Edit</button> <a class="btn btn-default ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="donorrecords-tab-viewinfo.php?id=$clientid">View</a>
-			// ';
-		 }
-		 */
 						}
 							else	{
 								$sub_array[3] =	'
 									<div class="text-center">
-										<a href = "fetch_donorsurveyanswers.php?rowid='.$latestdonationID.'" >
+										<a href = "fetch_donorsurveyanswers.php?rowid='.$latestdonationID.'" style="text-decoration: none">
 											<button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">
 												Check Survey
 											</button>
 										</a>
-										<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-											<i class="fa fa-user-edit fa-lg"></i>
-										</button>
-										<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-											<i class="fa fa-eye fa-lg"></i>
-										</a>
-									</div>
 								';
 							}
 					}
@@ -788,13 +744,6 @@
 								<button type = "button" class ="btn btn-success" disabled>
 									Record Complete
 								</button>
-								<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-									<i class="fa fa-user-edit fa-lg"></i>
-								</button>
-								<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-									<i class="fa fa-eye fa-lg"></i>
-								</a>
-							</div>
 						';
 					}
 				}
@@ -804,25 +753,17 @@
 							<button type = "button" class ="btn btn-success" disabled>
 								Record Complete
 							</button>
-							<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
-								<i class="fa fa-user-edit fa-lg"></i>
-							</button>
-							<a class="btn btn-outline-secondary btn-sm mx-1 p-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'" title="View">
-								<i class="fa fa-eye fa-lg"></i>
-							</a>
-						</div>
 					';
 				}
-				$data[] = $sub_array;
 			}
 			else	{
 				$sub_array = array();
 
-				$sub_array[0] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-
-				$sub_array[1] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-
-				$sub_array[2] = '<div class="update" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+				$sub_array[0] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+				
+				$sub_array[1] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
+				
+				$sub_array[2] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
 
 				$sub_array[3] =	'
 					<div class="text-center">
@@ -831,6 +772,10 @@
 								Add record
 							</button>
 						</a>
+				';
+			}	//end of else
+			
+			$sub_array[3] .= '
 						<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
 							<i class="fa fa-user-edit fa-lg"></i>
 						</button>
@@ -838,10 +783,9 @@
 							<i class="fa fa-eye fa-lg"></i>
 						</a>
 					</div>
-				';
-
-				$data[] = $sub_array;
-			}	//end of else
+			';
+		
+			$data[] = $sub_array;
 		}
 	
 		function get_all_data($connections)	{

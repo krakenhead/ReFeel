@@ -1,0 +1,39 @@
+									<!--
+									<div class="row">
+										client info
+										<div class="container-fluid col-md-4 client-info-card">
+											<b class="labeldonordiv">Name: </b>
+											<label id='client_fullname'>
+												<?php
+													// echo $clientfirstname . " " . $clientmiddlename . " " . $clientlastname
+													echo $clientlastname . ", " . $clientfirstname . " " . $clientmiddlename
+												?>
+											</label><br>
+											<b class="labeldonordiv">Birthday:  </b>
+											<label id='client_bday'><?php echo date_format(date_create($clientbirthday), "F d, Y"); ?></label><br>
+											<b class="labeldonordiv">Sex: </b>
+											<label id='client_sex'><?php echo $clientsex ?> </label><br>
+											<b class="labeldonordiv">Contact: </b>
+											<label id='client_contact'> <?php echo $clientcontact ?> </label><br>
+											<b class="labeldonordiv">Blood Type: </b>
+											<label id="client_bloodtype"> <?php echo $bloodtype . " " . $bloodrhesus ?> </label><br>
+											<b class="labeldonordiv">Latest Profile Changes : </b><br>
+											<label id="client_changes"> <?php echo $changes ?> </label>
+										</div>
+										client donation info
+										<div class="col-md-4 container-fluid client-info-card">
+											<b class="labeldonordiv" for="lastdonation">Last Donation: </b>
+											<label id="lastdonation"><?php echo date_format(date_create($lastdonationdate), 'F d, Y h:m A'); ?></label><br>
+											<b class="labeldonordiv" for="timesdonated">Times Donated: </b>
+											<label id="timesdonated"><?php echo $donationfreq ?></label><br>
+											<b class="labeldonordiv">Times Rejected:</b><br>
+											<b class="mr-3" id="timesrejectedinsurvey">Survey: <span style="font-weight: 300"><?php echo $donationrejmed ?></span> </b>
+											<b class="mr-3" id="timesrejectedphys">Physical Exam: <span style="font-weight: 300"><?php echo $donationrejphy ?></span> </b>
+											<b class="mr-3" id="timesrejectedinit">Initial Screening: <span style="font-weight: 300"><?php echo $donationrejinit ?></span></b>
+											<b class="mr-3" id="timesrejectedsero">Serological Screening: <span style="font-weight: 300"><?php echo $donationrejsero ?></span></b>
+										</div>
+										client image
+										<div class="col-md-4 container-fluid text-center client-info-card">
+											<img src = "../public/img/<?php echo $image ?>" class="ml-auto mr-auto" style = "width:200px; height:200px; border-radius: 100px;">
+										</div>
+									-->

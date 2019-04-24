@@ -3,7 +3,7 @@
 	$clientid = $_GET['id'];
 	// echo $clientid;
 	$viewrecord = mysqli_query($connections, "
-		SELECT tc.strClientFirstName, tc.strClientMiddleName, tc.strClientLastName, tc.stfClientSex, tc.strClientContact, tc.datClientBirthday, bt.stfBloodType, bt.stfBloodTypeRhesus, strUserImageDir
+		SELECT tc.strClientFirstName, tc.strClientMiddleName, tc.strClientLastName, tc.stfClientSex, tc.strClientContact, tc.datClientBirthday, TIMESTAMPDIFF(YEAR, tc.datClientBirthday, NOW()) AS 'Age', bt.stfBloodType, bt.stfBloodTypeRhesus, strUserImageDir
 		FROM tblclient tc
 		JOIN tblbloodtype bt ON tc.intBloodTypeId = bt.intBloodTypeId
 		JOIN tbluser u ON u.intUserId = tc.intUserId
@@ -15,6 +15,7 @@
 	$clientmiddlename = $row["strClientMiddleName"];
 	$clientlastname = $row["strClientLastName"];
 	$clientbirthday = $row["datClientBirthday"];
+	$clientage = $row["Age"];
 	$clientsex = $row["stfClientSex"];
 	$clientcontact = $row["strClientContact"];
 	$bloodtype = $row["stfBloodType"];
@@ -77,8 +78,8 @@
 		SELECT COUNT(intDonationId) AS count
 		FROM tbldonation
 		WHERE intClientId = '$clientid'
-		AND stfDonationRemarks = 'Complete'
-		AND stfDonationStatus = 'Able'
+		# AND stfDonationRemarks = 'Complete'
+		# AND stfDonationStatus = 'Able'
 	");
 	
 	if(mysqli_num_rows($timesdonatedqry) > 0)	{
@@ -88,6 +89,18 @@
 	}
 	else	{
 		$lastdonationdate = "None";
+	}
+	
+	$timescdonatedqry = mysqli_query($connections,"
+		SELECT COUNT(intDonationId) AS count
+		FROM tbldonation
+		WHERE intClientId = '$clientid'
+		AND stfDonationRemarks = 'Complete'
+		AND stfDonationStatus = 'Able'
+	");
+	
+	while($donation31 = mysqli_fetch_assoc($timescdonatedqry)){
+		$donationc = $donation31["count"];
 	}
 
 	$timesrejectedmedqry = mysqli_query($connections,"
@@ -211,18 +224,16 @@
 													<p class="display-1">
 														<?php
 															echo $bloodtype;
-															echo ($bloodrhesus == 'Negative' || $bloodrhesus == 'Positive') ? ($bloodrhesus == 'Positive' ? '+' : '-') : " " . $bloodrhesus
+															echo ($bloodrhesus == 'Negative' || $bloodrhesus == 'Positive') ? ($bloodrhesus == 'Positive' ? '+' : '-') : null;
 														?>
 													</p>
 													<p>Blood Type</p>
 												</div>
 											</div>
 										</div>
-
-										<hr class="my-0">
 										<!-- Row 1 -->
-										<div class="row collapse show" id="pnlPrsInfo">
-											<div class="col-4 mx-auto text-center">
+										<div class="row" id="pnlPrsInfo">
+											<div class="col-3 mx-auto text-center">
 												<h4 class="pt-3">
 													<?php
 														echo date_format(date_create($clientbirthday), "F d, Y"); ;
@@ -230,7 +241,15 @@
 												</h4>
 												<p class="mt-n2 pt-0">Birthday</p>
 											</div>
-											<div class="col-4 mx-auto text-center">
+											<div class="col-3 mx-auto text-center">
+												<h4 class="pt-3">
+													<?php
+														echo $clientage;
+													?>
+												</h4>
+												<p class="mt-n2 pt-0">Age</p>
+											</div>
+											<div class="col-3 mx-auto text-center">
 												<h4 class="pt-3">
 													<?php
 														echo $clientsex;
@@ -238,7 +257,7 @@
 												</h4>
 												<p class="mt-n2 pt-0">Sex</p>
 											</div>
-											<div class="col-4 mx-auto text-center">
+											<div class="col-3 mx-auto text-center">
 												<h4 class="pt-3">
 													<?php
 														echo $clientcontact;
@@ -247,86 +266,45 @@
 												<p class="mt-n2 pt-0">Contact Number</p>
 											</div>
 										</div>
-
 										<hr class="my-0">
 										<!-- Row 2 -->
-										<div class="row">
-											<div class="col-6 text-center">
-												<!--
-												<h4 class="pt-3">
-													<?php
-														// echo $clientfirstname . " " . $clientmiddlename . " " . $clientlastname;
-														echo $bloodtype;
-													?>
-												</h4>
-												<p class="mt-n2 pt-0">ABO Type</p>
-											</div>
-											<div class="col-6 text-center">
-												<h4 class="pt-3">
-													<?php
-														// echo $clientfirstname . " " . $clientmiddlename . " " . $clientlastname;
-														echo $bloodrhesus;
-													?>
-												</h4>
-												<p class="mt-n2 pt-0">Rhesus</p>
-												-->
-											</div>
+										<div class="row mt-4 pl-3">
+											<span class="mr-4 align-middle h4">
+												Donations
+											</span>
+											<span class="text-info h4" title="Total Donations">
+												<?php
+													echo $donationfreq;
+												?>
+											</span>
+											<span class="h4">&nbsp;/&nbsp;</span>
+											<span class="text-success h4" title="Succeeded Donation/s">
+												<?php
+													echo $donationc;
+												?>
+											</span>
+											<span class="h4">&nbsp;/&nbsp;</span>
+											<span class="text-danger h4" title="Failed Donation/s">
+												<?php
+													echo $donationrejmed + $donationrejphy + $donationrejinit + $donationrejsero;
+												?>
+											</span>
 										</div>
 									</div>
-									<!--
-									<div class="row">
-										client info
-										<div class="container-fluid col-md-4 client-info-card">
-											<b class="labeldonordiv">Name: </b>
-											<label id='client_fullname'>
-												<?php
-													// echo $clientfirstname . " " . $clientmiddlename . " " . $clientlastname
-													echo $clientlastname . ", " . $clientfirstname . " " . $clientmiddlename
-												?>
-											</label><br>
-											<b class="labeldonordiv">Birthday:  </b>
-											<label id='client_bday'><?php echo date_format(date_create($clientbirthday), "F d, Y"); ?></label><br>
-											<b class="labeldonordiv">Sex: </b>
-											<label id='client_sex'><?php echo $clientsex ?> </label><br>
-											<b class="labeldonordiv">Contact: </b>
-											<label id='client_contact'> <?php echo $clientcontact ?> </label><br>
-											<b class="labeldonordiv">Blood Type: </b>
-											<label id="client_bloodtype"> <?php echo $bloodtype . " " . $bloodrhesus ?> </label><br>
-											<b class="labeldonordiv">Latest Profile Changes : </b><br>
-											<label id="client_changes"> <?php echo $changes ?> </label>
-										</div>
-										client donation info
-										<div class="col-md-4 container-fluid client-info-card">
-											<b class="labeldonordiv" for="lastdonation">Last Donation: </b>
-											<label id="lastdonation"><?php echo date_format(date_create($lastdonationdate), 'F d, Y h:m A'); ?></label><br>
-											<b class="labeldonordiv" for="timesdonated">Times Donated: </b>
-											<label id="timesdonated"><?php echo $donationfreq ?></label><br>
-											<b class="labeldonordiv">Times Rejected:</b><br>
-											<b class="mr-3" id="timesrejectedinsurvey">Survey: <span style="font-weight: 300"><?php echo $donationrejmed ?></span> </b>
-											<b class="mr-3" id="timesrejectedphys">Physical Exam: <span style="font-weight: 300"><?php echo $donationrejphy ?></span> </b>
-											<b class="mr-3" id="timesrejectedinit">Initial Screening: <span style="font-weight: 300"><?php echo $donationrejinit ?></span></b>
-											<b class="mr-3" id="timesrejectedsero">Serological Screening: <span style="font-weight: 300"><?php echo $donationrejsero ?></span></b>
-										</div>
-										client image
-										<div class="col-md-4 container-fluid text-center client-info-card">
-											<img src = "../public/img/<?php echo $image ?>" class="ml-auto mr-auto" style = "width:200px; height:200px; border-radius: 100px;">
-										</div>
-									-->
-										<div class="col-md-12 mt-4" id="divview_records">
-											<table id="tblViewDonation" class="table table-hover table-bordered text-center" style="width: 100%">
-												<thead>
-													<tr class="bg-danger text-white">
-														<td style="">Donation ID</td>
-														<td>Donation Date</td>
-														<td style="width: 7.5%" title="Medical Exam"><i class="fa fa-notes-medical"></i></td>
-														<td style="width: 7.5%" title="Physical Exam"><i class="fa fa-stethoscope"></i></td>
-														<td style="width: 7.5%" title="Initial Screening"><i class="fa fa-vial"></i></td>
-														<td style="width: 7.5%" title="Serological Screening"><i class="fa fa-microscope"></i></td>
-														<td>Action</td>
-													</tr>
-												</thead>
-											</table>
-										</div>
+									<div class="col-md-12 mt-4" id="divview_records">
+										<table id="tblViewDonation" class="table table-hover table-bordered text-center" style="width: 100%">
+											<thead>
+												<tr class="bg-danger text-white">
+													<td style="width: 15%">Donation ID</td>
+													<td style="width: 25%">Donation Date</td>
+													<td style="width: 10%" title="Medical Exam"><i class="fa fa-notes-medical"></i></td>
+													<td style="width: 10%" title="Physical Exam"><i class="fa fa-stethoscope"></i></td>
+													<td style="width: 10%" title="Initial Screening"><i class="fa fa-vial"></i></td>
+													<td style="width: 10%" title="Serological Screening"><i class="fa fa-microscope"></i></td>
+													<td style="width: 25%">Action</td>
+												</tr>
+											</thead>
+										</table>
 									</div>
 								</div>
 							</div>
