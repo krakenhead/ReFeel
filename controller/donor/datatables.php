@@ -730,7 +730,7 @@
 							else	{
 								$sub_array[3] =	'
 									<div class="text-center">
-										<a href = "fetch_donorsurveyanswers.php?rowid='.$latestdonationID.'" style="text-decoration: none">
+										<a href = "fetchIntSheetQuestions-table.php?client_id='.$latestdonationID.'" style="text-decoration: none">
 											<button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">
 												Check Survey
 											</button>

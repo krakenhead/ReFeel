@@ -9,11 +9,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ReFeel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReFeel - Survey Answers</title>
+	<link rel="icon" href="../public/img/blood.ico">
   <link rel="stylesheet" href="../public/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
   <?php
@@ -25,7 +27,17 @@
       include "components/special-header.php";
       ?>
       <div class="page-title">
-        <h3>Survey Answers</h3>
+        <div class="d-flex justify-content-between">
+						<div>
+							<h3 class="p-2 align-middle">Survey Answers</h3>
+						</div>
+						<div class="p-2">
+							<button type="button" onclick="location.href='donor-records.php'" class="btn btn-outline-danger">
+								<i class="fas fa-long-arrow-alt-left"></i>
+								Back
+							</button>
+						</div>
+					</div>
       </div>
       <section class="content">
         <div class="container-fluid">
@@ -34,28 +46,34 @@
               <div class="content-container">
                 <form id='idIntSheet'>
                   <div class="form-group">
-                    <label for="date_med">Date Answered</label>
-                    <input type="date" name="date_med" required>
+										<div class="row pt-2 pb-1 pl-4">
+											<h5 class="mr-4">Date Answered</h5>
+											<input type="date" name="date_med" required="required">
+											<input type="time" name="date_med" required="required">
+										</div>
                   </div>
                   <input type="hidden" name="hidden_id" value="<?php echo $varDbId;?>">
                   <?php
                     $qryDistQueCtg = mysqli_query($connections, "
-                    SELECT DISTINCT(qc.stfQuestionCategory)
-                    FROM tblquestion q
-                    JOIN tblquestioncategory qc ON q.intQuestionCategoryId = qc.intQuestionCategoryId
+											SELECT DISTINCT(qc.stfQuestionCategory)
+											FROM tblquestion q
+											JOIN tblquestioncategory qc ON q.intQuestionCategoryId = qc.intQuestionCategoryId
                     ");
 
                     $qryCountQueCtg = mysqli_num_rows($qryDistQueCtg);
 
-                    $qryCliSex = mysqli_query($connections, "SELECT stfClientSex FROM tblclient WHERE intClientId = $varDbId");
-                    while($rowCliSex = mysqli_fetch_assoc($qryCliSex))	{
-                      $varSex = $rowCliSex["stfClientSex"];
-                    }
+                    $qryCliSex = mysqli_query($connections, "
+											SELECT stfClientSex
+											FROM tblclient
+											WHERE intClientId = $varDbId
+										");
+                    $rowCliSex = mysqli_fetch_assoc($qryCliSex);
+                    $varSex = $rowCliSex["stfClientSex"];
 
                     function typeYn($varQueId)	{
                       echo "
                           <div class='row'>
-                            <div class='btn-group-toggle text-center w-100 form-group mb-sm-3' data-toggle='buttons'>
+                            <div class='btn-group-toggle text-center w-100' data-toggle='buttons'>
                               <label id='btnYn$varQueId' class='btn btn-outline-danger form-control col-4 mr-sm-2' value='Yes'>
                                 <input type='radio' name='txtYn$varQueId' value='Yes' autocomplete='off' required='required' />Oo
                               </label>
@@ -69,7 +87,7 @@
 
                     function typeDate($varQueId)	{
                       echo "
-                          <div class='row'>
+                          <div class='row mt-3'>
                             <div class='form-group col-4'>
                               <select class='form-control' name='optDm$varQueId' placeholder='Month'>
                               <option value='00'>Month</option>';
@@ -134,14 +152,14 @@
 
                     function btnRems($varQueId)	{
                       echo "
-                        <div class='btn-group-toggle text-center w-100 form-group mb-sm-3' data-toggle='buttons'>
-                          <label id='btnYn$varQueId' class='btn btn-outline-success btn-lg form-control col-12 mb-sm-3' value='Yes'>
+                        <div class='btn-group-toggle' data-toggle='buttons'>
+                          <label id='btnYn$varQueId' class='btn btn-outline-success form-control col-12 mb-sm-2' value='Yes'>
                             <input type='radio' name='updatestatus$varQueId' value='Correct' autocomplete='off' required='required' />
-                              <i class='fa fa-check fa-2x'></i>
+                              Acceptable
                           </label>
-                          <label id='btnYn$varQueId' class='btn btn-outline-danger btn-lg form-control col-12' value='No'>
+                          <label id='btnYn$varQueId' class='btn btn-outline-danger form-control col-12' value='No'>
                             <input type='radio' name='updatestatus$varQueId' value='Wrong' autocomplete='off' required='required' />
-                              <i class='fa fa-times fa-2x'></i>
+                              Unacceptable
                           </label>
                         </div>
                       ";
@@ -243,7 +261,7 @@
                       }
                     }
                   ?>
-                  <button input="submit" class="form-control btn btn-outline-danger mb-4">Submit Answers</button>
+                  <button input="submit" class="form-control btn btn-danger my-2">Submit Answers</button>
                 </form>
               </div>
             </div>
@@ -252,9 +270,7 @@
       </section>
     </main>
   </div>
-  <?php
-  include "components/core-script.php";
-  ?>
+  <?php include "components/core-script.php"; ?>
   <script src="../public/js/notification.js"></script>
   <script>
     $('.loader').hide();
@@ -282,7 +298,7 @@
             url: "../controller/survey/getIntSheetAnswers.php",
             method: "POST",
             data: {formdata,formdata},
-            success: function(data){
+            success: function(data)	{
               console.log(data);
               if(data == "2"){
                 alert("Date Answered must not be greater than the date today!");
@@ -297,8 +313,7 @@
         return false;
       }
     });
-
 	});
   </script>
-</body>
+	</body>
 </html>

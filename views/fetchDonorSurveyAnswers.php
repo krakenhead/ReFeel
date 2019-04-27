@@ -176,8 +176,8 @@ include "../controller/fetchEmpAcc.php";
       });
     }
 
-  $(function(){
-    $("form[name ='submit_update']").on('submit',function(e){
+  $(function()	{
+    $("form[name ='submit_update']").on('submit',function(e)	{
       e.preventDefault();
       var formdata = $("form[name ='submit_update']").serialize();
       console.log(formdata);
@@ -204,36 +204,36 @@ include "../controller/fetchEmpAcc.php";
 			// span.innerHTML = "Are you sure you want to submit the checked survey?";
 			
 			swal({
-					title: 'Notice.',
-					// content: span,
-					text:  "Are you sure you want to submit the checked survey?",
-					icon: 'warning',
-					dangerMode: true,
-					buttons: ['No', 'Yes'],
-				}).then((willRequest) => {
-					if(willRequest)	{
-						$.ajax	({
-							url: "../controller/survey/saveUpdateSurvey.php",
-							type: "POST",
-							data: {formdata:formdata},
-							success: function(data)	{
-								console.log(data);
-								swal({
-									title: 'Done!',
-									text: 'Survey has been checked.',
-									icon: 'success'
-								}).then(() => {
-									window.location.href = 'donor-list.php'
-								});
-							}
-						});
-					}
-					else	{
-						swal({
-							text: 'Confirmation cancelled.',
-						})
-					}
-				});
+				title: 'Notice.',
+				// content: span,
+				text:  "Are you sure you want to submit the checked survey?",
+				icon: 'warning',
+				dangerMode: true,
+				buttons: ['No', 'Yes'],
+			}).then((willRequest) => {
+				if(willRequest)	{
+					$.ajax	({
+						url: "../controller/survey/saveUpdateSurvey.php",
+						type: "POST",
+						data: {formdata:formdata},
+						success: function(data)	{
+							console.log(data);
+							swal({
+								title: 'Done!',
+								text: 'Survey has been checked.',
+								icon: 'success'
+							}).then(() => {
+								window.location.href = 'donor-list.php'
+							});
+						}
+					});
+				}
+				else	{
+					swal({
+						text: 'Confirmation cancelled.',
+					})
+				}
+			});
     });
   });
   </script>

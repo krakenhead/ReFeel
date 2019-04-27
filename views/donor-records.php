@@ -1,6 +1,4 @@
-<?php 
-include "../controller/fetchEmpAcc.php";
-?>
+<?php include "../controller/fetchEmpAcc.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +59,6 @@ include "../controller/fetchEmpAcc.php";
                 </div>
               </div>
             </div>
-            
             <div class="col-md-12 col-lg-12 p-0 mt-2" id="addPhysical" style="display: none">
               <div class="content-container">
                 <div id="addPhysical" class="mt-2">
@@ -193,91 +190,88 @@ include "../controller/fetchEmpAcc.php";
                           <th>Remarks</th>
                           <th>Screener</th>
                           <th>Verifier</th>
-
                         </tr>
                       </thead>
                       <tbody>
                         <?php
+													$fetch_components = mysqli_query($connections,"
+														SELECT *
+														FROM tblbloodcomponent
+														WHERE stfBloodComponentStatus = 'Active'
+													");
 
-                        $fetch_components = mysqli_query($connections,"SELECT * FROM tblbloodcomponent WHERE stfBloodComponentStatus = 'Active'");
-
-                        if(mysqli_num_rows($fetch_components)>0)
-                        {
-                          while ($row = mysqli_fetch_assoc($fetch_components)){
-                            $bloodcomponentid = $row['intBloodComponentId'];
-                            $componentname = $row['strBloodComponent'];
-                            $maleleast = $row['decMaleLeastVal'];
-                            $malemax = $row['decMaleMaxVal'];
-                            $femaleleast = $row['decFemaleLeastVal'];
-                            $femalemax = $row['decFemaleMaxVal'];
-
-                            ?>
-                            <input type="hidden" value="<?php echo $bloodcomponentid; ?>" name ='hidden_ID'>
-                            <tr>
-                              <td><?php echo $componentname; ?></td>
-                              <td>  <input type="number" step = 'any' class="form-control BC_result" placeholder="Enter Result" name = "BC_result<?php echo $bloodcomponentid; ?>" id = "<?php echo $bloodcomponentid; ?>" data-ml ='<?php echo $maleleast; ?>' data-mm ='<?php echo $malemax; ?>' data-fl ='<?php echo $femaleleast; ?>'
-                              data-fm ='<?php echo $femalemax; ?>' required>
-                              </td>
-                            <!--  <td>
+													if(mysqli_num_rows($fetch_components)>0)	{
+														while ($row = mysqli_fetch_assoc($fetch_components))	{
+															$bloodcomponentid = $row['intBloodComponentId'];
+															$componentname = $row['strBloodComponent'];
+															$maleleast = $row['decMaleLeastVal'];
+															$malemax = $row['decMaleMaxVal'];
+															$femaleleast = $row['decFemaleLeastVal'];
+															$femalemax = $row['decFemaleMaxVal'];
+                        ?>
+													<input type="hidden" value="<?php echo $bloodcomponentid; ?>" name ='hidden_ID'>
+													<tr>
+														<td><?php echo $componentname; ?></td>
+														<td>
+															<input type="number" step = 'any' class="form-control BC_result" placeholder="Enter Result" name = "BC_result<?php echo $bloodcomponentid; ?>" id = "<?php echo $bloodcomponentid; ?>" data-ml ='<?php echo $maleleast; ?>' data-mm ='<?php echo $malemax; ?>' data-fl ='<?php echo $femaleleast; ?>'	data-fm ='<?php echo $femalemax; ?>' required="required">
+														</td>
+                            <!--  
+															<td>
                                 <label class="radio-inline"><input type="radio" name="BC_remarks<?php echo $bloodcomponentid; ?>" id="BC_remarks<?php echo $bloodcomponentid; ?>" value="Passed" required>Passed</label>
                                 <label class="radio-inline"><input type="radio" name="BC_remarks<?php echo $bloodcomponentid; ?>" id="optradio<?php echo $bloodcomponentid; ?>" value="Failed" required>Failed</label>
-
-                              </td>-->
+                              </td>
+														-->
                               <td>
                                 <button type = "button" class ="btn btn-success" disabled style="display:none;" id = "BCremarkspassed<?php echo $bloodcomponentid; ?>" >PASSED</button>
                                 <button type = "button" class ="btn btn-danger" disabled style="display:none;" id = "BCremarksfailed<?php echo $bloodcomponentid; ?>" >FAILED</button>
                               </td>
                               <td>
-                                <select class="form-control" name="BC_screener<?php echo $bloodcomponentid; ?>" id="BC_screener<?php echo $bloodcomponentid; ?>" required>
-                                  <?php
+                                <select class="form-control" name="BC_screener<?php echo $bloodcomponentid; ?>" id="BC_screener<?php echo $bloodcomponentid; ?>" required="required">
+                                <?php
                                   include("connections.php");
 
-                                  $fetch_staff = mysqli_query($connections, " SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
-                                                                              FROM tblemployee WHERE stfEmployeeStatus = 'Active'
-                                                                              ");
-
-                                  if(mysqli_num_rows($fetch_staff) > 0 ){
-                                    while($row = mysqli_fetch_assoc($fetch_staff)){
+                                  $fetch_staff = mysqli_query($connections, "
+																		SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
+                                    FROM tblemployee
+																		WHERE stfEmployeeStatus = 'Active'
+                                  ");
+																	
+                                  if(mysqli_num_rows($fetch_staff) > 0 )	{
+                                    while($row = mysqli_fetch_assoc($fetch_staff))	{
                                       $fullname = $row["Fullname"];
-
-                                      ?>
-                                      <option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
-                                      <?php
+                                ?>
+																	<option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
+                                <?php
                                     }
-
-                                    }
-
-                                  ?>
+                                  }
+                                ?>
                                 </select>
                               </td>
                               <td>
                                 <select class="form-control" name="BC_verifier<?php echo $bloodcomponentid; ?>" id="BC_verifier<?php echo $bloodcomponentid; ?>" required>
-                                  <?php
+                                <?php
                                   include("connections.php");
 
-                                  $fetch_staff = mysqli_query($connections, " SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
-                                                                              FROM tblemployee WHERE stfEmployeeStatus = 'Active'
-                                                                              ");
+                                  $fetch_staff = mysqli_query($connections, "
+																		SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
+																		FROM tblemployee WHERE stfEmployeeStatus = 'Active'
+                                  ");
 
-                                  if(mysqli_num_rows($fetch_staff) > 0 ){
-                                    while($row = mysqli_fetch_assoc($fetch_staff)){
+                                  if(mysqli_num_rows($fetch_staff) > 0 )	{
+                                    while($row = mysqli_fetch_assoc($fetch_staff))	{
                                       $fullname = $row["Fullname"];
-
-                                      ?>
+                                ?>
                                       <option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
-                                      <?php
+                                <?php
                                     }
-
-                                    }
-
-                                  ?>
+                                  }
+                                ?>
                                 </select>
                               </td>
-
                             </tr>
-                            <?php
-                          }
-                        }
+                        <?php
+														}
+													}
                         ?>
                       </tbody>
                     </table>
@@ -312,69 +306,75 @@ include "../controller/fetchEmpAcc.php";
                       </thead>
                       <tbody>
                         <?php
+													$fetch_disease = mysqli_query($connections,"
+														SELECT *
+														FROM tbldisease
+														WHERE stfDiseaseStatus = 'Active'
+													");
+													$fetch_diseasecount = mysqli_query($connections,"
+														SELECT COUNT(intDiseaseId) AS diseasecount
+														FROM tbldisease
+														WHERE stfDiseaseStatus = 'Active'
+													");
 
-                        $fetch_disease = mysqli_query($connections,"SELECT * FROM tbldisease WHERE stfDiseaseStatus = 'Active'");
-                        $fetch_diseasecount = mysqli_query($connections,"SELECT COUNT(intDiseaseId) AS diseasecount FROM tbldisease WHERE stfDiseaseStatus = 'Active'");
-
-                          while($row = mysqli_fetch_assoc($fetch_diseasecount)){
+                          while($row = mysqli_fetch_assoc($fetch_diseasecount))	{
                             $diseasecount = $row['diseasecount'];
                           }
 
-                        if(mysqli_num_rows($fetch_disease)>0)
-                        {
-                          while ($row = mysqli_fetch_assoc($fetch_disease)){
-                            $diseaseid = $row['intDiseaseId'];
-                            $diseasename = $row['strDisease'];
-
-                            ?>
+													if(mysqli_num_rows($fetch_disease)>0)	{
+														while ($row = mysqli_fetch_assoc($fetch_disease))	{
+															$diseaseid = $row['intDiseaseId'];
+															$diseasename = $row['strDisease'];
+                        ?>
                             <input type ="hidden" value="<?php echo $diseaseid ?>" name ='hidden_ID' id='hidden_ID'>
                             <input type ="hidden" value="<?php echo $diseasecount ?>" id ='hidden_count'>
                             <tr>
                               <td><?php echo $diseasename; ?></td>
-                              <td>  <input type="number" step = 'any' class="form-control d_remarks" placeholder="Enter Remarks" name = "D_remarks<?php echo $diseaseid; ?>" id = "<?php echo $diseaseid; ?>"  data-trial='hi' required> </td>
+                              <td>
+																<input type="number" step = 'any' class="form-control d_remarks" placeholder="Enter Remarks" name = "D_remarks<?php echo $diseaseid; ?>" id = "<?php echo $diseaseid; ?>"  data-trial='hi' required>
+															</td>
                               <td>
                                 <select class="form-control" name="D_screener<?php echo $diseaseid; ?>" id="D_screener<?php echo $diseaseid; ?>" required>
-                                  <?php
+                                <?php
                                   include("connections.php");
 
-                                  $fetch_staff = mysqli_query($connections, " SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
-                                                                              FROM tblemployee WHERE stfEmployeeStatus = 'Active'
-                                                                              ");
+                                  $fetch_staff = mysqli_query($connections, "
+																		SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
+                                    FROM tblemployee
+																		WHERE stfEmployeeStatus = 'Active'
+                                  ");
 
-                                  if(mysqli_num_rows($fetch_staff) > 0 ){
-                                    while($row = mysqli_fetch_assoc($fetch_staff)){
+                                  if(mysqli_num_rows($fetch_staff) > 0 )	{
+                                    while($row = mysqli_fetch_assoc($fetch_staff))	{
                                       $fullname = $row["Fullname"];
 
-                                      ?>
+                                ?>
                                       <option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
-                                      <?php
+                                <?php
                                     }
-
-                                    }
-
-                                  ?>
+                                  }
+                                ?>
                                 </select>
                               </td>
                               <td>
                                 <select class="form-control" name="D_verifier<?php echo $diseaseid; ?>" id="D_verifier<?php echo $diseaseid; ?>" required>
-                                  <?php
+                                <?php
                                   include("connections.php");
 
-                                  $fetch_staff = mysqli_query($connections, " SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
-                                                                              FROM tblemployee WHERE stfEmployeeStatus = 'Active'
-                                                                              ");
+                                  $fetch_staff = mysqli_query($connections, "
+																		SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
+																		FROM tblemployee
+																		WHERE stfEmployeeStatus = 'Active'
+                                  ");
 
-                                  if(mysqli_num_rows($fetch_staff) > 0 ){
-                                    while($row = mysqli_fetch_assoc($fetch_staff)){
+                                  if(mysqli_num_rows($fetch_staff) > 0 )	{
+                                    while($row = mysqli_fetch_assoc($fetch_staff))	{
                                       $fullname = $row["Fullname"];
-
-                                      ?>
+                                ?>
                                       <option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
                                       <?php
                                     }
-
-                                    }
-
+                                  }
                                   ?>
                                 </select>
                               </td>
@@ -387,33 +387,32 @@ include "../controller/fetchEmpAcc.php";
                                 <button type = "button" class ="btn btn-success" disabled style="display:none;" id = "remarksnegative<?php echo $diseaseid; ?>" >NEGATIVE</button>
                               </td>
                             </tr>
-                            <?php
-                          }
-                        }
+                        <?php
+														}
+													}
                         ?>
                       </tbody>
                     </table>
                     <label for="D_phlebotomist">Phlebotomist</label>
                     <select class="form-control" name="D_phlebotomist" id="D_phlebotomist" required>
-                      <?php
+                    <?php
                       include("connections.php");
 
-                      $fetch_staff = mysqli_query($connections, " SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
-                                                                  FROM tblemployee WHERE stfEmployeeStatus = 'Active'
-                                                                  ");
+                      $fetch_staff = mysqli_query($connections, "
+												SELECT CONCAT(strEmployeeFirstName,' ',strEmployeeMiddleName,' ',strEmployeeLastName) AS 'Fullname'
+                        FROM tblemployee
+												WHERE stfEmployeeStatus = 'Active'
+                      ");
 
-                      if(mysqli_num_rows($fetch_staff) > 0 ){
-                        while($row = mysqli_fetch_assoc($fetch_staff)){
+                      if(mysqli_num_rows($fetch_staff) > 0 )	{
+                        while($row = mysqli_fetch_assoc($fetch_staff))	{
                           $fullname = $row["Fullname"];
-
-                          ?>
-                          <option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
-                          <?php
+                    ?>
+													<option value="<?php echo $fullname ?>"><?php echo $fullname ?></option>
+                    <?php
                         }
-
-                        }
-
-                      ?>
+											}
+										?>
                     </select>
                     <button type="submit" class="btn btn-success mt-2 float-right" id='donorserorecord_save'>Save</button>
                   </form>
@@ -428,10 +427,15 @@ include "../controller/fetchEmpAcc.php";
   <!-- modal declaration -->
   <div class="modal fade" id="editdonorinfo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editdonorinfo">Edit Donor Info</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-close="Close"> <span aria-hidden="true">&times;</span> </button>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="editdonorinfo">
+						<i class="fa fa-edit px-2 fa-sm"></i> 
+						Edit Donor Info
+					</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-close="Close">
+						<span aria-hidden="true" class="text-white">&times;</span>
+					</button>
         </div>
         <div class="modal-body">
           <div class="container-fluid">
@@ -467,25 +471,26 @@ include "../controller/fetchEmpAcc.php";
               <div class="form-group">
                 <label for="clientbloodtype">Blood Type</label>
                 <select class="form-control" name="clientbloodtype" id="clientbloodtype">
-
-                  <?php
+                <?php
                   include("connections.php");
 
-                  $fetch_bloodtype = mysqli_query($connections, " SELECT * FROM tblbloodtype WHERE stfBloodTypeStatus = 'Active'");
+                  $fetch_bloodtype = mysqli_query($connections, "
+										SELECT *
+										FROM tblbloodtype
+										WHERE stfBloodTypeStatus = 'Active'
+									");
 
-                  if(mysqli_num_rows($fetch_bloodtype) > 0 ){
-                    while($row = mysqli_fetch_assoc($fetch_bloodtype)){
+                  if(mysqli_num_rows($fetch_bloodtype) > 0 )	{
+                    while($row = mysqli_fetch_assoc($fetch_bloodtype))	{
                       $blood_typeid = $row["intBloodTypeId"];
                       $blood_type = $row["stfBloodType"];
                       $rhesus = $row["stfBloodTypeRhesus"];
-                      ?>
+                ?>
                       <option value="<?php echo $blood_typeid ?>"><?php echo $blood_type." ".$rhesus ?></option>
-                      <?php
+                <?php
                     }
                   }
-                  ?>
-
-
+                ?>
                 </select>
               </div>
               <div class="form-group">
@@ -505,8 +510,14 @@ include "../controller/fetchEmpAcc.php";
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-seconday" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success" id="submit_editdonor">Save</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times pr-1 fa-sm"></i> 
+							Close
+						</button>
+            <button type="submit" class="btn btn-success" id="submit_editdonor">
+						<i class="fa fa-save pr-1 fa-sm"></i> 
+							Save
+						</button>
           </div>
         </form>
       </div>
@@ -525,31 +536,41 @@ include "../controller/fetchEmpAcc.php";
             <div class="form-group">
               <label for="chosenStorage">Choose a Storage</label>
               <select class="form-control" name="chosenStorage" id="chosenStorage" required>
-                <?php
+              <?php
+                $fetch_storage = mysqli_query($connections, "
+									SELECT intStorageId, intStorageCapacity, strStorageName
+									FROM tblstorage
+									WHERE intStorageTypeId = 2
+								");
 
-                $fetch_storage = mysqli_query($connections, " SELECT intStorageId,intStorageCapacity,strStorageName FROM tblstorage WHERE intStorageTypeId = 2");
-
-                if(mysqli_num_rows($fetch_storage) > 0 ){
-                  while($row = mysqli_fetch_assoc($fetch_storage)){
+                if(mysqli_num_rows($fetch_storage) > 0 )	{
+                  while($row = mysqli_fetch_assoc($fetch_storage))	{
                     $storageid = $row["intStorageId"];
                     $storagename = $row["strStorageName"];
                     $storagecapacity = $row["intStorageCapacity"];
 
-                    $check_ifmayspacepa = mysqli_query($connections,"SELECT COUNT(intBloodBagId) AS bloodcount FROM tblbloodbag bb JOIN tblstorage s ON bb.intStorageId = s.intStorageId WHERE intBloodDispatchmentId = '1' AND stfIsBloodBagExpired = 'No' AND intStorageTypeId = 2 AND s.intStorageId = $storageid");
+                    $check_ifmayspacepa = mysqli_query($connections,"
+											SELECT COUNT(intBloodBagId) AS bloodcount
+											FROM tblbloodbag bb
+											JOIN tblstorage s ON bb.intStorageId = s.intStorageId
+											WHERE intBloodDispatchmentId = '1'
+											AND stfIsBloodBagExpired = 'No'
+											AND intStorageTypeId = 2
+											AND s.intStorageId = $storageid
+										");
 
                     while ($row2 = mysqli_fetch_assoc($check_ifmayspacepa)) {
                       $quantity = $row2["bloodcount"];
                     }
 
-                    if($quantity < $storagecapacity){
-                    ?>
+                    if($quantity < $storagecapacity)	{
+              ?>
                     <option value="<?php echo $storageid ?>"><?php echo $storagename ?></option>
-                    <?php
-                  }
-
+              <?php
+										}
                   }
                 }
-                ?>
+              ?>
               </select>
             </div>
           </div>

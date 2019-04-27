@@ -72,8 +72,8 @@
 		<!-- Applicant Register modal -->
 		 <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content" style='border-radius: 30px 30px 25px 25px;'>
-					<div class="modal-header bg-danger" style='border-radius: 25px 25px 0px 0px;'>
+				<div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+					<div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
 						<h5 class="modal-title text-white">
 							<i class="fa fa-user-plus px-2 fa-sm"></i> 
 							Applicant Register
@@ -84,7 +84,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
-							<form action="../controller/donor/valClientSignup.php" method="POST" id = "client_signup" enctype="multipart/form-data">
+							<form action="../controller/donor/valClientSignup.php" method="POST" id="client_signup" enctype="multipart/form-data">
 								<p class="text-muted"><small><strong>PERSONAL INFORMATION</strong></small></p>
 								<hr style="margin-top: -15px;" />
 								
@@ -169,38 +169,11 @@
 										<label for="lblBdate" class="col-form-label">Birthday</label>
 										<span style="color: red;">*</span>
 										<select class="form-control" name="txtBd" required="required">";
-
-											<option value=1>1</option>
-											<option value=2>2</option>
-											<option value=3>3</option>
-											<option value=4>4</option>
-											<option value=5>5</option>
-											<option value=6>6</option>
-											<option value=7>7</option>
-											<option value=8>8</option>
-											<option value=9>9</option>
-											<option value=10>10</option>
-											<option value=11>11</option>
-											<option value=12>12</option>
-											<option value=13>13</option>
-											<option value=14>14</option>
-											<option value=15>15</option>
-											<option value=16>16</option>
-											<option value=17>17</option>
-											<option value=18>18</option>
-											<option value=19>19</option>
-											<option value=20>20</option>
-											<option value=21>21</option>
-											<option value=22>22</option>
-											<option value=23>23</option>
-											<option value=24>24</option>
-											<option value=25>25</option>
-											<option value=26>26</option>
-											<option value=27>27</option>
-											<option value=28>28</option>
-											<option value=29>29</option>
-											<option value=30>30</option>
-											<option value=31>31</option>
+										<?php
+											for($d=1; $d<=31; $d++)	{
+												echo "<option value='$d'>$d</option>";
+                      }
+										?>
 										</select>
 									</div>
 
@@ -208,7 +181,6 @@
 										<label for="lblBdate" class="col-form-label">Birthyear</label>
 										<span style="color: red;">*</span>
 										<select class="form-control" name="txtBy" required="required">
-
 										<?php
 											$curYear = date("Y");
 											for($y=($curYear-($curYear-18)); $y<=($curYear-($curYear-60)); $y++)	{
@@ -216,7 +188,6 @@
 												echo "<option value='$z'>$z</option>";
 											}
 										?>
-
 										</select>
 									</div>
 								</div>
@@ -313,12 +284,30 @@
 								</div>
 								-->
 								<div class="form-group">
+									<label for="clientcivstat">Civil Status</label>
+									<select name="clientcivstat" class="form-control" id="clientcivstat">
+										<option value="Married">Married</option>
+										<option value="Widowed">Widowed</option>
+										<option value="Separated">Separated</option>
+										<option value="Divorced">Divorced</option>
+										<option value="Single">Single</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="clientbday">Age</label>
+									<input type="text" class="form-control" id='clientbday' disabled>
+								</div>
+								<div class="form-group">
 									<label for="clientbloodtype">Blood Type</label>
 									<select class="form-control" name="clientbloodtype" id="clientbloodtype">
 										<?php
 											include("connections.php");
 
-											$fetch_bloodtype = mysqli_query($connections, " SELECT * FROM tblbloodtype WHERE stfBloodTypeStatus = 'Active'");
+											$fetch_bloodtype = mysqli_query($connections, "
+												SELECT *
+												FROM tblbloodtype
+												WHERE stfBloodTypeStatus = 'Active'
+											");
 
 											if(mysqli_num_rows($fetch_bloodtype) > 0 ){
 												while($row = mysqli_fetch_assoc($fetch_bloodtype)){
@@ -336,35 +325,22 @@
 										?>
 									</select>
 								</div>
-								<div class="form-group">
-									<label for="clientcivstat">Civil Status</label>
-									<select name="clientcivstat" class="form-control" id="clientcivstat">
-										<option value="Married">Married</option>
-										<option value="Widowed">Widowed</option>
-										<option value="Separated">Separated</option>
-										<option value="Divorced">Divorced</option>
-										<option value="Single">Single</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="clientbday">Age</label>
-									<input type="text" class="form-control" id='clientbday' disabled>
-								</div>
-							</div>
 						</div>
-						<div class="modal-footer">
-							<div class="mr-4">
-								<button type="button" class="mx-1 btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="submit" class="mx-1 btn btn-success" id="submit_editdonor">Save</button>
-							</div>
-						</form>
 					</div>
+					<div class="modal-footer">
+						<div class="mr-4">
+							<button type="button" class="mx-1 btn btn-outline-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="mx-1 btn btn-success" id="submit_editdonor">Save</button>
+						</div>
+					</div>
+							</form>
 				</div>
 			</div>
 		</div>
 		<?php include "components/core-script.php"; ?>
 		<script src="../public/js/datatables.min.js"></script>
 		<script src="../public/js/notification.js"></script>
+		<script src="../public/js/sweetalert.min.js"></script>
 		<script>
 			$('#maintenance').addClass('active');
 			$('#donor').addClass('active');
@@ -381,7 +357,7 @@
 					}
 				});
 			}
-
+			
 			// $(document).ajaxStart(function() {
 			//   $('.loader').show();
 			// });
@@ -443,6 +419,47 @@
 				var bbtype = $('#clientbloodtype').val();
 				console.log(bbtype);
 			});
+			
+			/*
+			$("form[name='editdonor'").submit(function(e)	{
+				e.preventDefault();
+				var formdata = $(this).serialize();
+				
+				// console.log(formdata);
+				
+				swal({
+					title: 'Notice.',
+					text: "Are you sure you want to update the user's information?",
+					icon: 'info',
+					buttons: ['No', 'Update'],
+				}).then((willRequest) => {
+					if(willRequest)	{
+						$.ajax	({
+							url:"../controller/donor/editDonorRecord.php",
+							type:"POST",
+							data:{formdata:formdata},
+							success:function(data)	{
+								console.log(data);
+								if(data == '1')	{
+									swal({
+										title: 'Done!',
+										text: "User's information has been updated.",
+										icon: 'success'
+									}).then(() => {
+										$("#editdonorinfo").modal('hide');
+										// window.location.href = 'clientProfile.php'
+									});
+								}
+							}
+						});
+					}
+					else	{
+						swal('Okay.', 'Nothing is updated.', 'success');
+					}
+				});
+			});
+			
+			*/
 
 			function readURL(input) {
 				if (input.files && input.files[0]) {

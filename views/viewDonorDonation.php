@@ -428,12 +428,12 @@
 											$bloodbagserial = 'N/A';
 											$datestored = 'N/A';
 											
-											echo "
+										?>
 												<script type='text/javascript'>
-													document.getElementById('spnBloodBagId').innerHTML = '$bloodbagserial';
-													document.getElementById('spnBagStored').innerHTML = '$datestored';
+													document.getElementById('spnBloodBagId').innerHTML = <?php echo '$bloodbagserial' ?>;
+													document.getElementById('spnBagStored').innerHTML = <?php echo '$datestored' ?>;
 												</script>
-											";
+										<?php
 											
 											while($serological = mysqli_fetch_assoc($serologicalQry))	{
 												$diseaseid = $serological["intDiseaseId"];
