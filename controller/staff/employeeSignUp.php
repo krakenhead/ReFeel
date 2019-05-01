@@ -23,6 +23,7 @@
 			$varPos = mysqli_real_escape_string($connections,$_REQUEST["optPos"]);
 			$varUn = strtolower(ltrim(rtrim(mysqli_real_escape_string($connections,$_REQUEST["txtUn"]))));
 			$varPw = mysqli_real_escape_string($connections,$_REQUEST["txtPw"]);
+			$hashedPw = password_hash($varPw, PASSWORD_DEFAULT);
 		}
 	}
 
@@ -71,7 +72,7 @@
 		// If username has no matched in the records
 		if($qryCheckUserOcc <= 0)	{
 			$qryAddUser = mysqli_query($connections, "INSERT INTO tbluser(strUserName, strUserPassword, strUserImageDir)
-			VALUES('$varUn', '$varPw','$fileNameNew')");
+			VALUES('$varUn', '$hashedPw','$fileNameNew')");
 
 			if($qryAddUser)	{
 				$qryCheckUserNew = mysqli_query($connections, "

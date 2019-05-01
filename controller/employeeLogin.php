@@ -33,9 +33,11 @@
 			while($row = mysqli_fetch_assoc($qryCheckUser))	{
 				$varDbId = $row["intUserId"];
 				$varDbPw = $row["strUserPassword"];
+				// $dehashedPw = password_verify($varPw, $varDbPw);
+				// print_r($dehashedPw);
 
 
-				if($varDbPw == $varPw)	{
+				if(password_verify($varPw, $varDbPw))	{
 					$qryJoinView1 = mysqli_query($connections, "SELECT e.intEmployeeId, e.stfEmployeeType ,u.strUserImageDir
 					FROM tblemployee e
 					JOIN tbluser u ON e.intUserId = u.intUserId
