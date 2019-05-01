@@ -30,14 +30,12 @@
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container">
-                <div id="donorRecords" class="mt-4">
+                <div id="donorRecords" class="mt-2">
                   <table id="tblDonorRecords" class="table table-hover table-bordered text-center">
                     <thead>
                       <tr class="bg-danger text-white">
-                        <td>First Name</td>
-                        <td>Middle Name</td>
-                        <td>Last Name</td>
-                        <td>Action</td>
+                        <td style="width: 50%">Name</td>
+                        <td style="width: 50%">Action</td>
                       </tr>
                     </thead>
                   </table>
@@ -616,6 +614,10 @@
     $('#tblDonorRecords').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs':	[{
+				'orderable': false,
+				'targets': 1
+			}],
       'ajax': {
         url: '../controller/donor/datatables.php',
         type: 'POST',

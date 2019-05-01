@@ -313,9 +313,7 @@
 				</section>
 			</main>
 		</div>
-		<?php
-		include "components/core-script.php";
-		?>
+		<?php include "components/core-script.php";	?>
 		<script src="../public/js/datatables.min.js"></script>
 		<script src="../public/js/notification.js"></script>
 		<script>
@@ -343,6 +341,11 @@
 			$('#tblViewDonation').DataTable({
 				"processing" : true,
 				"serverSide" : true,
+				'columnDefs': [{
+					'orderable': false,
+					'targets': [2, 3, 4, 5, 6]
+				}],
+				"order": [[ 0, "desc" ]],
 				"ajax" : {
 					url : "../controller/donor/datatables.php",
 					type: "POST",

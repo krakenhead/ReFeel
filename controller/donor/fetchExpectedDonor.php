@@ -3,7 +3,7 @@
 	include "../connections.php";
 	$res = array();
 	$fetchUncheckedSurvey = mysqli_query($connections, "
-		SELECT DISTINCT(d.intDonationId), c.intClientId, CONCAT(strClientFirstName, ' ', strClientMiddleName, ' ', strClientLastName) AS Applicant_DonorName, DATE_FORMAT(dtmExamTaken, '%M %d, %Y - %h:%i %p') AS 'Expectation_Date'
+		SELECT DISTINCT(d.intDonationId), c.intClientId, CONCAT(strClientLastName, ', ', strClientFirstName, ' ', strClientMiddleName) AS Applicant_DonorName, DATE_FORMAT(dtmExamTaken, '%M %d, %Y - %h:%i %p') AS 'Expectation_Date'
 		FROM tbldonation d
 		JOIN tblclient c ON d.intClientId = c.intClientId
 		JOIN tblmedicalexam m ON d.intDonationId = m.intDonationId

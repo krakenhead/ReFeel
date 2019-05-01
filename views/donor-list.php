@@ -93,13 +93,16 @@
 					
 					else if (data.length !== 0) {
             uncheckedSurveyRes = `
-            <table class='table table-bordered text-center' id='tbldonorsurvey'>
+            <table class='table table-bordered table-hover text-center' id='tbldonorsurvey'>
               <thead>
                 <tr class="bg-danger text-white">
-									<td style='width: 25%'>Exam Code</td>
-									<td style='width: 25%'>Donor Code</td>
-									<td style='width: 25%'>Donor/Applicant Name</td>
-									<td style='width: 25%'>Action</td>
+									<td style='width: 15%'>Exam Code</td>
+									<td style='width: 15%'>Donor Code</td>
+									<td style='width: 45%'>Donor/Applicant Name</td>
+									<td style='width: 25%'>
+										<i class=""></i>
+										Action
+									</td>
                 </tr>
               </thead>
               <tbody>
@@ -125,7 +128,10 @@
           <td class="align-middle">${ obj.Applicant_DonorName }</td>
           <td>
 						<a href="fetchDonorSurveyAnswers.php?rowid=${ obj.intDonationId }">
-							<button type="button" class="btn btn-sm btn-outline-danger" data-id="${ obj.intDonationId }">Check</button>
+							<button type="button" class="btn btn-sm btn-success" data-id="${ obj.intDonationId }">
+								<i class="fa fa-check fa-sm mr-1"></i>
+								Check Survey
+							</button>
 						</a>
 					</td>
         </tr>
@@ -152,17 +158,16 @@
 					else if (data.length !== 0) {
             let iterateExpDonor = iterateOverExpectedDonor(data).toString();
             expectedDonor = `
-							<table class='table table-bordered text-center' id='tbldonorsurvey'>
+							<table class='table table-bordered table-hover text-center' id='tbldonorsurvey'>
 								<thead>
 									<tr class="bg-danger text-white">
-										<td style='width: 25%'>Exam Code</td>
-										<td style='width: 25%'>Donor Code</td>
-										<td style='width: 25%'>Donor/Applicant Name</td>
+										<td style='width: 15%'>Exam Code</td>
+										<td style='width: 15%'>Donor Code</td>
+										<td style='width: 45%'>Donor/Applicant Name</td>
 										<td style='width: 25%'>Date</td>
 									</tr>
 								</thead>
-								<tbody>
-                
+								<tbody> 
 									${ iterateExpDonor.replace(/[,]/g, "") }
 								</tbody>
 							</table>

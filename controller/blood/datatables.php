@@ -54,16 +54,14 @@
 		$sub_array[] = '<div class="update pt-1" data-id="'.$row["intBloodTypeId"].'" 	data-column="stfBloodTypeRhesus">' . $row["stfBloodTypeRhesus"] . '</div>';
 
 		$sub_array[] =	'
-			<div class="btn-group">
-				<button type="button" name="edit" class="btn btn-outline-success btn-sm mr-2" id="'.$row["intBloodTypeId"].'" data-toggle="modal" data-target="#editBloodTypeModal" data-id="'.$row["intBloodTypeId"].'">
-					<i class="fa fa-edit fa-sm mr-1"></i>
-					Edit
-				</button>
-				<button type="button" name="view" class="btn btn-outline-secondary btn-sm" id="'.$row["intBloodTypeId"].'" data-toggle="modal" data-target="#viewBloodTypeModal" data-id="'.$row["intBloodTypeId"].'">
-					<i class="fa fa-eye fa-sm mr-1"></i>
-					View
-				</button>
-			</div>
+			<button type="button" name="edit" class="btn btn-outline-success btn-sm mr-1" id="'.$row["intBloodTypeId"].'" data-toggle="modal" data-target="#editBloodTypeModal" data-id="'.$row["intBloodTypeId"].'">
+				<i class="fa fa-edit fa-sm mr-1"></i>
+				Edit
+			</button>
+			<button type="button" name="view" class="btn btn-outline-secondary btn-sm" id="'.$row["intBloodTypeId"].'" data-toggle="modal" data-target="#viewBloodTypeModal" data-id="'.$row["intBloodTypeId"].'">
+				<i class="fa fa-eye fa-sm mr-1"></i>
+				View
+			</button>
 		';
 
 		//<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
@@ -146,7 +144,7 @@
 
 		$sub_array[] =	'
 			<button type="button" name="view" class="btn btn-sm btn-outline-secondary" id="'.$row["intBloodTypeId"].'" data-toggle="modal" data-target="#viewBloodTypeModal_enable" data-id="'.$row["intBloodTypeId"].'">
-				<i class="fa fa-eye fa-sm"></i>
+				<i class="fa fa-eye fa-sm mr-1"></i>
 				View
 			</button>
 		';
@@ -226,17 +224,15 @@
 			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intBloodComponentId"].'" 	data-column="strBloodComponent">' . $row["strBloodComponent"] . '</div>';
 
 			$sub_array[] =	'
-				<div class="btn-group">
-					<button type="button" name="edit" class="btn btn-outline-success btn-sm mr-2" id="'.$row["intBloodComponentId"].'" data-toggle="modal" data-target="#editBloodComponentModal" data-id="'.$row["intBloodComponentId"].'">
-						<i class="fa fa-edit fa-sm mr-1"></i>
-						Edit
-					</button>
-					<button type="button" name="view" class="btn btn-outline-secondary btn-sm mr-2" id="'.$row["intBloodComponentId"].'" data-toggle="modal"
-					data-target="#viewBloodComponentModal" data-id="'.$row["intBloodComponentId"].'">
-						<i class="fa fa-eye fa-sm mr-1"></i>
-						View
-					</button>
-				</div>
+				<button type="button" name="edit" class="btn btn-outline-success btn-sm mr-1" id="'.$row["intBloodComponentId"].'" data-toggle="modal" data-target="#editBloodComponentModal" data-id="'.$row["intBloodComponentId"].'">
+					<i class="fa fa-edit fa-sm mr-1"></i>
+					Edit
+				</button>
+				<button type="button" name="view" class="btn btn-outline-secondary btn-sm mr-2" id="'.$row["intBloodComponentId"].'" data-toggle="modal"
+				data-target="#viewBloodComponentModal" data-id="'.$row["intBloodComponentId"].'">
+					<i class="fa fa-eye fa-sm mr-1"></i>
+					View
+				</button>
 			';
 
 			//<button type="button" name="delete" class="btn btn-danger fa fa-trash btn-sm btnDeleteCultureMedia" id="'.$row["intClientId"].'"></button>
@@ -311,8 +307,7 @@
 			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intBloodComponentId"].'" 	data-column="strBloodComponent">' . $row["strBloodComponent"] . '</div>';
 
 			$sub_array[] = '
-				<button type="button" name="view" class="btn btn-sm btn-outline-secondary" id="'.$row["intBloodComponentId"].'" data-toggle="modal"
-				data-target="#viewBloodComponentModal_enable" data-id="'.$row["intBloodComponentId"].'">
+				<button type="button" name="view" class="btn btn-sm btn-outline-secondary" id="'.$row["intBloodComponentId"].'" data-toggle="modal" data-target="#viewBloodComponentModal_enable" data-id="'.$row["intBloodComponentId"].'">
 					<i class="fa fa-eye fa-sm mr-1"></i>
 					View
 				</button>
@@ -322,7 +317,6 @@
 
 			$data[] = $sub_array;
 		}
-
 
 		function get_all_data($connections)	{
 			$query = "

@@ -37,7 +37,7 @@
                   </thead>
                 </table>
                 <button type='button' class='btn btn-outline-danger float-right my-2 mx-4' data-toggle='modal' data-target='#addBloodComponentModal'>
-									<i class="fas fa-plus"></i>
+									<i class="fas fa-plus mr-1"></i>
 									Add Blood Component
 								</button>
               </div>
@@ -54,7 +54,7 @@
                   </thead>
                 </table>
 								<button type='button' class='btn btn-outline-danger float-right my-2 mx-4' data-toggle='modal' data-target='#addBloodComponentModal'>
-									<i class="fas fa-plus"></i>
+									<i class="fas fa-plus mr-1"></i>
 									Add Blood Component
 								</button>
               </div>
@@ -137,7 +137,7 @@
         <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
           <h5 class="modal-title text-white" id="editnewbloodcomponentTitle">
 						<i class="fa fa-edit px-2 fa-sm"></i> 
-						Blood Component
+						Edit Blood Component
 					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" class="text-white">&times;</span>
@@ -329,6 +329,10 @@
     $('#tblActiveBloodComponent').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 1
+			}],
       'ajax': {
         url: '../controller/blood/datatables.php',
         type: 'POST',
@@ -344,6 +348,10 @@
     $('#tblInactiveBloodComponent').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 1
+			}],
       'ajax': {
         url: '../controller/blood/datatables.php',
         type: 'POST',
@@ -368,10 +376,13 @@
     var formdata = $("form[name='form_addnewbloodcomponent']").serialize();
 
     swal({
-      title: "Are you sure?",
-      text: "You are about to add a blood component",
-      icon: "info",
-      buttons: true,
+      // title: "Are you sure?",
+      title: "Notice.",
+      // text: "You are about to add a blood component",
+      text: "Are you sure you want to add this blood component?",
+      icon: 'warning',
+			buttons: ['No', 'Add'],
+			dangerMode: true
     })
     .then((willApprove) => {
       if (willApprove){
@@ -384,10 +395,10 @@
             if(data == 1){
               // alert("Blood Component Added");
               swal({
-                title: "",
-                text: "Blood Component Added",
-                icon: "success",
-                buttons: {text:"Close"},
+                title: "Success!",
+                text: "The blood component has been added.",
+                icon: "success"
+                // buttons: {text:"Close"},
               })
               .then((willApprove) => {
                 if (willApprove) {
@@ -405,36 +416,31 @@
               // swal("","The Blood Component You Entered Already Exists","info");
               swal({
                 title: "",
-                text: "The blood component you're trying to add already exists, Please check the disabled blood components too.",
+                text: "The blood component you're trying to add already exists, Please refer to Inactive Blood Components panel.",
                 icon: "warning",
-                buttons:{text:"Okay"},
+                // buttons:{text:"Okay"},
               })
-              .then((willApprove) => {
-                if(willApprove) {
-                  window.location.href = "blood-component.php";
-                }
-              });
+              // .then((willApprove) => {
+                // if(willApprove) {
+                  // window.location.href = "blood-component.php";
+                // }
+              // });
             }
             else if (data == 3) {
               // swal("","Blood Component is not saved","info");
-              swal({
-                title:"",
-                text:"Blood Component is not saved!",
-                icon:"error",
-                buttons:{text:"OKAY"},
-              })
-              .then((willApprove) => {
-                if (willApprove) {
-                  window.location.href = "blood-component.php";
-                }
-              });
+              swal('Oops.', 'The blood type is not saved.', 'error');
+              // .then((willApprove) => {
+                // if (willApprove) {
+                  // window.location.href = "blood-component.php";
+                // }
+              // });
             }
             else if (data == 4) {
               swal({
-                title: "",
-                text: "Blood Component is not added Least values must be lesser than max values!",
+                title: "Oops.",
+                text: "Blood Component is not added. Minimum values must be lesser than maximum values.",
                 icon: "error",
-                buttons:{text:"Okay"},
+                // buttons:{text:"Okay"},
               })
               .then((willApprove) => {
                 if (willApprove) {
@@ -448,7 +454,8 @@
         });
       }
       else {
-        swal("","Cancelled","info");
+        // swal("","Cancelled","info");
+				swal('', 'The confirmation is cancelled.', '');
       }
     });
   });
@@ -520,10 +527,13 @@
 
     var formdata = $("form[name='form_editbloodcomponent']").serialize();
     swal({
-      title: "Are you sure?",
-      text: "You are about to edit this blood component",
+      // title: "Are you sure?",
+      title: "Notice.",
+      // text: "You are about to edit this blood component",
+      text: "Are you sure you want to update this blood component?",
       icon: "warning",
-      buttons: true,
+      buttons: ["No", "Update"],
+			dangerMode: true
     })
     .then((willApprove) => {
       if (willApprove) {
@@ -534,10 +544,10 @@
           success:function(data){
             if(data == 1){
               swal({
-                title: "",
-                text: "Blood Component Successfully edited",
+                title: "Okay!",
+                text: "The blood component has been updated.",
                 icon: "success",
-                buttons:{text:"Okay"},
+                // buttons:{text:"Okay"},
               })
               .then((willApprove) => {
                 $('#editBloodComponentModal').modal('hide');
@@ -548,94 +558,66 @@
               //$('#divdonoraddsero').show(600);
             }
             else if(data == 2){
-              swal({
-                title: "",
-                text: "The Blood Component you entered already exists!",
-                icon: "error",
-                buttons:{text:"Okay"},
-              })
-              .then((willApprove) => {
-                if (willApprove) {
-                  window.location.href = "blood-component.php";
-                }
-              });
+              swal('Oops.', 'The blood type is already existing and/or currently inactive. Please refer to Inactive Blood Types panel.', 'error');
               // alert("The Blood Component You Entered Already Exists");
             }
             else if (data == 3) {
-              swal({
-                title: "",
-                text: "Blood Component is not edited",
-                icon: "error",
-                buttons:{text:"Okay"},
-              })
-              .then((willApprove) => {
-                if (willApprove) {
-                  window.location.href = "blood-component.php";
-                }
-              });
+              swal('Oops.', 'The blood type is not updated.', 'error');
               // alert("Blood Component is not Edited");
 
             }
             else if (data == 4) {
-              swal({
-                title: "",
-                text: "Blood Component is not edited Least values must be lesser than max values!",
-                icon: "error",
-                buttons:{text:"Okay"},
-              })
-              .then((willApprove) => {
-                if (willApprove) {
-                  //window.location.href = "bloodcomponent-tab.php";
-                }
-              });
+              swal('Oops.', 'The blood component is not added. Minimum values must be less than maximum values.', 'error');
               // alert("Blood Component is not Edited");
-
             }
           }
         });
       }
       else {
-        swal("","Cancelled","info");
+        // swal("","Cancelled","info");
+				swal('', 'The confirmation is cancelled.', '');
       }
     });
   });
 
-  $(document).on("click", "#btnsavedeletebloodcomponent", function(e){
+  $(document).on("click", "#btnsavedeletebloodcomponent", function(e)	{
     e.preventDefault();
     var id = $("#viewbloodcomp_ID").val();
     // var confirm_enable = confirm("Are you sure?");
     swal({
-      title: "Are you sure",
-      text: "You are about to disable this blood component",
-      icon: "info",
-      buttons: true,
+      title: "Notice.",
+			text: "Do you want to disable this blood component?",
+			icon: "warning",
+			buttons: ['No', 'Disable'],
+			dangerMode: true
     })
-    .then((willApprove) =>{
-      if (willApprove) {
+    .then((willApprove) =>	{
+      if(willApprove) {
         $.ajax({
           type: "POST",
           url: '../controller/blood/disableBloodComponent.php',
           data: {id:id},
-          success:function(data){
+          success:function(data)	{
             // alert("Blood Component has been enabled");
-            if(data == "deleted"){
+           if(data == "deleted")	{
             swal({
-              title: "",
-              text: "Blood Component is now disabled!",
+              title: "Okay.",
+              text: "The blood component is now disabled.",
               icons: "success",
-              buttons:{text:"Okay"},
+              // buttons:{text:"Okay"},
             })
             .then((willApprove) => {
-              if (willApprove) {
+              if(willApprove) {
                 window.location.href = "blood-component.php";
               }
             });
-          }else{
+          }
+					else	{
             swal({
-              title: "",
-              text: "The blood component is not disabled because "+data+" record/s uses this.",
-              icons: "error",
-              buttons:{text:"Okay"},
+              title: "Oops.",
+              text: "The blood component is not disabled because " + data + " record/s uses this.",
+              icon: "error",
+              // buttons:{text:"Okay"},
             })
             .then((willApprove) => {
               if (willApprove) {
@@ -647,7 +629,8 @@
         });
       }
       else {
-        swal("","Cancelled","info");
+        // swal("","Cancelled","info");
+				swal('', 'The confirmation is cancelled.', '');
       }
     });
   });
@@ -657,10 +640,11 @@
     var id = $("#viewbloodcomp_ID_enable").val();
     // var confirm_enable = confirm("Are you sure?");
     swal({
-      title: "Are you sure",
-      text: "You are about to enable this blood component",
-      icon: "info",
-      buttons: true,
+     title: "Notice.",
+			text: "Do you want to enable this blood component?",
+			icon: "warning",
+			buttons: ['No', 'Enable'],
+			dangerMode: true
     })
     .then((willApprove) =>{
       if (willApprove) {
@@ -671,10 +655,9 @@
           success:function(data){
             // alert("Blood Component has been enabled");
             swal({
-              title: "",
-              text: "Blood Component is now enabled!",
+              title: "Okay.",
+              text: "The blood component is now enabled.",
               icons: "success",
-              buttons:{text:"Okay"},
             })
             .then((willApprove) => {
               if (willApprove) {
@@ -685,7 +668,8 @@
         });
       }
       else {
-        swal("","Cancelled","info");
+        // swal("","Cancelled","info");
+				swal('', 'The confirmation is cancelled.', '');
       }
     });
   });
@@ -779,5 +763,5 @@
     }
   });
   </script>
-</body>
+	</body>
 </html>

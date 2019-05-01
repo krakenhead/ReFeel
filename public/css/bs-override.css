@@ -58,7 +58,7 @@
 
 .btn-danger	{
 	background-color: #fa3c4c!important;
-	/* /* border-color: #fa3c4c!important; */ */
+	/* border-color: #fa3c4c!important; */
 }
 
 /* For pagination. */
@@ -70,7 +70,7 @@
 	background-color: #fa3c4c!important;
 	border-color: #fa3c4c!important;
 	outline: 0;
-	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5);
+	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5)!important;
 }
 
 .page-item  > a	{
@@ -84,5 +84,13 @@
 	color: white;
 	border-color: #fa3c4c!important;
 	outline: 0;
-	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5);
+	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5)!important;
+}
+
+.page-item  > a:focus	{
+	color: #fa3c4c;
+	background-color: white;
+	/* border-color: #fa3c4c!important; */
+	outline: 0;
+	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5)!important;
 }

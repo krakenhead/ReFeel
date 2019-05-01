@@ -43,21 +43,24 @@
 										</thead>
 									</table>
 									<button type="button" class="btn btn-outline-danger float-right mt-3 mx-4" data-toggle="modal" data-target="#modalSignUp">
-										<i class="fas fa-user-plus"></i> 
+										<i class="fas fa-user-plus mr-1"></i> 
 										Add Donor
 									</button>
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-12 p-0 mt-2">
-								<div class="content-container" style="padding-bottom: 4rem;">
+								<div class="content-container">
 									<h4 class="py-2">Banned Donors</h4>
 									<table id="tblBannedDonor" class="table table-hover table-bordered text-center">
 										<thead>
 											<tr class="bg-danger text-white">
+												<!--
 												<td>First Name</td>
 												<td>Middle Name</td>
 												<td>Last Name</td>
-												<td>Action</td>
+												-->
+												<td style="width: 50%">Name</td>
+												<td style="width: 50%">Action</td>
 											</tr>
 										</thead>
 									</table>
@@ -329,8 +332,14 @@
 					</div>
 					<div class="modal-footer">
 						<div class="mr-4">
-							<button type="button" class="mx-1 btn btn-outline-secondary" data-dismiss="modal">Close</button>
-							<button type="submit" class="mx-1 btn btn-success" id="submit_editdonor">Save</button>
+							<button type="button" class="mx-1 btn btn-outline-secondary" data-dismiss="modal">
+								<i class="fa fa-times fa-sm mr-1"></i>
+								Close
+							</button>
+							<button type="submit" class="mx-1 btn btn-success" id="submit_editdonor">
+								<i class="fa fa-save fa-sm mr-1"></i>
+								Save
+							</button>
 						</div>
 					</div>
 							</form>
@@ -371,6 +380,11 @@
 			$('#tblDonor').DataTable({
 				'processing': true,
 				'serverSide': true,
+				// 'ordering': false,
+				'columnDefs': [{
+					'orderable': false,
+					'targets': 2
+				}],
 				'ajax': {
 					url: '../controller/donor/datatables.php',
 					type: 'POST',
@@ -383,6 +397,10 @@
 			$('#tblBannedDonor').DataTable({
 				'processing': true,
 				'serverSide': true,
+				'columnDefs': [{
+					'orderable': false,
+					'targets': 1
+				}],
 				'ajax': {
 					url: '../controller/donor/datatables.php',
 					type: 'POST',

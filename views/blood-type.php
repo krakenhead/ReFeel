@@ -38,7 +38,7 @@
                   </thead>
                 </table>
 								<button type="button" class="btn btn-outline-danger float-right my-2 mx-4" data-toggle="modal" data-target="#addBloodTypeModal">
-									<i class="fas fa-plus"></i>
+									<i class="fas fa-plus mr-1"></i>
 									Add Blood Type
 								</button>
 							</div>
@@ -58,7 +58,7 @@
 									</thead>
 								</table>
 								<button type="button" class="btn btn-outline-danger float-right my-2 mx-4" data-toggle="modal" data-target="#addBloodTypeModal">
-									<i class="fas fa-plus"></i>
+									<i class="fas fa-plus mr-1"></i>
 									Add Blood Type
 								</button>
 							</div>
@@ -123,7 +123,7 @@
 				<div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
 					<h5 class="modal-title text-white" id="editnewbloodcomponentTitle">
 						<i class="fa fa-edit px-2 fa-sm"></i> 
-						Blood Type
+						Edit Blood Type
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true" class='text-white'>&times;</span>
@@ -267,6 +267,10 @@
     $('#tblActiveBloodType').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 2
+			}],
       'ajax': {
         url: '../controller/blood/datatables.php',
         type: 'POST',
@@ -282,6 +286,10 @@
     $('#tblInactiveBloodType').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 2
+			}],
       'ajax': {
         url: '../controller/blood/datatables.php',
         type: 'POST',
@@ -356,33 +364,6 @@
       // var confirm_input = confirm("Are you sure?");
       var formdata = $("form[name='form_addnewbloodtype']").serialize();
 
-      // if (confirm_input == true){
-        // $.ajax({
-          // type: "POST",
-          // url: '../controller/blood/addNewBloodType.php',
-          // data: {formdata,formdata},
-          // success:function(data){
-            // if(data == 1){
-              // alert("Blood Type Added");
-              // $('#addBloodTypeModal').modal('hide');
-              // $("#addBloodTypeModal .modal-body input").val("");
-              // window.location.href = "blood-type.php";
-              // $('#divdonoraddsero').show(600);
-            // }
-            // else if(data == 2){
-              // alert("The Blood Type Name You Entered Already Exists, Please check the disabled blood types too.");
-            // }
-            // else if (data == 3) {
-              // alert("Blood Type is not saved");
-            // }
-          // }
-        // });
-      // }
-      // else{
-        // alert("Confirmation Cancelled");
-        // return false;
-      // }
-			
 			swal({
 				title: 'Notice.',
 				text: 'Do you want to add this blood type?',
@@ -429,34 +410,6 @@
       // var confirm_input = confirm("Are you sure?");
       var formdata = $("form[name='form_editbloodType']").serialize();
       console.log(formdata);
-      // if (confirm_input == true){
-        // $.ajax({
-          // type: "POST",
-          // url: '../controller/blood/editBloodType.php',
-          // data: {formdata,formdata},
-          // success:function(data){
-            // if(data == 1){
-              // alert("Blood Type Succesfully Edited");
-              // $('#editBloodTypeModal').modal('hide');
-              // $("#editBloodTypeModal .modal-body input").val("");
-              // window.location.href = "blood-type.php";
-              // $('#divdonoraddsero').show(600);
-            // }
-            // else if(data == 2){
-              // alert("The Blood Type Name You Entered Already Exists");
-              // window.location.href = "blood-type.php";
-            // }
-            // else if (data == 3) {
-              // alert("Blood Type Name is not Edited");
-              // window.location.href = "blood-type.php";
-            // }
-          // }
-        // });
-      // }
-      // else{
-        // alert("Confirmation Cancelled");
-        // return false;
-      // }
 			
 			swal({
 				title: 'Notice.',
@@ -509,10 +462,8 @@
         icon: "warning",
         buttons: ['No', 'Disable'],
 				dangerMode: true
-      })
-      //var confirm_delete = confirm("Are you sure you want to disable?");
-      //if(confirm_delete == true){
-      .then((willApprove) => {
+			})
+			.then((willApprove) => {
         if (willApprove) {
           $.ajax({
             type: "POST",
@@ -581,8 +532,7 @@
         icon: "warning",
         buttons: ['No', 'Enable'],
 				dangerMode: true
-      })
-      .then((willApprove) => {
+      }).then((willApprove) => {
         if (willApprove) {
           $.ajax({
             type: "POST",
@@ -594,8 +544,7 @@
 								text: "The blood type is now enabled.",
 								icon: "success"
 								// buttons: {text:"Okay"},
-							})
-							.then((willApprove) => {
+							}).then((willApprove) => {
 								if (willApprove) {
 									$("#viewBloodTypeModal_enable").modal('hide');
 									window.location.href = "blood-type.php";

@@ -8,8 +8,8 @@
 			// 'strClientMiddleName',
 			// 'strClientLastName'
 			'strClientLastName',
-			'strClientFirstName',
-			'strClientMiddleName'
+			'stfClientType',
+			// 'strClientMiddleName'
 		);
 		
 		$query = "
@@ -115,12 +115,10 @@
 		echo json_encode($output);  // send data as json format
 	}
 	
-	//////////////////////////////////////////////////////////////////////////////////////////
-	
 	else if ($requestData['type'] == 'bannedDonor') {
 		$columns = array(
-			'strClientFirstName',
-			'strClientMiddleName',
+			// 'strClientFirstName',
+			// 'strClientMiddleName',
 			'strClientLastName'
 		);
 
@@ -183,12 +181,14 @@
 			//}
 
 			$sub_array = array();
+			
+			$sub_array[] = '<div class="update pt-1">' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientLastName"] . ', ' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . ' '.'<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientMiddleName"] .'</div>';
+			
+			// $sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
 
-			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
+			// $sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
 
-			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-
-			$sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+			// $sub_array[] = '<div class="update pt-1" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
 
 			// $sub_array[] =	'
 				// <a style="border: 1px solid; color: white; background: #6C757D; border-radius: 4px; text-decoration: none; padding: .2rem .75rem" class=" ml-2 btn_viewrec" data-id="'.$row["intClientId"].'" href="viewDonorRecordInfo.php?id='.$row["intClientId"].'">View</a>
@@ -231,7 +231,7 @@
 		$columns = array(
 			'd.intDonationId',
 			'm.dtmExamTaken',
-			'd.stfDonationRemarks'
+			// 'd.stfDonationRemarks'
 		);
 
 		$query = "
@@ -257,7 +257,7 @@
 		}
 		else	{
 			$query .= '
-				ORDER BY d.intDonationId ASC
+				ORDER BY 1 ASC
 			';
 		}
 
@@ -442,8 +442,8 @@
 	
 	else if ($requestData['type'] == 'donorRecords') {
 		$columns = array(
-			'strClientFirstName',
-			'strClientMiddleName',
+			// 'strClientFirstName',
+			// 'strClientMiddleName',
 			'strClientLastName'
 		);
 
@@ -682,18 +682,14 @@
 
 				$sub_array = array();
 
-				$sub_array[0] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-
-				$sub_array[1] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-
-				$sub_array[2] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+				$sub_array[0] = '<div class="update pt-2">' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientLastName"] . ', ' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . ' '.'<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientMiddleName"] .'</div>';
 
 				if(mysqli_num_rows($check_ifhasrecordwithinninetydays) == 0)	{
 					if(mysqli_num_rows($failed_BC) == 0 AND mysqli_num_rows($failed_survey) == 0 AND mysqli_num_rows($expired_survey) == 0)	{
 						if(mysqli_num_rows($unchecked_survey) == 0)	{
 							//  if(mysqli_num_rows($failed_hemo) == 0){
 							if(mysqli_num_rows($check_ifnophys) > 0)	{
-								$sub_array[3] =	'
+								$sub_array[1] =	'
 									<div class="text-center">
 										<button type="button" class="btn btn-primary btnAddphysical" data-id="'.$row["intClientId"].'">
 											Add Physical Screening
@@ -701,7 +697,7 @@
 								';
 							}
 							else if(mysqli_num_rows($check_ifnoinit) > 0)	{
-								$sub_array[3] =	'
+								$sub_array[1] =	'
 									<div class="text-center">
 										<button type="button" class="btn btn-primary btnAddinitial" data-id="'.$row["intClientId"].'">
 										Add Initial Screening
@@ -709,7 +705,7 @@
 								';
 							}
 							else if(mysqli_num_rows($check_ifseroremaining) > 0 )	{
-								$sub_array[3] =	'
+								$sub_array[1] =	'
 									<div class="text-center">
 										<button type="button" class="btn btn-primary btnAddserological" data-id="'.$row["intClientId"].'">
 											Add Serological Screening
@@ -717,7 +713,7 @@
 								';
 							}
 							else if (mysqli_num_rows($checkifpwedenaulit) > 0)	{
-								$sub_array[3] =	'
+								$sub_array[1] =	'
 									<div class="text-center">
 										<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'" style="text-decoration: none">
 											<button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">
@@ -728,7 +724,7 @@
 							}
 						}
 							else	{
-								$sub_array[3] =	'
+								$sub_array[1] =	'
 									<div class="text-center">
 										<a href = "fetchIntSheetQuestions-table.php?client_id='.$latestdonationID.'" style="text-decoration: none">
 											<button type="button" class="btn btn-primary btnchecksurvey"  name = "check_survey">
@@ -739,7 +735,7 @@
 							}
 					}
 					else	{
-						$sub_array[3] =	'
+						$sub_array[1] =	'
 							<div class="text-center">
 								<button type = "button" class ="btn btn-success" disabled>
 									Record Complete
@@ -748,7 +744,7 @@
 					}
 				}
 				else {
-					$sub_array[3] =	'
+					$sub_array[1] =	'
 						<div class="text-center">
 							<button type = "button" class ="btn btn-success" disabled>
 								Record Complete
@@ -759,13 +755,9 @@
 			else	{
 				$sub_array = array();
 
-				$sub_array[0] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientFirstName">' . $row["strClientFirstName"] . '</div>';
-				
-				$sub_array[1] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientMiddleName">' . $row["strClientMiddleName"] . '</div>';
-				
-				$sub_array[2] = '<div class="update pt-2" data-id="'.$row["intClientId"].'" 	data-column="strClientLastName">' . $row["strClientLastName"] . '</div>';
+				$sub_array[0] = '<div class="update pt-2">' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientLastName"] . ', ' . '<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientFirstName"] . ' '.'<span data-id="' . $row["intClientId"].'" data-column="strClientFirstName">' . $row["strClientMiddleName"] .'</div>';
 
-				$sub_array[3] =	'
+				$sub_array[1] =	'
 					<div class="text-center">
 						<a href = "fetchIntSheetQuestions-table.php?client_id='.$row["intClientId"].'">
 							<button type="button" class="btn btn-primary btnAddrecord" data-id="'.$row["intClientId"].'">
@@ -775,7 +767,7 @@
 				';
 			}	//end of else
 			
-			$sub_array[3] .= '
+			$sub_array[1] .= '
 						<button type="button" class="btn mx-1 btn-outline-primary btn-sm p-2" data-toggle="modal" data-target="#editdonorinfo" data-id="'.$row["intClientId"].'" title="Edit">
 							<i class="fa fa-user-edit fa-lg"></i>
 						</button>
