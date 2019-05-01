@@ -114,14 +114,14 @@ include "../controller/fetchEmpAcc.php";
             <div class="form-group">
               <label for="lblUn" class="col-form-label">Username</label>
               <span style="color: red">*</span>
-              <input type="text" class="form-control" name="txtUn" required="required">
+              <input type="text" class="form-control" name="txtUn" required="required" minlength="8">
             </div>
 
             <!-- Password -->
             <div class="form-group">
               <label for="lblPw" class="col-form-label">Password</label>
               <span style="color: red">*</span>
-              <input type="password" class="form-control" name="txtPw" required="required">
+              <input type="password" class="form-control" name="txtPw" required="required" minlength="8">
             </div>
 
             <div class="modal-footer">

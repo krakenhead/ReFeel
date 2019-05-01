@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../public/css/all.css">
   <link rel="stylesheet" href="../public/css/datatables.min.css">
   <link rel="stylesheet" href="../public/css/bs-override.css">
+  <link rel="stylesheet" href="../public/css/jquery-ui.css">
 </head>
 <body>
   <?php include "components/loader.php"; ?>
@@ -66,7 +67,7 @@
                       <!-- <div class=""> -->
                       <div class="form-group col-md-5">
                         <label for="date_phys">Date Screened</label>
-                        <input type="date" name="date_phys" value=<?php echo $datenow ?> required>
+                        <input type="text" name="date_phys" class="screenDate form-control" readonly value=<?php echo $datenow ?> required>
                       </div>
                       <!-- </div> -->
                       <div class="col-md-5">
@@ -178,7 +179,7 @@
                     <input type="hidden" id="clientId_init" name ="clientId_init">
                     <div class="form-group col-md-5">
                       <label for="date_init">Date Screened</label>
-                      <input type="date" name="date_init" value=<?php echo $datenow ?> required>
+                      <input type="text" name="date_init" class="screenDate form-control" readonly value=<?php echo $datenow ?> required>
                     </div>
                     <table class = "table table-striped">
                       <thead>
@@ -286,7 +287,7 @@
                     <input type="hidden" id="clientId_sero" name ="clientId_sero">
                     <div class="form-group col-md-5">
                       <label for="date_sero">Date Screened</label>
-                      <input type="date" name="date_sero" value=<?php echo $datenow ?> required>
+                      <input type="text" name="date_sero" class="screenDate form-control" readonly value=<?php echo $datenow ?> required>
                     </div>
                     <div class="form-group col-md-5">
                       <label for="date_sero">Blood Bag</label>
@@ -584,11 +585,14 @@
   ?>
   <script src="../public/js/datatables.min.js"></script>
   <script src="../public/js/notification.js"></script>
+  <script src="../public/js/jquery-ui.js"></script>
   <script>
     $('#transaction').addClass('active');
     $('#donor-records').addClass('active');
     $('.loader').hide();
-
+    $('.screenDate').datepicker({
+      dateFormat: 'yy-mm-dd'
+    });
     checkExpiringBloodBags();
 
     function checkExpiringBloodBags() {
