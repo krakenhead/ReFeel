@@ -17,16 +17,6 @@
 
 /* .dropdown-item:focus{color:#fff;text-decoration:none;background-color:#fa3c4c} */
 
-.form-control:focus, .form-control-file:focus	{
-	color: #495057;
-	background-color: #fff;
-	border-color: #fa3c4c;
-	outline: 0;
-	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5)
-}
-
-.form-control[readonly]{background-color:#fff;}
-
 /* .btn:focus,.btn:hover,.page-link:focus,.page-link:hover{text-decoration:none} */
 /* .btn:focus,.btn:hover,.page-link:focus,.page-link:hover{outline:0;box-shadow:0 0 0 .1rem rgba(237,154,162,0.5)} */
 
@@ -41,6 +31,16 @@
 /* } */
 
 /* a:link, a:visited, a:hover, a:active{color:#dc3545;} */
+
+.form-control:focus, .form-control-file:focus	{
+	color: #495057;
+	background-color: #fff;
+	border-color: #fa3c4c;
+	outline: 0;
+	box-shadow: 0 0 0 .2rem rgba(237,154,162,.5)
+}
+
+.form-control[readonly]{background-color:#fff;}
 
 /* Request ni Ma'am Fab na walang scroll bar pero nakakapagscroll parin */
 ::-webkit-scrollbar {

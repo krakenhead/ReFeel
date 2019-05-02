@@ -1,6 +1,4 @@
-<?php 
-include "../controller/fetchEmpAcc.php";
-?>
+<?php include "../controller/fetchEmpAcc.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,20 +10,14 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
-	
-  <?php 
-  include "components/loader.php";
-  ?>
+  <?php include "components/loader.php"; ?>
   <div class="wrapper">
-    <?php 
-    include "components/sidebar.php";
-    ?>
+    <?php include "components/sidebar.php"; ?>
     <main class="mainpanel">
-      <?php 
-      include "components/header.php";
-      ?>
+      <?php include "components/header.php"; ?>
 			<a href ="addNewSurvey.php">
 				<button title="Add new survey" class="btn btn-lg btn-danger" style="position: fixed; bottom: 20px; right: 30px; z-index: 99; border-radius: 60px;">
 					<i class="fas fa-plus"></i>
@@ -37,7 +29,7 @@ include "../controller/fetchEmpAcc.php";
 				</button>
 			</a>
       <div class="page-title">
-        <h3>Survey</h3>
+        <h3 class="p-2">Survey</h3>
       </div>
       <section class="content">
         <div class="container-fluid">
@@ -46,23 +38,39 @@ include "../controller/fetchEmpAcc.php";
               <div class="content-container" style="padding-bottom: 4rem">
                 <h4 id="jump" class="py-2">Available Surveys</h4>
                 <?php
-                  $fetchsurveyvercurr = mysqli_query($connections,"SELECT DISTINCT(decQuestionVersion)
-                  FROM tblquestion WHERE boolVersionInUse = '1'");
+                  $fetchsurveyvercurr = mysqli_query($connections,"
+										SELECT DISTINCT(decQuestionVersion)
+										FROM tblquestion
+										WHERE boolVersionInUse = '1'
+									");
 									$rowsurveyvercurr = mysqli_fetch_assoc($fetchsurveyvercurr);
 									$varsurveyvercurr = $rowsurveyvercurr["decQuestionVersion"];
 									
-									$fetchsurveyverunused = mysqli_query($connections,"SELECT DISTINCT(decQuestionVersion)
-                  FROM tblquestion WHERE boolVersionInUse = '0' ORDER BY 1 ASC");
+									$fetchsurveyverunused = mysqli_query($connections,"
+										SELECT DISTINCT(decQuestionVersion)
+										FROM tblquestion
+										WHERE boolVersionInUse = '0'
+										ORDER BY 1 ASC
+									");
                 ?>
-                <table class='table table-bordered mt-2 text-center' id='tblsurvey' style="tr:first-child {background-color: rgb(234,72,127)}">
+                <table class='table table-bordered table-hover mt-2 text-center' id='tblsurvey' style="tr:first-child {background-color: rgb(234,72,127)}">
 									<tr class="text-white" style="background-color: #ff4848;">
 										<td>Survey Version</td>
 										<td>Action</td>
 									</tr>
 									<tbody>
 										<tr class="text-danger">
-											<td class="position-sticky sticky-top bg-light align-middle" style="border-bottom: 3px solid gray;"><?php echo $varsurveyvercurr;?></td>
-											<td class="position-sticky sticky-top bg-light" style="border-bottom: 3px solid gray;"><a href ="fetchSurvey.php?selected=<?php echo $varsurveyvercurr; ?>"><button type='button' class='btn'  name = 'check_survey'>View</button></a></td>
+											<td class="align-middle">
+												<?php echo $varsurveyvercurr;?>
+											</td>
+											<td class="">
+												<a href ="fetchSurvey.php?selected=<?php echo $varsurveyvercurr; ?>">
+													<button type='button' class='btn btn-outline-secondary btn-sm'  name = 'check_survey'>
+														<i class="fa fa-eye fa-sm mr-1"></i>
+														View
+													</button>
+												</a>
+											</td>
 										</tr>
 									<?php
 										while ($row = mysqli_fetch_assoc($fetchsurveyverunused)) {
@@ -79,7 +87,14 @@ include "../controller/fetchEmpAcc.php";
 									?>
 										<tr>
 											<td class="align-middle"><?php echo $version; ?></td>
-											<td><a href ="fetchSurvey.php?selected=<?php echo $version; ?>"><button type='button' class='btn'  name = 'check_survey'>View</button></a></td>
+											<td>
+												<a href ="fetchSurvey.php?selected=<?php echo $version; ?>">
+													<button type='button' class='btn btn-outline-secondary btn-sm'  name = 'check_survey'>
+														<i class="fa fa-eye fa-sm mr-1"></i>
+														View
+													</button>
+												</a>
+											</td>
 										</tr>
 									<?php 
 										}

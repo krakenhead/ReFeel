@@ -1,6 +1,4 @@
-<?php 
-include "../controller/fetchEmpAcc.php";
-?>
+<?php include "../controller/fetchEmpAcc.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,50 +11,52 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
   <link rel="stylesheet" href="../public/css/datatables.min.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
-  <?php 
-  include "components/loader.php";
-  ?>
+  <?php include "components/loader.php"; ?>
   <div class="wrapper">
-    <?php 
-    include "components/sidebar.php";
-    ?>
+    <?php include "components/sidebar.php"; ?>
     <main class="mainpanel">
-      <?php 
-      include "components/header.php";
-      ?>
+      <?php include "components/header.php"; ?>
       <div class="page-title">
-        <h3>Survey Category</h3>
+        <h3 class="p-2">Survey Category</h3>
       </div>
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container" style="padding-bottom: 4rem;">
-                <h4>Active Categories</h4>
-                <table id="tblActiveSurveyCategory" class="table table-striped table-bordered text-center">
+                <h4 class="py-2">Active Categories</h4>
+                <table id="tblActiveSurveyCategory" class="table table-hover table-bordered text-center">
                   <thead>
-                    <tr>
-                      <th>Category</th>
-                      <th>Action</th>
+                    <tr class="bg-danger text-white">
+                      <td style="width: 50%">Category</td>
+                      <td style="width: 50%">Action</td>
                     </tr>
                   </thead>
                 </table>
-                <button type='button' class='btn btn-outline-danger float-right mt-2' data-toggle='modal' data-target='#addSurveyCategoryModal'>Add Survey Category</button>
+                <button type='button' class='btn btn-outline-danger float-right my-2 mx-3' data-toggle='modal' data-target='#addSurveyCategoryModal'>
+									<i class="fa fa-plus mr-1"></i>
+									Add Survey Category
+								</button>
               </div>
             </div>
             <div class="col-md-12 col-lg-12 p-0 mt-2">
-              <div class="content-container">
-                <h4>Inactive Categories</h4>
-                <table id="tblInactiveSurveyCategory" class="table table-bordered table-striped text-center">
+              <div class="content-container" style="padding-bottom: 4rem;">
+                <h4 class="py-2">Inactive Categories</h4>
+                <table id="tblInactiveSurveyCategory" class="table table-bordered table-hover text-center">
                   <thead>
-                    <tr>
-                      <th>Category</th>
-                      <th>Action</th>
+                    <tr class="bg-danger text-white">
+                      <td style="width: 50%">Category</td>
+                      <td style="width: 50%">Action</td>
                     </tr>
                   </thead>
                 </table>
+								<button type='button' class='btn btn-outline-danger float-right my-2 mx-3' data-toggle='modal' data-target='#addSurveyCategoryModal'>
+									<i class="fa fa-plus mr-1"></i>
+									Add Survey Category
+								</button>
               </div>
             </div>
           </div>
@@ -68,23 +68,36 @@ include "../controller/fetchEmpAcc.php";
   <!-- add survey category modal -->
   <div class="modal fade" id="addSurveyCategoryModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addnewsurveycategoryTitle">Add Survey Category</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+					<div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+						<h5 class="modal-title text-white" id="addnewsurveycategoryTitle">
+							<i class="fa fa-user-plus px-2 fa-sm"></i>
+							Add Survey Category
+						</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="addnewsurveycategory.php" name="form_addnewsurveycategory">
           <div class="modal-body">
             <div class="form-group">
-              <label for="newSurveyCategoryName">Survey Category Name</label>
+              <label for="newSurveyCategoryName">Survey Category</label>
               <input type="text" class="form-control" id='newSurveyCategoryName' name ='newSurveyCategoryName' required>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsavenewsurveycategory">Save changes</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times mr-1"></i>
+							Close
+						</button>
+						<button type="reset" class="btn btn-outline-danger">
+							<i class="fa fa-eraser mr-1"></i>
+							Clear
+						</button>
+            <button type="submit" class="btn btn-success" id="btnsavenewsurveycategory">
+							<i class="fa fa-plus mr-1"></i>
+							Add
+						</button>
           </div>
         </form>
       </div>
@@ -93,9 +106,12 @@ include "../controller/fetchEmpAcc.php";
   <!-- edit survey category modal -->
   <div class="modal fade" id="editSurveyCategoryModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editnewsurveycategoryTitle">Edit Survey Category</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="editnewsurveycategoryTitle">
+						<i class="fa fa-edit px-2"></i>
+						Edit Survey Category
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -103,14 +119,20 @@ include "../controller/fetchEmpAcc.php";
         <form method="POST" action ="editsurveycategory.php" name="form_editsurveycategory">
           <div class="modal-body">
             <div class="form-group">
-              <label for="editSurveyCategoryName">Survey Category Name</label>
+              <label for="editSurveyCategoryName">Survey Category</label>
               <input type="hidden" name = "surveycategory_ID" id = "surveycategory_ID">
               <input type="text" class="form-control" id='editSurveyCategoryName' name ='editSurveyCategoryName' required>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsaveeditsurveycategory">Save changes</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times mr-1"></i>
+							Close
+						</button>
+            <button type="submit" class="btn btn-success" id="btnsaveeditsurveycategory">
+							<i class="fa fa-save mr-1"></i>
+							Save
+						</button>
           </div>
         </form>
       </div>
@@ -119,24 +141,33 @@ include "../controller/fetchEmpAcc.php";
   <!--View Details-->
   <div class="modal fade" id="viewSurveyCategoryModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="viewnewsurveycategoryTitle">Survey Category</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="viewnewsurveycategoryTitle">
+						<i class="fa fa-toggle-off px-2"></i>
+						Survey Category
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="deletecategory.php" name="form_viewsurveycategory">
           <div class="modal-body">
             <div class="form-group">
-              <label for="viewSurveyCategoryName">Survey Category Name</label>
+              <label for="viewSurveyCategoryName">Survey Category</label>
               <input type="hidden" name = "viewsurveycategory_ID" id = "viewsurveycategory_ID">
               <input type="text" class="form-control" id='viewSurveyCategoryName' name ='viewSurveyCategoryName' readonly>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsavedeletesurveycategory">Delete</button>
+             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times mr-1"></i>
+							Close
+						</button>
+            <button type="submit" class="btn btn-danger" id="btnsavedeletesurveycategory">
+							<i class="fa fa-toggle-off mr-1"></i>
+							Disable
+						</button>
           </div>
         </form>
       </div>
@@ -145,32 +176,39 @@ include "../controller/fetchEmpAcc.php";
   <!-- enable category -->
   <div class="modal fade" id="viewSurveyCategoryModal_enable" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="viewnewsurveycategoryTitle_enable">Survey Category</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="viewnewsurveycategoryTitle_enable">
+						<i class="fa fa-toggle-on px-2"></i>
+						Survey Category
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="enablecategory.php" name="form_viewsurveycategory_enable">
           <div class="modal-body">
             <div class="form-group">
-              <label for="viewSurveyCategoryName">Survey Category Name</label>
+              <label for="viewSurveyCategoryName">Survey Category</label>
               <input type="hidden" name = "viewsurveycategory_ID_enable" id = "viewsurveycategory_ID_enable">
               <input type="text" class="form-control" id='viewSurveyCategoryName_enable' name ='viewSurveyCategoryName_enable' readonly>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsaveenablesurveycategory">Enable</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times mr-1"></i>
+							Close
+						</button>
+            <button type="submit" class="btn btn-success" id="btnsaveenablesurveycategory">
+							<i class="fa fa-toggle-on mr-1"></i>
+							Enable
+						</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  <?php 
-  include "components/core-script.php";
-  ?>
+  <?php include "components/core-script.php"; ?>
   <script src="../public/js/datatables.min.js"></script>
   <script src="../public/js/sweetalert.min.js"></script>
   <script src="../public/js/notification.js"></script>
@@ -196,13 +234,17 @@ include "../controller/fetchEmpAcc.php";
     $('#tblActiveSurveyCategory').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 1
+			}],
       'ajax': {
         url: '../controller/survey/datatables.php',
         type: 'POST',
         data: { type: activeSurveyCategory }
       },
       'language': {
-        'emptyTable': 'No active category to show'
+        'emptyTable': 'No active category to show.'
       }
     });
     
@@ -211,13 +253,17 @@ include "../controller/fetchEmpAcc.php";
     $('#tblInactiveSurveyCategory').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 1
+			}],
       'ajax': {
         url: '../controller/survey/datatables.php',
         type: 'POST',
         data: { type: inactiveSurveyCategory }
       },
       'language': {
-        'emptyTable': 'No inactive category to show'
+        'emptyTable': 'No inactive category to show.'
       }
     });
 

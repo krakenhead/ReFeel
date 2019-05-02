@@ -49,7 +49,9 @@
 										<div class="row pt-2 pb-1 pl-4">
 											<h5 class="mr-4">Date Answered</h5>
 											<input type="date" name="date_med" required="required">
+											<!--
 											<input type="time" name="date_med" required="required">
+											-->
 										</div>
                   </div>
                   <input type="hidden" name="hidden_id" value="<?php echo $varDbId;?>">

@@ -1,6 +1,4 @@
-<?php 
-include "../controller/fetchEmpAcc.php";
-?>
+<?php include "../controller/fetchEmpAcc.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,54 +11,56 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
   <link rel="stylesheet" href="../public/css/datatables.min.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
-  <?php 
-  include "components/loader.php";
-  ?>
+  <?php include "components/loader.php"; ?>
   <div class="wrapper">
-    <?php 
-    include "components/sidebar.php";
-    ?>
+    <?php include "components/sidebar.php"; ?>
     <main class="mainpanel">
-      <?php 
-      include "components/header.php";
-      ?>
+      <?php include "components/header.php"; ?>
       <div class="page-title">
-        <h3>Storage</h3>
+        <h3 class="p-2">Storage</h3>
       </div>
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
               <div class="content-container" style="padding-bottom: 4rem">
-                <h4>Active Storage</h4>
-                <table id="tblActiveStorage" class="table table-striped table-bordered text-center">
+                <h4 class="py-2">Active Storage</h4>
+                <table id="tblActiveStorage" class="table table-hover table-bordered text-center">
                   <thead>
-                    <tr>
-                      <th>Storage Name</th>
-                      <th>Storage Type</th>
-                      <th>Capacity</th>
-                      <th>Action</th>
+                    <tr class="bg-danger text-white">
+                      <td style="width: 25%">Storage Name</td>
+                      <td style="width: 25%">Storage Type</td>
+                      <td style="width: 15%">Capacity</td>
+                      <td style="width: 35%">Action</td>
                     </tr>
                   </thead>
                 </table>
-                <button type="button" class="btn btn-outline-danger float-right mt-2" data-toggle="modal" data-target="#addBloodStorageModal"><i class="fas fa-plus"></i> Add Storage</button>
+                <button type="button" class="btn btn-outline-danger float-right my-2 mx-3" data-toggle="modal" data-target="#addBloodStorageModal">
+									<i class="fa fa-plus mr-1"></i>
+									Add Storage
+								</button>
               </div>
             </div>
             <div class="col-md-12 col-lg-12 p-0 mt-2">
-              <div class="content-container">
-                <h4>Disabled Storage</h4>
-                <table id="tblInactiveStorage" class="table table-striped table-bordered text-center">
+              <div class="content-container" style="padding-bottom: 4rem">
+                <h4 class="py-2">Disabled Storage</h4>
+                <table id="tblInactiveStorage" class="table table-hover table-bordered text-center">
                   <thead>
-                    <tr>
-                      <th>Storage Name</th>
-                      <th>Storage Type</th>
-                      <th>Capacity</th>
-                      <th>Action</th>
+                    <tr class="bg-danger text-white">
+                      <td style="width: 25%">Storage Name</td>
+                      <td style="width: 25%">Storage Type</td>
+                      <td style="width: 15%">Capacity</td>
+                      <td style="width: 35%">Action</td>
                     </tr>
                   </thead>
                 </table>
+								<button type="button" class="btn btn-outline-danger float-right my-2 mx-3" data-toggle="modal" data-target="#addBloodStorageModal">
+									<i class="fa fa-plus mr-1"></i>
+									Add Storage
+								</button>
               </div>
             </div>
           </div>
@@ -72,11 +72,14 @@ include "../controller/fetchEmpAcc.php";
   <!--Add Storage Modal-->
   <div class="modal fade" id="addBloodStorageModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addnewbloodstorageTitle">Add Blood Storage</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="addnewbloodstorageTitle">
+						<i class="fa fa-plus mx-2"></i>
+						Add Blood Storage
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="addnewbloodstorage.php" name="form_addnewbloodstorage">
@@ -90,21 +93,20 @@ include "../controller/fetchEmpAcc.php";
               <select class="form-control" name="sel_storagetype">
                 <option selected disabled>Select storage type</option>
               <?php
-              $fetch_storagetype = mysqli_query($connections, " SELECT * FROM tblstoragetype ");
+								$fetch_storagetype = mysqli_query($connections, "
+									SELECT *
+									FROM tblstoragetype
+								");
 
-              if(mysqli_num_rows($fetch_storagetype) > 0){
-                while ($row = mysqli_fetch_assoc($fetch_storagetype)) {
-                  $storagetype = $row["strStorageType"];
-                  ?>
-                <?php
-                echo "<option value='".$storagetype."'>$storagetype</option>";
-                 ?>
-              <?php
-            }
-          }
-               ?>
-             </select>
-
+								if(mysqli_num_rows($fetch_storagetype) > 0)	{
+									while ($row = mysqli_fetch_assoc($fetch_storagetype)) {
+										$storagetype = $row["strStorageType"];
+										
+										echo "<option value='".$storagetype."'>$storagetype</option>";
+									}
+								}
+              ?>
+							</select>
             </div>
             <div class="form-group">
               <label for="newBloodStorageCapacity">Storage Capacity</label>
@@ -112,8 +114,18 @@ include "../controller/fetchEmpAcc.php";
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsavenewbloodstorage">Save changes</button>
+             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times mr-1"></i>
+							Close
+						</button>
+						<button type="reset" class="btn btn-outline-danger">
+							<i class="fa fa-eraser mr-1"></i>
+							Clear
+						</button>
+            <button type="submit" class="btn btn-success" id="btnsavenewbloodstorage">
+							<i class="fa fa-plus mr-1"></i>
+							Add
+						</button>
           </div>
         </form>
       </div>
@@ -123,11 +135,14 @@ include "../controller/fetchEmpAcc.php";
   <!--Edit Storage Modal-->
   <div class="modal fade" id="editBloodStorageModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editnewbloodstorageTitle">Edit Blood Storage</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="editnewbloodstorageTitle">
+						<i class="fa fa-edit mx-2"></i>
+						Edit Blood Storage
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="blood-related/editstorage.php" name="form_editbloodstorage">
@@ -143,8 +158,14 @@ include "../controller/fetchEmpAcc.php";
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsaveeditstorage">Save changes</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times pr-1 fa-sm"></i> 
+							Close
+						</button>
+            <button type="submit" class="btn btn-success" id="btnsaveeditstorage">
+							<i class="fa fa-save pr-1 fa-sm"></i> 
+							Save
+						</button>
           </div>
         </form>
       </div>
@@ -153,11 +174,14 @@ include "../controller/fetchEmpAcc.php";
   <!--View Details-->
   <div class="modal fade" id="viewBloodStorageModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editnewbloodstorageTitle">Blood Storage</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="editnewbloodstorageTitle">
+						<i class="fa fa-toggle-off mx-2"></i>
+						Blood Storage
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="deletestorage.php" name="form_viewbloodstorage">
@@ -173,8 +197,14 @@ include "../controller/fetchEmpAcc.php";
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnsavedeletestorage" >Disable</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times pr-1 fa-sm"></i> 
+							Close
+						</button>
+            <button type="submit" class="btn btn-danger" id="btnsavedeletestorage">
+							<i class="fa fa-toggle-off pr-1 fa-sm"></i>
+							Disable
+						</button>
           </div>
         </form>
       </div>
@@ -183,11 +213,14 @@ include "../controller/fetchEmpAcc.php";
   <!-- end -->
   <div class="modal fade" id="viewBloodStorageModal_enable" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="viewBloodStorageModal_enable">Blood Storage</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+        <div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+          <h5 class="modal-title text-white" id="viewBloodStorageModal_enable">
+						<i class="fa fa-toggle-on mx-2"></i>
+						Blood Storage
+					</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <form method="POST" action ="enablestorage.php" name="form_viewbloodstorage_enable">
@@ -203,17 +236,24 @@ include "../controller/fetchEmpAcc.php";
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" name="delete" class="btn btn-danger" id="btn_deletestorage">Delete</button>
-            <button type="submit" class="btn btn-primary" id="btnsaveenablestorage" >Enable</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+							<i class="fa fa-times pr-1 fa-sm"></i> 
+							Close
+						</button>
+            <button type="button" name="delete" class="btn btn-outline-danger" id="btn_deletestorage">
+							<i class="fa fa-trash pr-1 fa-sm"></i>
+							Delete
+						</button>
+            <button type="submit" class="btn btn-success" id="btnsaveenablestorage">
+							<i class="fa fa-toggle-on pr-1 fa-sm"></i>
+							Enable
+						</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  <?php 
-  include "components/core-script.php";
-  ?>
+  <?php include "components/core-script.php"; ?>
   <script src="../public/js/datatables.min.js"></script>
   <script src="../public/js/sweetalert.min.js"></script>
   <script src="../public/js/notification.js"></script>
@@ -239,6 +279,10 @@ include "../controller/fetchEmpAcc.php";
     $('#tblActiveStorage').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 3
+			}],
       'ajax': {
         url: '../controller/storage/datatables.php',
         type: 'POST',
@@ -254,6 +298,10 @@ include "../controller/fetchEmpAcc.php";
     $('#tblInactiveStorage').DataTable({
       'processing': true,
       'serverSide': true,
+			'columnDefs': [{
+				'orderable': false,
+				'targets': 3
+			}],
       'ajax': {
         url: '../controller/storage/datatables.php',
         type: 'POST',

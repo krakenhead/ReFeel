@@ -1,6 +1,4 @@
-<?php
-include "../controller/fetchEmpAcc.php";
-?>
+<?php include "../controller/fetchEmpAcc.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,64 +11,87 @@ include "../controller/fetchEmpAcc.php";
   <link rel="stylesheet" href="../public/css/main.css">
   <link rel="stylesheet" href="../public/css/all.css">
   <link rel="stylesheet" href="../public/css/jquery-ui.css">
+  <link rel="stylesheet" href="../public/css/bs-override.css">
 </head>
 <body>
-  <?php
-  include "components/loader.php";
-  ?>
+  <?php include "components/loader.php"; ?>
   <div class="wrapper">
-    <?php
-    include "components/sidebar.php";
-    ?>
+    <?php include "components/sidebar.php"; ?>
     <main class="mainpanel">
-      <?php
-      include "components/header.php";
-      ?>
+      <?php include "components/header.php"; ?>
+			<div class="page-title">
+				<div class="d-flex justify-content-between">
+					<div>
+						<h3 class="p-2 align-middle">Survey Questions</h3>
+					</div>
+					<div class="p-2">
+						<button type="button" onclick="location.href='survey.php'" class="btn btn-outline-danger">
+							<i class="fas fa-long-arrow-alt-left mr-1"></i>
+							Back
+						</button>
+					</div>
+				</div>
+			</div>
+			<!--
       <div class="page-title">
         <h3>Survey Questions</h3>
 				<a href="#jump">
 				<button type="button" onclick="location.href='survey.php'" class="btn"><i class="fas fa-long-arrow-alt-left"></i> Back</button>
 			</a>
       </div>
+			-->
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12 col-lg-12 p-0">
-              <div class="content-container" style="padding-bottom: 5rem;">
+              <div class="content-container pt-3" style="padding-bottom: 4rem;">
                 <?php
                   $selectedVer = $_GET["selected"];
 
-                  $questions = mysqli_query($connections,"SELECT *
+                  $questions = mysqli_query($connections,"
+										SELECT *
                     FROM tblquestion
-                    WHERE decQuestionVersion = $selectedVer");
-                    $first_id_qry = mysqli_query($connections,"SELECT intQuestionId FROM tblquestion WHERE decQuestionVersion = $selectedVer ORDER BY intQuestionId DESC LIMIT 1");
+                    WHERE decQuestionVersion = $selectedVer
+									");
+									
+									$first_id_qry = mysqli_query($connections,"
+										SELECT intQuestionId
+										FROM tblquestion
+										WHERE decQuestionVersion = $selectedVer
+										ORDER BY intQuestionId DESC
+										LIMIT 1
+									");
 
-                    while ($row2 = mysqli_fetch_assoc($first_id_qry)) {
-                      $first_id = $row2["intQuestionId"];
-                    }
+									while ($row2 = mysqli_fetch_assoc($first_id_qry)) {
+										$first_id = $row2["intQuestionId"];
+									}
 
-                    if(mysqli_num_rows($questions) > 0){
-                  ?>
-                  <form method = 'POST' action = 'editquestion.php' id = 'survey' name = 'survey'>
-                  <table class='table table-bordered mb-4 text-center' id='tblsurvey'>
+									if(mysqli_num_rows($questions) > 0)	{
+                ?>
+                <form method = 'POST' action = 'editquestion.php' id = 'survey' name = 'survey'>
+                  <table class='table table-bordered table-hover mb-4 text-center' id='tblsurvey'>
                     <input type="hidden" id='hiddensurveyversion' value='<?php echo $selectedVer;?>'>
                     <thead>
-                      <tr>
-                        <th>Question</th>
-                        <th>Question Type</th>
-                        <th>Question Category</th>
-                        <th>Action</th>
+                      <tr class="bg-danger text-white">
+                        <td style="width: 45%">Question</td>
+                        <td style="width: 15%">Question Type</td>
+                        <td style="width: 20%">Question Category</td>
+                        <td style="width: 20%">Action</td>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                      while($row = mysqli_fetch_assoc($questions)){
+                      while($row = mysqli_fetch_assoc($questions))	{
                         $id = $row["intQuestionId"];
                         $question = $row["txtQuestion"];
                         $type = $row["stfQuestionType"];
                         $categoryID = $row["intQuestionCategoryId"];
 
-                        $getcategorystring = mysqli_query($connections,"SELECT stfQuestionCategory FROM tblquestioncategory WHERE intQuestionCategoryId = $categoryID");
+                        $getcategorystring = mysqli_query($connections,"
+													SELECT stfQuestionCategory
+													FROM tblquestioncategory
+													WHERE intQuestionCategoryId = $categoryID
+												");
                         // while ($row3 = mysqli_fetch_assoc($getcategorystring)) {
                         //   $category = $row3["stfQuestionCategory"];
                         // }
@@ -78,26 +99,68 @@ include "../controller/fetchEmpAcc.php";
                         $category = $row3["stfQuestionCategory"];
                     ?>
                       <tr id = '<?php echo $row['intQuestionId'];?>'>
-                        <td><textarea class='que form-control' value ='<?php echo $question; ?>' name='question<?php echo $id; ?>' id='question<?php echo $id; ?>' readonly><?php echo $question; ?></textarea></td>
-                        <td><input type = 'text' value = '<?php echo $type; ?>' name = 'type<?php echo $id; ?>' id='type<?php echo $id; ?>' class = "type" readonly></td>
-                        <td><input type = 'text' value = '<?php echo $category; ?>' name = 'category<?php echo $id;?>' id='category<?php echo $id; ?>' class ="cat" readonly></td>
                         <td>
+													<textarea class='que form-control' value ='<?php echo $question; ?>' name='question<?php echo $id; ?>' id='question<?php echo $id; ?>' readonly><?php echo $question; ?></textarea>
+												</td>
+                        <td class="align-middle">
+													<input type = 'text' value = '<?php echo $type; ?>' name = 'type<?php echo $id; ?>' id='type<?php echo $id; ?>' class = "type form-control" readonly>
+												</td>
+                        <td class="align-middle">
+													<input type = 'text' value = '<?php echo $category; ?>' name = 'category<?php echo $id;?>' id='category<?php echo $id; ?>' class ="cat form-control" readonly>
+												</td>
+                        <td class="align-middle">
+												<!--
                           <button type='button' class='btn' data-toggle='modal' data-target='#editsurveyitem' data-id='<?php echo $row['intQuestionId'];?>'>Edit</button> <button type='button' class='btn btn-danger' data-id='<?php echo $row['intQuestionId'];?>'>Delete</button>
+												-->
+													<button type='button' class='btn btn-sm btn-outline-primary mr-1' data-toggle='modal' data-target='#editsurveyitem' data-id='<?php echo $row['intQuestionId'];?>'>
+														<i class="fa fa-sm fa-edit mr-1"></i>
+														Edit
+													</button>
+													<button type='button' class='btn btn-sm btn-outline-danger' data-id='<?php echo $row['intQuestionId'];?>'>
+														<i class="fa fa-sm fa-trash mr-1"></i>
+														Delete
+													</button>
                         </td>
                       </tr>
+										<!--
+										  <tr id = '<?php echo $row['intQuestionId'];?>'>
+                        <td class="align-middle"><?php echo $question; ?></td>
+                        <td class="align-middle"><?php echo $type; ?></td>
+                        <td class="align-middle"><?php echo $category; ?></td>
+                        <td class="align-middle">
+                          <button type='button' class='btn btn-sm btn-outline-primary mr-1' data-toggle='modal' data-target='#editsurveyitem' data-id='<?php echo $row['intQuestionId'];?>'>
+														<i class="fa fa-sm fa-edit mr-1"></i>
+														Edit
+													</button>
+													<button type='button' class='btn btn-sm btn-outline-danger' data-id='<?php echo $row['intQuestionId'];?>'>
+														<i class="fa fa-sm fa-trash mr-1"></i>
+														Delete
+													</button>
+                        </td>
+                      </tr>
+										-->
                     <?php
-                    }
+											}
                     ?>
                     </tbody>
-                    </table>
+                  </table>
                 </form>
                 <?php
-                }
+									}
                 ?>
                 <div class="mt-3">
-                  <button type = 'button' class='btn btn-primary float-right mr-2' id = 'setasactive'>Set Survey as Active</button>
-                  <button type = 'button' class='btn btn-success float-right mb-2' id = 'save_changes' style = 'display : none;'>Save Changes</button>
-                  <button type = 'button' class='btn btn-success float-right' id = 'add_question' data-toggle='modal' data-target='#addsurveyitem'>Add a Question</button>
+                  <button type = 'button' class='btn btn-primary mr-2 float-right' id = 'setasactive'>
+										<i class="fa fa-sm fa-check mr-1"></i>
+										Set Survey as Active
+									</button>
+                  <button type = 'button' class='btn btn-success mr-2 float-right' id = 'save_changes' style = 'display : none;'>
+										<i class="fa fa-sm fa-save mr-1"></i>
+										Save Changes
+									</button>
+                  <button type = 'button' class='btn btn-success mr-2 float-right' id = 'add_question' data-toggle='modal' data-target='#addsurveyitem'>
+										<i class="fa fa-sm fa-plus mr-1"></i>
+										Add a Question
+									</button>
                 </div>
               </div>
             </div>
@@ -110,146 +173,198 @@ include "../controller/fetchEmpAcc.php";
   <!-- edit survey question -->
   <div class="modal fade" id="editsurveyitem" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editQuestionTitle">Edit Question</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+					<div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+						<h5 class="modal-title text-white">
+							<i class="fa fa-edit mx-2"></i>
+							Edit Question
+						</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <div class="modal-body">
-          <div class="container-fluid">
-            <div class="form-group">
-              <label for="editQuestion">Question</label>
-              <input type="hidden" name = "question_id" id = "question_id">
-              <input type="text" class="form-control" id='editQuestion' name ='editQuesion'>
-            </div>
-            <div class="form-group">
-              <label for="editquestiontype">Question Type</label>
-              <select id = "editquestiontype" name="editquestiontype" >
-                <option selected disabled>Select Question Type</option>
-                <option value = "Yn">Yes Or no</option>
-                <option value = "YnDate">Yes Or no & Date</option>
-                <option value = "YnQua">Yes Or no & Qua</option>
-                <option value = "YnStr">Yes Or no & Str</option>
-                <option value = "YnDateQua">Yes Or no & Date & Quantity</option>
-                <option value = "YnDateStr">Yes Or no & Date & String</option>
-                <option value = "YnQuaStr">Yes Or no & Quantity & String</option>
-                <option value = "YnDateQuaStr">Yes Or no & Date & Quatity & String</option>
-                <option value = "Date">Date</option>
-                <option value = "DateQua">Date & Quantity</option>
-                <option value = "DateStr">Date & String</option>
-                <option value = "DateQuaStr">Date & Quantity & String</option>
-                <option value = "Qua">Quantity</option>
-                <option value = "QuaStr">Quantity & String</option>
-                <option value = "Str">String</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="editquestioncategory">Question Category</label>
-              <select id = "editquestioncategory" name = 'editquestioncategory'>
-                <option selected disabled>Select Question Category</option>
-                <?php
-                //include("../connections.php");
+					<div class="form-group">
+						<label for="editQuestion" class="col-form-label">Question</label>
+						<input type="hidden" name = "question_id" id = "question_id">
+						<input type="text" class="form-control" id='editQuestion' name ='editQuesion'>
+					</div>
+					<div class="row">
+						<div class="form-group col-6">
+							<label for="editquestiontype" class="col-form-label">Question Type</label>
+							<select class="form-control" id = "editquestiontype" name="editquestiontype" >
+								<option selected disabled>Select Question Type</option>
+								<!--
+								<option value = "Yn">Yes Or no</option>
+								<option value = "YnDate">Yes Or no & Date</option>
+								<option value = "YnQua">Yes Or no & Qua</option>
+								<option value = "YnStr">Yes Or no & Str</option>
+								<option value = "YnDateQua">Yes Or no & Date & Quantity</option>
+								<option value = "YnDateStr">Yes Or no & Date & String</option>
+								<option value = "YnQuaStr">Yes Or no & Quantity & String</option>
+								<option value = "YnDateQuaStr">Yes Or no & Date & Quatity & String</option>
+								<option value = "Date">Date</option>
+								<option value = "DateQua">Date & Quantity</option>
+								<option value = "DateStr">Date & String</option>
+								<option value = "DateQuaStr">Date & Quantity & String</option>
+								<option value = "Qua">Quantity</option>
+								<option value = "QuaStr">Quantity & String</option>
+								<option value = "Str">String</option>
+								-->
+								<option value = "Yn">Yes/No</option>
+								<option value = "YnDate">Yes/No, Date</option>
+								<option value = "YnQua">Yes/No, Quantity</option>
+								<option value = "YnStr">Yes/No, String</option>
+								<option value = "YnDateQua">Yes/No, Date, Quantity</option>
+								<option value = "YnDateStr">Yes/No, Date, String</option>
+								<option value = "YnQuaStr">Yes/No, Quantity, String</option>
+								<option value = "YnDateQuaStr">Yes/No, Date, Quatity, String</option>
+								<option value = "Date">Date</option>
+								<option value = "DateQua">Date, Quantity</option>
+								<option value = "DateStr">Date, String</option>
+								<option value = "DateQuaStr">Date, Quantity, String</option>
+								<option value = "Qua">Quantity</option>
+								<option value = "QuaStr">Quantity, String</option>
+								<option value = "Str">String</option>
+							</select>
+						</div>
+						<div class="form-group col-6">
+							<label for="editquestioncategory" class="col-form-label">Question Category</label>
+							<select class="form-control" id = "editquestioncategory" name = 'editquestioncategory'>
+								<option selected disabled>Select Question Category</option>
+								<?php
+								//include("../connections.php");
 
-                $getcategories = mysqli_query($connections,"SELECT * FROM tblquestioncategory WHERE stfQuestionCategoryStatus = 'Active'");
-                while($row = mysqli_fetch_assoc($getcategories)){
-                  $category = $row["stfQuestionCategory"];
-                  ?>
-                  <option value = "<?php echo $category;?>"><?php echo $category;?></option>
-                  <?php
-                }
-                ?>
-              </select>
-            </div>
-          </div>
-
+								$getcategories = mysqli_query($connections,"
+									SELECT *
+									FROM tblquestioncategory
+									WHERE stfQuestionCategoryStatus = 'Active'
+								");
+								while($row = mysqli_fetch_assoc($getcategories)){
+									$category = $row["stfQuestionCategory"];
+								?>
+									<option value = "<?php echo $category;?>"><?php echo $category;?></option>
+								<?php
+								}
+								?>
+							</select>
+						</div>
+					</div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="btnsaveeditquestion">Confirm</button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+						<i class="fa fa-sm fa-times mr-1"></i>
+						Close
+					</button>
+          <button type="button" class="btn btn-success" id="btnsaveeditquestion">
+						<i class="fa fa-sm fa-save mr-1"></i>
+						Save
+					</button>
         </div>
       </div>
     </div>
   </div>
   <!-- end of edit survey question -->
-  <!--Add qustion to survey modal-->
+  <!--Add question to survey modal-->
   <div class="modal fade-lg" id="addsurveyitem" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addQuestionTitle">Add Question</h5>
+      <div class="modal-content" style="border-radius: 30px 30px 25px 25px;">
+				<div class="modal-header bg-danger" style="border-radius: 25px 25px 0px 0px;">
+						<h5 class="modal-title text-white" id="addQuestionTitle">
+							<i class="fa fa-plus px-2"></i>
+							Add Question
+						</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <div class="modal-body">
-          <input type="text" placeholder="Insert Question Here" id ="add_question_text" class="form-control">
-
-          <select id = "add_questiontype" name="add_questiontype">
-            <option selected disabled>Select Question Type</option>
-            <option value = "Yn">Yes Or no</option>
-            <option value = "YnDate">Yes Or no & Date</option>
-            <option value = "YnQua">Yes Or no & Qua</option>
-            <option value = "YnStr">Yes Or no & Str</option>
-            <option value = "YnDateQua">Yes Or no & Date & Quantity</option>
-            <option value = "YnDateStr">Yes Or no & Date & String</option>
-            <option value = "YnQuaStr">Yes Or no & Quantity & String</option>
-            <option value = "YnDateQuaStr">Yes Or no & Date & Quatity & String</option>
-            <option value = "Date">Date</option>
-            <option value = "DateQua">Date & Quantity</option>
-            <option value = "DateStr">Date & String</option>
-            <option value = "DateQuaStr">Date & Quantity & String</option>
-            <option value = "Qua">Quantity</option>
-            <option value = "QuaStr">Quantity & String</option>
-            <option value = "Str">String</option>
-          </select>
-
-          <select id = "add_questioncategory" name = "add_questioncategory">
-            <option selected disabled>Select Question Category</option>
-            <?php
-            //include("../connections.php");
-
-            $getcategories = mysqli_query($connections,"SELECT * FROM tblquestioncategory WHERE stfQuestionCategoryStatus = 'Active'");
-            while($row = mysqli_fetch_assoc($getcategories)){
-              $category = $row["stfQuestionCategory"];
-              ?>
-              <option value = "<?php echo $category;?>"><?php echo $category;?></option>
-              <?php
-            }
-            ?>
-          </select>
-
-          <button id ="add_submit_item">Add</button>
+					<div class="form-group">
+						<label class="col-form-label">Question</label>
+						<input type="text" placeholder="Insert Question Here" id ="add_question_text" class="form-control">
+					</div>
+					<div class="row">
+						<div class="form-group col-6">
+							<label class="col-form-label">Question Type</label>
+							<select class="form-control" id = "add_questiontype" name="add_questiontype">
+								<option selected disabled>Select Question Type</option>
+								<option value = "Yn">Yes/No</option>
+								<option value = "YnDate">Yes/No, Date</option>
+								<option value = "YnQua">Yes/No, Quantity</option>
+								<option value = "YnStr">Yes/No, String</option>
+								<option value = "YnDateQua">Yes/No, Date, Quantity</option>
+								<option value = "YnDateStr">Yes/No, Date, String</option>
+								<option value = "YnQuaStr">Yes/No, Quantity, String</option>
+								<option value = "YnDateQuaStr">Yes/No, Date, Quatity, String</option>
+								<option value = "Date">Date</option>
+								<option value = "DateQua">Date, Quantity</option>
+								<option value = "DateStr">Date, String</option>
+								<option value = "DateQuaStr">Date, Quantity, String</option>
+								<option value = "Qua">Quantity</option>
+								<option value = "QuaStr">Quantity, String</option>
+								<option value = "Str">String</option>
+							</select>
+						</div>
+						<div class="form-group col-6">
+							<label class="col-form-label">Question Category</label>
+							<select class="form-control" id = "add_questioncategory" name = "add_questioncategory">
+								<option selected disabled>Select Question Category</option>
+								<?php
+								//include("../connections.php");
+									$getcategories = mysqli_query($connections,"
+										SELECT *
+										FROM tblquestioncategory
+										WHERE stfQuestionCategoryStatus = 'Active'
+									");
+									while($row = mysqli_fetch_assoc($getcategories))	{
+										$category = $row["stfQuestionCategory"];
+								?>
+									<option value = "<?php echo $category;?>"><?php echo $category;?></option>
+								<?php
+									}
+								?>
+							</select>
+						</div>
+					</div>
         </div>
-
-        <div id = "add_survey_items">
-          <table id = "add_table_questions">
-            <thead>
-              <tr>
-                <th>Select</th>
-                <th>Question</th>
-                <th>Question Category</th>
-                <th>Question Type</th>
-              </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-          </table>
-          <button type="button" class="add_delete-row">Delete Row</button>
-          <button type="button" id = "add_save">Add to Survey</button>
+				<div class="modal-footer">
+					<button class="btn btn-success" id ="add_submit_item">
+						<i class="fa fa-plus mr-1"></i>
+						Add
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id = "add_survey_items">
+						<table id = "add_table_questions" class="table table-bordered table-hover text-center">
+							<thead>
+								<tr class="bg-danger text-white">
+									<td>Select</td>
+									<td>Question</td>
+									<td>Question Category</td>
+									<td>Question Type</td>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
         </div>
+				<div class="modal-footer">				
+					<button class="btn btn-outline-danger" type="button" class="add_delete-row">
+						<i class="fa fa-trash mr-1"></i>
+						Delete Row
+					</button>
+					<button class="btn btn-success" type="button" id = "add_save">
+						<i class="fa fa-plus mr-1"></i>
+						Add to Survey
+					</button>
+				</div>
       </div>
     </div>
   </div>
   <!-- end of modal -->
 
-  <?php
-  include "components/core-script.php";
-  ?>
+  <?php include "components/core-script.php"; ?>
   <script src="../public/js/jquery-ui.js"></script>
   <script src="../public/js/notification.js"></script>
   <script>
