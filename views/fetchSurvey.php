@@ -116,7 +116,7 @@
 														<i class="fa fa-sm fa-edit mr-1"></i>
 														Edit
 													</button>
-													<button type='button' class='btn btn-sm btn-outline-danger' data-id='<?php echo $row['intQuestionId'];?>'>
+													<button type='button' class='btn btn-sm btn-outline-danger deleteQuestion' data-id='<?php echo $row['intQuestionId'];?>'>
 														<i class="fa fa-sm fa-trash mr-1"></i>
 														Delete
 													</button>
@@ -639,7 +639,7 @@
         });
       }
 
-      $('#tblsurvey tbody').on('click','.btn-danger',function(){
+      $('#tblsurvey tbody').on('click','.deleteQuestion',function(){
         var confirm_delete = confirm("Are you sure you want to delete?");
 
         if(confirm_delete == true){
